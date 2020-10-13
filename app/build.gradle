@@ -33,5 +33,6 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     implementation "net.dean.jraw:JRAW-Android:$jraw_version"
+    implementation 'com.amitshekhar.android:android-networking:1.0.2'
 
 }
