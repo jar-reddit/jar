@@ -9,6 +9,7 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.androidnetworking.interfaces.StringRequestListener;
+import com.example.JAR.RAW.Reddit;
 
 
 import org.json.JSONException;
@@ -32,34 +33,36 @@ public class MainActivity extends AppCompatActivity {
 
         testView = findViewById(R.id.test_text);
         //TODO: make our own Reddit API Wrapper
-        AndroidNetworking.get("https://www.reddit.com/.json")
-                .setUserAgent("android:com.example.JAR:v0.0.1 (by /u/mueea001)")
-                .build()
-                .getAsJSONObject(new JSONObjectRequestListener() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        TextView out = findViewById(R.id.test_text);
-                        try {
-
-                            int length = response.getJSONObject("data").getInt("dist");
-                            String outText = "length: " + length + "\n";
-                            for (int i = 0; i < length; i++) {
-                                outText += "\nsub: " + response.getJSONObject("data").getJSONArray("children").getJSONObject(i).getJSONObject("data").getString("subreddit");
-                                outText += "\ntitle: " + response.getJSONObject("data").getJSONArray("children").getJSONObject(i).getJSONObject("data").getString("title");
-                                outText += "\nselftext: " + response.getJSONObject("data").getJSONArray("children").getJSONObject(i).getJSONObject("data").getString("selftext") + "\n";
-                            }
-                            out.setText(outText);
-                        } catch (JSONException e) {
-                            out.setText("JSON error");
-                            e.printStackTrace();
-                        }
-                    }
-
-                    @Override
-                    public void onError(ANError anError) {
-
-                    }
-                });
+//        AndroidNetworking.get("https://www.reddit.com/.json")
+//                .setUserAgent("android:com.example.JAR:v0.0.1 (by /u/mueea001)")
+//                .build()
+//                .getAsJSONObject(new JSONObjectRequestListener() {
+//                    @Override
+//                    public void onResponse(JSONObject response) {
+//                        TextView out = findViewById(R.id.test_text);
+//                        try {
+//
+//                            int length = response.getJSONObject("data").getInt("dist");
+//                            String outText = "length: " + length + "\n";
+//                            for (int i = 0; i < length; i++) {
+//                                outText += "\nsub: " + response.getJSONObject("data").getJSONArray("children").getJSONObject(i).getJSONObject("data").getString("subreddit");
+//                                outText += "\ntitle: " + response.getJSONObject("data").getJSONArray("children").getJSONObject(i).getJSONObject("data").getString("title");
+//                                outText += "\nselftext: " + response.getJSONObject("data").getJSONArray("children").getJSONObject(i).getJSONObject("data").getString("selftext") + "\n";
+//                            }
+//                            out.setText(outText);
+//                        } catch (JSONException e) {
+//                            out.setText("JSON error");
+//                            e.printStackTrace();
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onError(ANError anError) {
+//
+//                    }
+//                });
+        Reddit reddit = new Reddit(getApplicationContext(),"android:com.example.JAR:v0.0.1 (by /u/JARForReddit)");
+        reddit.getFrontpage();
 
 
         testView.setText("please wait");
