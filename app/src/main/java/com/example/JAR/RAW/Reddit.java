@@ -12,13 +12,20 @@ import com.google.gson.Gson;
 
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.List;
+import java.util.Scanner;
+
+import javax.net.ssl.HttpsURLConnection;
 
 import static android.content.ContentValues.TAG;
 
 
 public class Reddit {
     private final String url ="https://www.reddit.com/";
+    String ua;
     String params;
     /**
      * Start a Reddit instance
@@ -27,35 +34,30 @@ public class Reddit {
      * @param useragent The useragent string needed for Reddit
      */
     public Reddit(Context context, String useragent) {
-        AndroidNetworking.initialize(context);
-        AndroidNetworking.setUserAgent(useragent);
-        AndroidNetworking.setParserFactory(new GsonParserFactory());
+        ua = useragent;
         params = "raw_json=1";
     }
 
     /**
      * Gets frontpage of Reddit
      */
-    public JSONObject getFrontpage() {
-        JSONObject testListing = null; // TODO: 19/10/20 Remove this later
-        AndroidNetworking
-                .get(url + "?" + params)
-                .build()
-                .getAsJSONObject(new JSONObjectRequestListener() {
-                    @Override
-                    public void onResponse(JSONObject response) {
+    public String getFrontpage() {
+        try {
+            HttpsURLConnection connection = (HttpsURLConnection) new URL(url+".json?"+params).openConnection();
+            connection.addRequestProperty("User-Agent",ua);
+            connection.setRequestMethod("GET");
+            Scanner s = new Scanner((InputStream)connection.getContent());
 
-                    }
+            String response = "";
+            while (s.hasNext()) {
+                response += s.nextLine();
+            }
 
-                    @Override
-                    public void onError(ANError anError) {
-
-                    }
-
-                    public JSONObjectRequestListener init(JSONObject listing) {
-                        return this;
-                    }
-                }.init(testListing));
-        return testListing;
+            return response;
+        } catch (IOException e) {
+            // TODO: 28/10/20 Malformed URL Exception
+            e.printStackTrace();
+        }
+        return "error";
     }
 }
