@@ -17,15 +17,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <meta-data
-            android:name="com.example.JAR.REDDIT_USERNAME"
-            android:value="mueea001" />
-        <meta-data
-            android:name="com.example.JAR.CLIENT_ID"
-            android:value="BYoN8zqQRKfPew" />
-        <meta-data
-            android:name="com.example.JAR.REDIRECT_URL"
-            android:value="https://www.reddit.com" />
     </application>
 
 </manifest>
