@@ -23,6 +23,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Scanner;
 import java.util.UUID;
+import java.util.concurrent.Executor;
 
 // Emilio comment
 // Magd comment
@@ -35,12 +36,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         // TODO: 27/10/20 remove this policy  https://developer.android.com/reference/android/os/NetworkOnMainThreadException
         // https://stackoverflow.com/a/9289190
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
+//        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+//        StrictMode.setThreadPolicy(policy);
         
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        AndroidNetworking.initialize(getApplicationContext());
 
 
         testView = findViewById(R.id.test_text);
@@ -49,14 +49,41 @@ public class MainActivity extends AppCompatActivity {
 //
         testView.setText("please wait");
 
-
-        Reddit reddit = new Reddit(getApplicationContext(),getApplicationContext().getPackageName()+":v0.0.1 (by /u/JARForReddit)");
-
-        testView.setText(reddit.getFrontpage());
+        DebugThread dt = new DebugThread();
+        dt.start(); // delegate the task to the background
 
 
 
 
+
+
+
+
+
+    }
+
+    public class DebugThread extends Thread {
+        @Override
+        public void run() {
+            Reddit reddit = new Reddit(getApplicationContext(),getApplicationContext().getPackageName()+":v0.0.1 (by /u/JARForReddit)");
+            String response = reddit.getFrontpage();
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    ((TextView)findViewById(R.id.test_text)).setText(string);
+                }
+
+                private String string;
+
+                public Runnable init(String string) {
+                    this.string = string;
+                    return this;
+                }
+            }.init(response));
+        }
+    }
+
+    void debug() {
 
     }
 }
