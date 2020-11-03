@@ -103,3 +103,11 @@ lint/tmp/
 
 # Android Profiling
 *.hprof
+
+#VSCode
+.classpath
+.settings/
+.project
+
+
+
