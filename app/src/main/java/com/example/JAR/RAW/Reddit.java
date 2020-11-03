@@ -10,6 +10,7 @@ import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.androidnetworking.interfaces.StringRequestListener;
 import com.google.gson.Gson;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -41,7 +42,7 @@ public class Reddit {
     /**
      * Gets frontpage of Reddit
      */
-    public String getFrontpage() {
+    public ListingThing getFrontpage() {
         try {
             HttpsURLConnection connection = (HttpsURLConnection) new URL(url+".json?"+params).openConnection();
             connection.addRequestProperty("User-Agent",ua);
@@ -52,12 +53,14 @@ public class Reddit {
             while (s.hasNext()) {
                 response += s.nextLine();
             }
+            JSONObject json = new JSONObject(response);
 
-            return response;
-        } catch (IOException e) {
+            return new ListingThing(json);
+        } catch (IOException | JSONException e) {
             // TODO: 28/10/20 Malformed URL Exception
             e.printStackTrace();
+            Log.e("JAR for Reddit", e.getMessage());
         }
-        return "error";
+        return null;
     }
 }

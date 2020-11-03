@@ -1,5 +1,8 @@
 package com.example.JAR.RAW;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.List;
 
 public class Comment extends Thing implements Votable, Created{
@@ -27,5 +30,18 @@ public class Comment extends Thing implements Votable, Created{
     String subreddit_id;
     String distinguished;
 
+    public Comment(JSONObject data) throws JSONException {
+        super(data);
+    }
 
+
+    @Override
+    public void upvote() {
+
+    }
+
+    @Override
+    public void downvote() {
+
+    }
 }
