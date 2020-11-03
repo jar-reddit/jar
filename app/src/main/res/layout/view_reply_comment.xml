@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000">
+
+    <Button
+        android:id="@+id/button5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="submit"
+        android:textColor="#000000"
+        tools:layout_editor_absoluteX="321dp"
+        tools:layout_editor_absoluteY="296dp" />
+
+    <TextView
+        android:id="@+id/textView16"
+        android:layout_width="413dp"
+        android:layout_height="23dp"
+        android:gravity="center"
+        android:text="Reply to comment"
+        android:textColor="#FFFFFF"
+        tools:layout_editor_absoluteX="-1dp"
+        tools:layout_editor_absoluteY="2dp" />
+
+    <TextView
+        android:id="@+id/textView17"
+        android:layout_width="409dp"
+        android:layout_height="121dp"
+        android:gravity="center"
+        android:text="origiinal comment"
+        android:textColor="#FFFFFF"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="41dp" />
+
+    <TextView
+        android:id="@+id/textView18"
+        android:layout_width="409dp"
+        android:layout_height="92dp"
+        android:text="reply"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="204dp" />
+
+    <TextView
+        android:id="@+id/textView19"
+        android:layout_width="413dp"
+        android:layout_height="41dp"
+        android:gravity="center|center_horizontal"
+        android:text="Reply options (drafts, bold, italics, upload image)"
+        android:textColor="#FFFFFF"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="163dp" />
+
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="preview"
+        android:textColor="#000000"
+        tools:layout_editor_absoluteX="205dp"
+        tools:layout_editor_absoluteY="296dp" />
+</androidx.constraintlayout.widget.ConstraintLayout>
