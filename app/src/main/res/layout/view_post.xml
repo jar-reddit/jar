@@ -9,7 +9,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/postTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif"
@@ -19,7 +19,7 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/postSelftext"
         android:textColor="#ffffff"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -39,7 +39,7 @@
             app:srcCompat="@android:drawable/arrow_up_float" />
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/textUpvotes"
             android:textColor="#ffffff"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -54,7 +54,7 @@
             app:srcCompat="@android:drawable/ic_dialog_email" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/textComments"
             android:textColor="#ffffff"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
