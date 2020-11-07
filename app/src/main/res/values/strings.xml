@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">JAR for Reddit</string>
-
+    <string name="app_version">0.0.1</string>
 </resources>

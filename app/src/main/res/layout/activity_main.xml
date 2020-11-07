@@ -8,13 +8,21 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        >
 
         <LinearLayout
             android:id="@+id/submissionBuilder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            >
+
+            <ListView
+                android:id="@+id/postList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:listitem="@layout/view_post" />
 
             <TextView
                 android:id="@+id/test_text"
@@ -22,6 +30,9 @@
                 android:layout_height="wrap_content"
                 android:text="Hello World!" />
         </LinearLayout>
+
     </ScrollView>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
