@@ -112,19 +112,23 @@ public class MainActivity extends AppCompatActivity {
             runOnUiThread(()-> {
                 LinearLayout subBuilder = findViewById(R.id.submissionBuilder);
                 for(Submission post: posts) {
-                        TextView postText = new TextView(MainActivity.this);
-                        postText.setBackgroundColor(Color.GREEN);
-                        postText.setText(post.toString());
-                        postText.setLayoutParams(subBuilder.getLayoutParams());
+//                        TextView postText = new TextView(MainActivity.this);
+//                        postText.setBackgroundColor(Color.GREEN);
+//                        postText.setText(post.toString());
+//                        postText.setLayoutParams(subBuilder.getLayoutParams());
+//
+//
+//                        View separator = new View(MainActivity.this); // black line
+//                        separator.setBackgroundColor(Color.BLACK);
+//                        separator.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 5));
+//
+//
+//                        subBuilder.addView(postText);
+//                        subBuilder.addView(separator);
+                        PostView postView = new PostView(MainActivity.this);
+                        postView.setPost(post);
 
-
-                        View separator = new View(MainActivity.this); // black line
-                        separator.setBackgroundColor(Color.BLACK);
-                        separator.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 5));
-
-
-                        subBuilder.addView(postText);
-                        subBuilder.addView(separator);
+                        subBuilder.addView(postView);
 
                     }
 

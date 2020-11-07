@@ -36,22 +36,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            app:srcCompat="@android:drawable/arrow_up_float" />
+            android:src="@drawable/ic_baseline_arrow_upward_24"
+            />
 
         <TextView
-            android:id="@+id/textUpvotes"
-            android:textColor="#ffffff"
+            android:id="@+id/textScore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="upvotes" />
+            android:text="upvotes"
+            android:textColor="#ffffff" />
 
         <ImageView
             android:id="@+id/imageView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            app:srcCompat="@android:drawable/ic_dialog_email" />
+            android:src="@drawable/ic_baseline_comment_24"/>
 
         <TextView
             android:id="@+id/textComments"
@@ -71,14 +72,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            app:srcCompat="@android:drawable/stat_sys_upload" />
+            android:src="@drawable/ic_baseline_arrow_upward_24" />
 
         <ImageView
             android:id="@+id/imageView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            app:srcCompat="@android:drawable/stat_sys_download" />
+            android:src="@drawable/ic_baseline_arrow_downward_24" />
     </LinearLayout>
 
 </LinearLayout>
