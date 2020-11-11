@@ -11,7 +11,8 @@ public class Submission extends Thing {
     private String title;
     private int num_comments; // number of comments
     private String author;
-    private String selftext; 
+    private String selftext;
+    private Boolean likes; // whether the user upvoted the post(may cause a null pointer exception?)
 
     public Submission(JSONObject data) throws JSONException {
         super(data);
@@ -21,6 +22,7 @@ public class Submission extends Thing {
         num_comments = submissionData.getInt("num_comments");
         author = submissionData.getString("author");
         selftext= submissionData.getString("selftext");
+        likes = submissionData.getBoolean("likes");
     }
 
     @Override
@@ -32,5 +34,24 @@ public class Submission extends Thing {
                 ", author='" + author + '\'' +
                 ", selftext='" + selftext + '\'' +
                 '}';
+    }
+
+    //Need to increment/decrement ups?
+    public void upvote(){
+        if(Boolean.TRUE.equals(likes)){
+            likes = null;
+        }else {
+            likes = true;
+        }
+        //Submit?
+    }
+
+    public void downvote(){
+        if(Boolean.FALSE.equals(likes)){
+            likes = null;
+        }else {
+            likes = false;
+        }
+        //Submit?
     }
 }
