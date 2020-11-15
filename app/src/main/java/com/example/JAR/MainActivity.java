@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,7 +19,13 @@ import net.dean.jraw.models.Listing;
 import net.dean.jraw.models.Submission;
 import net.dean.jraw.pagination.DefaultPaginator;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.util.HashMap;
 import java.util.List;
+
+
 
 // Emilio comment
 // Magd comment
@@ -59,15 +66,35 @@ public class MainActivity extends AppCompatActivity {
             RedditClient reddit =  JRAW.init(MainActivity.this.getApplicationContext());
             DefaultPaginator<Submission>  page = reddit.frontPage().build();
             List<Submission> posts = page.next().getChildren();
+            HashMap<String, Drawable> thumbs = new HashMap<String, Drawable>(){};
+            for(Submission post: posts) {
+                if (post.hasThumbnail()) {
+                    if (post.getThumbnail().length()>10) { // filter out tags like self and nsfw
+                        Drawable d = null;
+                        Log.d("Jar: GET",post.getThumbnail());
+                        try {
+
+                            d = Drawable.createFromStream((InputStream) new URL(post.getUrl()).getContent(), "src");
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        thumbs.put(post.getThumbnail(), d);
+                    }
+                }
+            }
             runOnUiThread(()-> {
+
                 LinearLayout subBuilder = findViewById(R.id.submissionBuilder);
                 for(Submission post: posts) {
-                        PostView postView = new PostView(MainActivity.this);
-                        postView.setPost(post);
-
-                        subBuilder.addView(postView);
-
+                    PostView postView = new PostView(MainActivity.this);
+                    postView.setPost(post);
+                    if (post.hasThumbnail()) {
+                        postView.setThumbnail(thumbs.get(post.getThumbnail()));
                     }
+                    subBuilder.addView(postView);
+
+                }
 
                 testView.setText("Done");
             });

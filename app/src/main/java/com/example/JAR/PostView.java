@@ -1,6 +1,13 @@
 package com.example.JAR;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.media.Image;
+import android.media.ImageReader;
+import android.net.Uri;
+import android.provider.MediaStore;
+import android.util.Log;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -8,9 +15,13 @@ import com.example.JAR.databinding.ViewPostBinding;
 
 import net.dean.jraw.models.Submission;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+
 public class PostView extends LinearLayout {
     private TextView txtTitle;
-    private TextView txtSelftext;
+    private ImageView imgThumbnail;
     private TextView txtScore;
     private TextView txtComments;
     private ViewPostBinding binding;
@@ -28,7 +39,7 @@ public class PostView extends LinearLayout {
 
         binding = ViewPostBinding.bind(inflate(getContext(),R.layout.view_post,this));
         txtTitle = binding.postTitle;
-        txtSelftext = binding.postSelftext;
+        imgThumbnail = binding.postImage;
         txtScore = binding.textScore;
         txtComments = binding.textComments;
 
@@ -38,20 +49,28 @@ public class PostView extends LinearLayout {
     /**
      * Use this to set the data of the view
      * @param title posts title
-     * @param selftext post selftext
+     * @param uri thumbnail
      * @param score post score
      * @param comments number of comments
      */
-    public void setData(String title, String selftext, String score, String comments) {
+    public void setData(String title, String uri, String score, String comments) {
         this.txtTitle.setText(title);
-        this.txtSelftext.setText(selftext);
+
+//        if (post.hasThumbnail()) {
+//            Log.d("JAR img", uri);
+//        }
         this.txtScore.setText(score);
         this.txtComments.setText(comments);
     }
 
     public void setPost(Submission post) {
         this.post = post;
-        setData(post.getTitle(),post.getSelfText(),"" + post.getScore(),""+post.getCommentCount()); // TODO: 07/11/20 Check if needed
+        setData(post.getTitle(),post.getThumbnail(), String.valueOf(post.getScore()),""+post.getCommentCount());
+    }
+
+    public void setThumbnail(Drawable d) {
+        imgThumbnail.setImageDrawable(d);
+//        imgThumbnail.setMinimumWidth(LayoutParams.MATCH_PARENT);
     }
 
 }

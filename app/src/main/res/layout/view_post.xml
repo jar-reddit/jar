@@ -18,12 +18,10 @@
         android:textSize="24sp"
         android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/postSelftext"
-        android:textColor="#ffffff"
+    <ImageView
+        android:id="@+id/postImage"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="postBodyShort \n Hello World \n I don't know .." />
+        android:layout_height="wrap_content" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -47,7 +45,7 @@
             android:text="upvotes"
             android:textColor="#ffffff" />
 
-        <ImageView
+        <ImageButton
             android:id="@+id/imageView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -67,15 +65,15 @@
             android:layout_height="25dp"
             android:layout_weight="2" />
 
-        <ImageView
-            android:id="@+id/imageView3"
+        <ImageButton
+            android:id="@+id/postUpvoteButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:src="@drawable/ic_baseline_arrow_upward_24" />
 
-        <ImageView
-            android:id="@+id/imageView4"
+        <ImageButton
+            android:id="@+id/postDownvoteButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
