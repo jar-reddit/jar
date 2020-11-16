@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -95,6 +96,11 @@ public class MainActivity extends AppCompatActivity {
                     subBuilder.addView(postView);
 
                 }
+
+                // load more button
+                Button btnLoadMore =new Button(MainActivity.this);
+                btnLoadMore.setText(R.string.load_more);
+                subBuilder.addView(btnLoadMore);
 
                 testView.setText("Done");
             });
