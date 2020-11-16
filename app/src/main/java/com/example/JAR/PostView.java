@@ -73,4 +73,7 @@ public class PostView extends LinearLayout {
 //        imgThumbnail.setMinimumWidth(LayoutParams.MATCH_PARENT);
     }
 
+    public Submission getPost() {
+        return post;
+    }
 }
