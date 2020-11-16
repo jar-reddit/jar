@@ -25,7 +25,8 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
-
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 
 // Emilio comment
@@ -35,7 +36,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     public TextView testView;
     public ActivityMainBinding activityMainBinding;
-
+    static final ExecutorService testExecutor = Executors.newFixedThreadPool(4); // TODO: 16/11/20 How executors work?
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // TODO: 27/10/20 remove this policy  https://developer.android.com/reference/android/os/NetworkOnMainThreadException
@@ -68,39 +69,31 @@ public class MainActivity extends AppCompatActivity {
             DefaultPaginator<Submission>  page = reddit.frontPage().build();
             List<Submission> posts = page.next().getChildren();
             HashMap<String, Drawable> thumbs = new HashMap<String, Drawable>(){};
-            for(Submission post: posts) {
-                if (post.hasThumbnail()) {
-                    if (post.getThumbnail().length()>10) { // filter out tags like self and nsfw
-                        Drawable d = null;
-                        Log.d("Jar: GET",post.getThumbnail());
-                        try {
-
-                            d = Drawable.createFromStream((InputStream) new URL(post.getUrl()).getContent(), "src");
-
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        thumbs.put(post.getThumbnail(), d);
-                    }
-                }
-            }
             runOnUiThread(()-> {
 
                 LinearLayout subBuilder = findViewById(R.id.submissionBuilder);
                 for(Submission post: posts) {
                     PostView postView = new PostView(MainActivity.this);
                     postView.setPost(post);
-                    if (post.hasThumbnail()) {
-                        postView.setThumbnail(thumbs.get(post.getThumbnail()));
-                    }
                     subBuilder.addView(postView);
 
                 }
 
                 // load more button
+                int btnLocation = subBuilder.getChildCount();
                 Button btnLoadMore =new Button(MainActivity.this);
                 btnLoadMore.setText(R.string.load_more);
+                btnLoadMore.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        MainActivity.testExecutor.execute(()->{
+                            List<Submission> morePosts = page.next().getChildren();
+
+                        });
+                    }
+                });
                 subBuilder.addView(btnLoadMore);
+
 
                 testView.setText("Done");
             });

@@ -1,15 +1,21 @@
 package com.example.JAR;
 
 import android.content.Context;
+import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.media.ImageReader;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.example.JAR.databinding.ViewPostBinding;
 
@@ -26,6 +32,7 @@ public class PostView extends LinearLayout {
     private TextView txtComments;
     private ViewPostBinding binding;
     private Submission post;
+    private Drawable thumbnail;
 
     // https://medium.com/@Sserra90/android-writing-a-compound-view-1eacbf1957fc
     public PostView(Context context) {
@@ -69,11 +76,36 @@ public class PostView extends LinearLayout {
     }
 
     public void setThumbnail(Drawable d) {
-        imgThumbnail.setImageDrawable(d);
+        thumbnail=d;
 //        imgThumbnail.setMinimumWidth(LayoutParams.MATCH_PARENT);
     }
 
     public Submission getPost() {
         return post;
     }
+
+
+    @Override
+    protected void onVisibilityChanged(@NonNull View changedView, int visibility) {
+        super.onVisibilityChanged(changedView, visibility);
+        if (post.hasThumbnail()) {
+            MainActivity.testExecutor.execute(() -> {
+
+                Log.d("Jar: GET",post.getThumbnail());
+                try {
+
+                    thumbnail = Drawable.createFromStream((InputStream) new URL(post.getUrl()).getContent(), "src");
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                this.post(()->{
+                    imgThumbnail.setImageDrawable(thumbnail);
+                });
+            });
+        }
+
+    }
+
+
 }
