@@ -89,20 +89,24 @@ public class PostView extends LinearLayout {
     protected void onVisibilityChanged(@NonNull View changedView, int visibility) {
         super.onVisibilityChanged(changedView, visibility);
         if (post.hasThumbnail()) {
-            MainActivity.testExecutor.execute(() -> {
+            if (thumbnail==null) {
+                MainActivity.testExecutor.execute(() -> {
 
-                Log.d("Jar: GET",post.getThumbnail());
-                try {
+                    Log.d("Jar: GET", post.getThumbnail());
+                    try {
 
-                    thumbnail = Drawable.createFromStream((InputStream) new URL(post.getUrl()).getContent(), "src");
+                        thumbnail = Drawable.createFromStream((InputStream) new URL(post.getUrl()).getContent(), "src");
 
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                this.post(()->{
-                    imgThumbnail.setImageDrawable(thumbnail);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    this.post(() -> {
+                        imgThumbnail.setImageDrawable(thumbnail);
+                    });
                 });
-            });
+            } else {
+                imgThumbnail.setImageDrawable(thumbnail);
+            }
         }
 
     }

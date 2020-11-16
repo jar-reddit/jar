@@ -68,7 +68,6 @@ public class MainActivity extends AppCompatActivity {
             RedditClient reddit =  JRAW.init(MainActivity.this.getApplicationContext());
             DefaultPaginator<Submission>  page = reddit.frontPage().build();
             List<Submission> posts = page.next().getChildren();
-            HashMap<String, Drawable> thumbs = new HashMap<String, Drawable>(){};
             runOnUiThread(()-> {
 
                 LinearLayout subBuilder = findViewById(R.id.submissionBuilder);
@@ -80,20 +79,27 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 // load more button
-                int btnLocation = subBuilder.getChildCount();
                 Button btnLoadMore =new Button(MainActivity.this);
                 btnLoadMore.setText(R.string.load_more);
                 btnLoadMore.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        // TODO: 16/11/20 Find a better way then nested threads
+                        subBuilder.removeView(btnLoadMore);
                         MainActivity.testExecutor.execute(()->{
                             List<Submission> morePosts = page.next().getChildren();
-
+                            runOnUiThread(()->{
+                                for(Submission post: morePosts) {
+                                    PostView postView = new PostView(MainActivity.this);
+                                    postView.setPost(post);
+                                    subBuilder.addView(postView);
+                                }
+                                subBuilder.addView(btnLoadMore);
+                            });
                         });
                     }
                 });
                 subBuilder.addView(btnLoadMore);
-
 
                 testView.setText("Done");
             });
