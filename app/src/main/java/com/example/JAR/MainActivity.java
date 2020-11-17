@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -53,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
 
         activityMainBinding = ActivityMainBinding.inflate(getLayoutInflater());
         //activityMainBinding.postList.addView();
-
         DebugThread dt = new DebugThread();
         dt.start(); // delegate the task to the background
 
@@ -86,9 +86,13 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         // TODO: 16/11/20 Find a better way then nested threads
                         subBuilder.removeView(btnLoadMore);
+                        subBuilder.removeView(testView);
+                        testView.setText("Please wait");
+                        subBuilder.addView(testView);
                         MainActivity.testExecutor.execute(()->{
                             List<Submission> morePosts = page.next().getChildren();
                             runOnUiThread(()->{
+                                subBuilder.removeView(testView);
                                 for(Submission post: morePosts) {
                                     PostView postView = new PostView(MainActivity.this);
                                     postView.setPost(post);
@@ -96,12 +100,14 @@ public class MainActivity extends AppCompatActivity {
                                 }
                                 subBuilder.addView(btnLoadMore);
                             });
+
                         });
                     }
                 });
                 subBuilder.addView(btnLoadMore);
 
                 testView.setText("Done");
+                subBuilder.removeView(testView);
             });
         }
     }
