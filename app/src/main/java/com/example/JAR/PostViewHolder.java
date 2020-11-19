@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,10 +25,9 @@ public class PostViewHolder extends RecyclerView.ViewHolder {
         Log.d("JAR:PostViewHolder", "set the post for " +post.getId());
     }
 
-    public static PostViewHolder create(ViewGroup parent, Context context) {
-        // TODO: 19/11/20 What does this do? 
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.view_post, parent, false);
-        return new PostViewHolder(new PostView(context));
+    public static PostViewHolder create(ViewGroup parent) {
+        PostView view = new PostView(parent.getContext());
+        view.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        return new PostViewHolder(view);
     }
 }

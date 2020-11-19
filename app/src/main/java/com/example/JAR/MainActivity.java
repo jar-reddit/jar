@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
 
             runOnUiThread(()->{
                 RecyclerView postList = findViewById(R.id.postList);
-                postList.setAdapter(new PostAdapter(posts,this));
+                postList.setAdapter(new PostAdapter(posts));
                 postList.setLayoutManager(new LinearLayoutManager(this));
             });
         });
