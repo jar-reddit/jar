@@ -6,34 +6,24 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <ScrollView
-        android:id="@+id/scroll"
+    <LinearLayout
+        android:id="@+id/submissionBuilder"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <LinearLayout
-            android:id="@+id/submissionBuilder"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/postList"
             android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:listitem="@layout/view_post"></androidx.recyclerview.widget.RecyclerView>
+
+        <TextView
+            android:id="@+id/test_text"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            >
-
-            <ListView
-                android:id="@+id/postList"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:listitem="@layout/view_post" />
-
-            <TextView
-                android:id="@+id/test_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Hello World!" />
-        </LinearLayout>
-
-    </ScrollView>
-
+            android:text="Hello World!" />
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

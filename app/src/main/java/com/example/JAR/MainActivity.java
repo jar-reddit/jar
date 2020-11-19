@@ -1,6 +1,8 @@
 package com.example.JAR;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
 import android.graphics.Color;
@@ -53,9 +55,22 @@ public class MainActivity extends AppCompatActivity {
         Log.d("JAR for Reddit", "Lets get STARTED");
 
         activityMainBinding = ActivityMainBinding.inflate(getLayoutInflater());
-        //activityMainBinding.postList.addView();
+
+        testExecutor.execute(()->{
+            RedditClient reddit =  JRAW.init(MainActivity.this.getApplicationContext());
+            DefaultPaginator<Submission>  page = reddit.frontPage().build();
+            List<Submission> posts = page.next().getChildren();
+
+            runOnUiThread(()->{
+                RecyclerView postList = findViewById(R.id.postList);
+                postList.setAdapter(new PostAdapter(posts,this));
+                postList.setLayoutManager(new LinearLayoutManager(this));
+            });
+        });
+
+
         DebugThread dt = new DebugThread();
-        dt.start(); // delegate the task to the background
+//        dt.start(); // delegate the task to the background
 
     }
 
@@ -63,52 +78,55 @@ public class MainActivity extends AppCompatActivity {
         public DebugThread() {
         }
 
+
+
         @Override
         public void run() {
             RedditClient reddit =  JRAW.init(MainActivity.this.getApplicationContext());
             DefaultPaginator<Submission>  page = reddit.frontPage().build();
             List<Submission> posts = page.next().getChildren();
-            runOnUiThread(()-> {
 
-                LinearLayout subBuilder = findViewById(R.id.submissionBuilder);
-                for(Submission post: posts) {
-                    PostView postView = new PostView(MainActivity.this);
-                    postView.setPost(post);
-                    subBuilder.addView(postView);
-
-                }
-
-                // load more button
-                Button btnLoadMore =new Button(MainActivity.this);
-                btnLoadMore.setText(R.string.load_more);
-                btnLoadMore.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        // TODO: 16/11/20 Find a better way then nested threads
-                        subBuilder.removeView(btnLoadMore);
-                        subBuilder.removeView(testView);
-                        testView.setText("Please wait");
-                        subBuilder.addView(testView);
-                        MainActivity.testExecutor.execute(()->{
-                            List<Submission> morePosts = page.next().getChildren();
-                            runOnUiThread(()->{
-                                subBuilder.removeView(testView);
-                                for(Submission post: morePosts) {
-                                    PostView postView = new PostView(MainActivity.this);
-                                    postView.setPost(post);
-                                    subBuilder.addView(postView);
-                                }
-                                subBuilder.addView(btnLoadMore);
-                            });
-
-                        });
-                    }
-                });
-                subBuilder.addView(btnLoadMore);
-
-                testView.setText("Done");
-                subBuilder.removeView(testView);
-            });
+//            runOnUiThread(()-> {
+//
+//                LinearLayout subBuilder = findViewById(R.id.submissionBuilder);
+//                for(Submission post: posts) {
+//                    PostView postView = new PostView(MainActivity.this);
+//                    postView.setPost(post);
+//                    subBuilder.addView(postView);
+//
+//                }
+//
+//                // load more button
+//                Button btnLoadMore =new Button(MainActivity.this);
+//                btnLoadMore.setText(R.string.load_more);
+//                btnLoadMore.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        // TODO: 16/11/20 Find a better way then nested threads
+//                        subBuilder.removeView(btnLoadMore);
+//                        subBuilder.removeView(testView);
+//                        testView.setText("Please wait");
+//                        subBuilder.addView(testView);
+//                        MainActivity.testExecutor.execute(()->{
+//                            List<Submission> morePosts = page.next().getChildren();
+//                            runOnUiThread(()->{
+//                                subBuilder.removeView(testView);
+//                                for(Submission post: morePosts) {
+//                                    PostView postView = new PostView(MainActivity.this);
+//                                    postView.setPost(post);
+//                                    subBuilder.addView(postView);
+//                                }
+//                                subBuilder.addView(btnLoadMore);
+//                            });
+//
+//                        });
+//                    }
+//                });
+//                subBuilder.addView(btnLoadMore);
+//
+//                testView.setText("Done");
+//                subBuilder.removeView(testView);
+//            });
         }
     }
 
