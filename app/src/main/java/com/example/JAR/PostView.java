@@ -111,5 +111,12 @@ public class PostView extends LinearLayout {
 
     }
 
+    public void getComments()
+            // https://mattbdean.gitbooks.io/jraw/content/cookbook.html
+    {
+        
+
+    }
+
 
 }
