@@ -12,6 +12,7 @@ import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -39,6 +40,7 @@ import java.util.concurrent.Executors;
 public class MainActivity extends AppCompatActivity {
     public TextView testView;
     public ActivityMainBinding activityMainBinding;
+    public ImageView submissionImage;
     static final ExecutorService testExecutor = Executors.newFixedThreadPool(4); // TODO: 16/11/20 How executors work?
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
                 RecyclerView postList = findViewById(R.id.postList);
                 postList.setAdapter(new PostAdapter(posts));
                 postList.setLayoutManager(new LinearLayoutManager(this));
+                //postList.setOnClickListener(clickListener); possibly redundant
             });
         });
 
@@ -73,7 +76,10 @@ public class MainActivity extends AppCompatActivity {
 //        dt.start(); // delegate the task to the background
 
     }
-
+    public void onClick(View v)
+    {
+        Log.d("TEST CLICK", "Click Call Is Working On Image");
+    }
     public class DebugThread extends Thread {
         public DebugThread() {
         }
