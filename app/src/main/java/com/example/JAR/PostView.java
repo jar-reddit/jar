@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.media.ImageReader;
 import android.net.Uri;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -26,8 +27,8 @@ import net.dean.jraw.tree.RootCommentNode;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-
-public class PostView extends LinearLayout {
+// This is the code for a singular post
+public class PostView extends LinearLayout implements View.OnClickListener {
     private TextView txtTitle;
     private ImageView imgThumbnail;
     private TextView txtScore;
@@ -77,6 +78,10 @@ public class PostView extends LinearLayout {
         setData(post.getTitle(),post.getThumbnail(), String.valueOf(post.getScore()),""+post.getCommentCount());
     }
 
+    public void onClick(View v) {
+            Log.d("Test Click","Clicked Post");
+    }
+
     public void setThumbnail(Drawable d) {
         thumbnail=d;
 //        imgThumbnail.setMinimumWidth(LayoutParams.MATCH_PARENT);
@@ -104,6 +109,7 @@ public class PostView extends LinearLayout {
                     }
                     this.post(() -> {
                         imgThumbnail.setImageDrawable(thumbnail);
+                        imgThumbnail.setOnClickListener(this);
                     });
                 });
             } else {
@@ -112,6 +118,7 @@ public class PostView extends LinearLayout {
         }
 
     }
+
 
     /*public void getComments()
             // https://mattbdean.gitbooks.io/jraw/content/cookbook.html

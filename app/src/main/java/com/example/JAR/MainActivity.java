@@ -40,7 +40,6 @@ import java.util.concurrent.Executors;
 public class MainActivity extends AppCompatActivity {
     public TextView testView;
     public ActivityMainBinding activityMainBinding;
-    public ImageView submissionImage;
     static final ExecutorService testExecutor = Executors.newFixedThreadPool(4); // TODO: 16/11/20 How executors work?
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,15 +58,14 @@ public class MainActivity extends AppCompatActivity {
         activityMainBinding = ActivityMainBinding.inflate(getLayoutInflater());
 
         testExecutor.execute(()->{
-            RedditClient reddit =  JRAW.init(MainActivity.this.getApplicationContext());
-            DefaultPaginator<Submission>  page = reddit.frontPage().build();
-            List<Submission> posts = page.next().getChildren();
+            RedditClient reddit =  JRAW.init(MainActivity.this.getApplicationContext()); // Gets the client
+            DefaultPaginator<Submission>  page = reddit.frontPage().build(); // Gets The Front Page
+            List<Submission> posts = page.next().getChildren(); // This retrieves all the posts
 
             runOnUiThread(()->{
                 RecyclerView postList = findViewById(R.id.postList);
                 postList.setAdapter(new PostAdapter(posts));
                 postList.setLayoutManager(new LinearLayoutManager(this));
-                //postList.setOnClickListener(clickListener); possibly redundant
             });
         });
 
@@ -76,10 +74,7 @@ public class MainActivity extends AppCompatActivity {
 //        dt.start(); // delegate the task to the background
 
     }
-    public void onClick(View v)
-    {
-        Log.d("TEST CLICK", "Click Call Is Working On Image");
-    }
+
     public class DebugThread extends Thread {
         public DebugThread() {
         }
