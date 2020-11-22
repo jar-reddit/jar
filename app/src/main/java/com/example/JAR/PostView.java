@@ -79,6 +79,8 @@ public class PostView extends LinearLayout implements View.OnClickListener {
 
     public void setPost(Submission post) {
         this.post = post;
+        imgThumbnail.setOnClickListener(this);
+        txtTitle.setOnClickListener(this);
         setData(post.getTitle(),post.getThumbnail(), String.valueOf(post.getScore()),""+post.getCommentCount());
     }
 
@@ -114,7 +116,6 @@ public class PostView extends LinearLayout implements View.OnClickListener {
                     }
                     this.post(() -> {
                         imgThumbnail.setImageDrawable(thumbnail);
-                        imgThumbnail.setOnClickListener(this);
                     });
                 });
             } else {
@@ -123,20 +124,4 @@ public class PostView extends LinearLayout implements View.OnClickListener {
         }
 
     }
-
-
-    /*public void getComments()
-            // https://mattbdean.gitbooks.io/jraw/content/cookbook.html
-    {
-        RootCommentNode comment = redditClient.submission("need to find a way to pull the post id");
-        // This line is used to retrieve the comments from the post
-        Iterator<CommentNode<PublicContribution<?>>> it = root.walkTree().iterator();
-
-        while (it.hasNext()) {
-            PublicContribution<?> thing = it.next().getSubject();
-            System.out.println(thing.getBody());
-        }
-    }*/
-
-
 }
