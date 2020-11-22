@@ -1,5 +1,6 @@
 package com.example.JAR;
-
+// TODO: EE 22/11/2020 handling no results, limiting instances, returning failed dialog to user, adding subreddit specific functionality, superclass, commenting code
+import androidx.annotation.MainThread;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -9,8 +10,8 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Looper;
 import android.util.Log;
-import android.view.View;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,18 +20,20 @@ import com.example.JAR.databinding.ActivityMainBinding;
 
 import net.dean.jraw.RedditClient;
 import net.dean.jraw.models.Submission;
+import net.dean.jraw.models.SubredditSearchResult;
 import net.dean.jraw.pagination.DefaultPaginator;
+import net.dean.jraw.references.SubredditReference;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import static com.example.JAR.MainActivity.testExecutor;
 
-// Emilio comment
-// Magd comment
-// Murray Comment
-// Steve Comment
-public class MainActivity extends AppCompatActivity {
+public class SearchActivity extends AppCompatActivity {
+
+    List<SubredditSearchResult> results;
+    public String query;
     public TextView testView;
     public SearchView search;
     public ActivityMainBinding activityMainBinding;
@@ -41,11 +44,15 @@ public class MainActivity extends AppCompatActivity {
         // https://stackoverflow.com/a/9289190
 //        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 //        StrictMode.setThreadPolicy(policy);
-        
+
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_search);
         search = (SearchView) findViewById(R.id.searchView1);
 
+        Intent intent = getIntent();
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            query = intent.getStringExtra(SearchManager.QUERY);
+        }
 
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         search.setSearchableInfo(searchManager.getSearchableInfo(new ComponentName(this, SearchActivity.class)));
@@ -57,10 +64,12 @@ public class MainActivity extends AppCompatActivity {
 
         activityMainBinding = ActivityMainBinding.inflate(getLayoutInflater());
 
+        {
         testExecutor.execute(()->{
-            RedditClient reddit =  JRAW.init(MainActivity.this.getApplicationContext()); // Gets the client
-            DefaultPaginator<Submission>  page = reddit.frontPage().build(); // Gets The Front Page
-            List<Submission> posts = page.next().getChildren(); // This retrieves all the posts
+
+           RedditClient reddit =  JRAW.init(SearchActivity.this.getApplicationContext()); // Gets the client
+                DefaultPaginator<Submission> page = reddit.subreddit(checkSubreddit(query).get(0).getName()).posts().build();
+                List<Submission> posts = page.next().getChildren(); // This retrieves all the posts
 
             runOnUiThread(()->{
                 RecyclerView postList = findViewById(R.id.postList);
@@ -69,19 +78,18 @@ public class MainActivity extends AppCompatActivity {
             });
         });
 
-
         DebugThread dt = new DebugThread();
 //        dt.start(); // delegate the task to the background
 
     }
-
+}
     public class DebugThread extends Thread {
         public DebugThread() {
         }
 
         @Override
         public void run() {
-            RedditClient reddit =  JRAW.init(MainActivity.this.getApplicationContext());
+            RedditClient reddit =  JRAW.init(SearchActivity.this.getApplicationContext());
             DefaultPaginator<Submission>  page = reddit.frontPage().build();
             List<Submission> posts = page.next().getChildren();
 
@@ -134,4 +142,168 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public List<SubredditSearchResult> checkSubreddit(String query)
+    {
+       Toast.makeText(SearchActivity.this, "Not a valid subreddit", Toast.LENGTH_LONG).show();
+       RedditClient subSearch = JRAW.getInstance(getApplicationContext());
+       results = subSearch.searchSubredditsByName(query);
+       return results;
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   /* public String query;
+    public TextView x;
+
+    List<SubredditSearchResult> results;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_search);
+
+        *//*testExecutor.execute(()->{*//*
+
+        Intent intent = getIntent();
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            query = intent.getStringExtra(SearchManager.QUERY);
+            x = findViewById(R.id.queryResults);
+            x.setText(doMySearch(query).size());
+        }
+//        });
+    }
+
+    public List<SubredditSearchResult> doMySearch(String query)
+    {
+       RedditClient subSearch = JRAW.getInstance(getApplicationContext());
+       results = subSearch.searchSubredditsByName(query);
+       return results;
+    }*/
+
+
+//}

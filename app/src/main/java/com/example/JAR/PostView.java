@@ -87,6 +87,7 @@ public class PostView extends LinearLayout implements View.OnClickListener {
     public void onClick(View v) {
             Log.d("Test Click","Clicked Post");
             //startActivity(new Intent(MainActivity.this, submissionView.class));
+
     }
 
     public void setThumbnail(Drawable d) {
