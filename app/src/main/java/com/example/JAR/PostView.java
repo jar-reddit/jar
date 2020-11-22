@@ -1,6 +1,7 @@
 package com.example.JAR;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
@@ -27,6 +28,9 @@ import net.dean.jraw.tree.RootCommentNode;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+
+import static androidx.core.content.ContextCompat.startActivity;
+
 // This is the code for a singular post
 public class PostView extends LinearLayout implements View.OnClickListener {
     private TextView txtTitle;
@@ -80,6 +84,7 @@ public class PostView extends LinearLayout implements View.OnClickListener {
 
     public void onClick(View v) {
             Log.d("Test Click","Clicked Post");
+            //startActivity(new Intent(MainActivity.this, submissionView.class));
     }
 
     public void setThumbnail(Drawable d) {
