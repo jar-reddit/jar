@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         activityMainBinding = ActivityMainBinding.inflate(getLayoutInflater());
 
         testExecutor.execute(()->{
-            RedditClient reddit =  JRAW.init(MainActivity.this.getApplicationContext()); // Gets the client
+            RedditClient reddit =  JRAW.getInstance(this); // Gets the client
             DefaultPaginator<Submission>  page = reddit.frontPage().build(); // Gets The Front Page
             List<Submission> posts = page.next().getChildren(); // This retrieves all the posts
 
