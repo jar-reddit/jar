@@ -1,5 +1,6 @@
 package com.example.JAR;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -9,6 +10,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.text.Layout;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -40,6 +42,8 @@ import java.util.concurrent.Executors;
 public class MainActivity extends AppCompatActivity {
     public TextView testView;
     public ActivityMainBinding activityMainBinding;
+    private DefaultPaginator<Submission> page;
+    private boolean loadingPosts = false;
     static final ExecutorService testExecutor = Executors.newFixedThreadPool(4); // TODO: 16/11/20 How executors work?
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,17 +60,42 @@ public class MainActivity extends AppCompatActivity {
         Log.d("JAR for Reddit", "Lets get STARTED");
 
         activityMainBinding = ActivityMainBinding.inflate(getLayoutInflater());
-
+        List<Submission> allPosts = Listing.empty();
+        RecyclerView postList = findViewById(R.id.postList);
+        PostAdapter postAdapter = new PostAdapter(allPosts);
+        postList.setAdapter(postAdapter);
+        postList.setLayoutManager(new LinearLayoutManager(this));
         testExecutor.execute(()->{
+            loadingPosts =true;
             RedditClient reddit =  JRAW.getInstance(this); // Gets the client
-            DefaultPaginator<Submission>  page = reddit.frontPage().build(); // Gets The Front Page
+            page = reddit.frontPage().build(); // Gets The Front Page
             List<Submission> posts = page.next().getChildren(); // This retrieves all the posts
-
+            allPosts.addAll(posts);
+            loadingPosts=false;
+            Log.d("Jar","added posts");
             runOnUiThread(()->{
-                RecyclerView postList = findViewById(R.id.postList);
-                postList.setAdapter(new PostAdapter(posts));
-                postList.setLayoutManager(new LinearLayoutManager(this));
+                postAdapter.notifyDataSetChanged();
+
             });
+        });
+
+        postList.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (!recyclerView.canScrollVertically(1)&!loadingPosts) {
+                    testExecutor.execute(()->{
+                        loadingPosts=true;
+                        List<Submission> posts = page.next().getChildren(); // This retrieves all the posts
+                        allPosts.addAll(posts);
+                        loadingPosts=false;
+                        Log.d("Jar","added posts");
+                        runOnUiThread(()->{
+                            postAdapter.notifyDataSetChanged();
+                        });
+                    });
+                }
+            }
         });
     }
 }
