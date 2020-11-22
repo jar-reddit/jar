@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.JAR.databinding.ViewPostBinding;
 
@@ -32,7 +33,7 @@ import java.net.URL;
 import static androidx.core.content.ContextCompat.startActivity;
 
 // This is the code for a singular post
-public class PostView extends LinearLayout implements View.OnClickListener {
+public class PostView extends ConstraintLayout implements View.OnClickListener {
     private TextView txtTitle;
     private ImageView imgThumbnail;
     private TextView txtScore;
