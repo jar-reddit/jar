@@ -144,7 +144,6 @@ public class SearchActivity extends AppCompatActivity {
 
     public List<SubredditSearchResult> checkSubreddit(String query)
     {
-       Toast.makeText(SearchActivity.this, "Not a valid subreddit", Toast.LENGTH_LONG).show();
        RedditClient subSearch = JRAW.getInstance(getApplicationContext());
        results = subSearch.searchSubredditsByName(query);
        return results;
