@@ -7,8 +7,8 @@
 
     <TextView
         android:id="@+id/submissionTitle"
-        android:layout_width="265dp"
-        android:layout_height="35dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="postTitle"
@@ -17,8 +17,8 @@
 
     <TextView
         android:id="@+id/submissionUser"
-        android:layout_width="104dp"
-        android:layout_height="22dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:text="submissionUser"
         app:layout_constraintStart_toEndOf="@+id/userAvatar"
@@ -26,8 +26,8 @@
 
     <ImageView
         android:id="@+id/submissionImage"
-        android:layout_width="348dp"
-        android:layout_height="423dp"
+        android:layout_width="339dp"
+        android:layout_height="201dp"
         android:layout_marginStart="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/userAvatar"
@@ -35,17 +35,19 @@
 
     <Button
         android:id="@+id/Upvote"
-        android:layout_width="56dp"
-        android:layout_height="0dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginEnd="20dp"
         android:text="upvote"
+        app:layout_constraintEnd_toStartOf="@+id/submissionScore"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/submissionImage" />
 
     <ImageView
         android:id="@+id/userAvatar"
-        android:layout_width="30dp"
-        android:layout_height="33dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/submissionTitle"
@@ -53,24 +55,28 @@
 
     <TextView
         android:id="@+id/submissionScore"
-        android:layout_width="67dp"
-        android:layout_height="54dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
         android:text="#"
         app:layout_constraintStart_toEndOf="@+id/Upvote"
         app:layout_constraintTop_toBottomOf="@+id/submissionImage" />
 
     <Button
         android:id="@+id/downvote"
-        android:layout_width="57dp"
-        android:layout_height="53dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
         android:text="downvote"
+        app:layout_constraintEnd_toStartOf="@+id/commentScore"
         app:layout_constraintStart_toEndOf="@+id/submissionScore"
         app:layout_constraintTop_toBottomOf="@+id/submissionImage" />
 
     <TextView
         android:id="@+id/commentScore"
-        android:layout_width="170dp"
-        android:layout_height="51dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
         android:text="Comments"
         app:layout_constraintStart_toEndOf="@+id/downvote"
         app:layout_constraintTop_toBottomOf="@+id/submissionImage" />
