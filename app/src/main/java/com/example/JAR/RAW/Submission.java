@@ -5,7 +5,9 @@ import org.json.JSONObject;
 
 /**
  * Submission class is used for reddit submissions (posts)
+ * @Deprecated use the JRAW Submission
  */
+@Deprecated
 public class Submission extends Thing {
     private int ups; // upvotes
     private String title;
