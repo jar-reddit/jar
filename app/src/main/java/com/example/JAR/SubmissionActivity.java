@@ -21,6 +21,8 @@ public class SubmissionActivity extends AppCompatActivity {
     private TextView title;
     private ImageView image;
     private Drawable thumbnail;
+    private TextView score;
+    private TextView commentScore;
 
 
     public void onCreate(Bundle savedInstanceState)
@@ -42,8 +44,12 @@ public class SubmissionActivity extends AppCompatActivity {
     {
         TextView title = (TextView) findViewById(R.id.submissionTitle);
         ImageView image = (ImageView) findViewById(R.id.submissionImage);
+        TextView commentScore = (TextView) findViewById(R.id.commentScore);
         //image.setImageResource(R.drawable.post.getThumbnail());
         title.setText(post.getTitle()); // This sets the title of the post to the one retrieved from the post variable
+        TextView score = (TextView) findViewById(R.id.submissionScore);
+        score.setText(String.valueOf(post.getScore()));
+        commentScore.setText(""+post.getCommentCount());
        /* if (post.hasThumbnail()) {
             if (thumbnail==null) {
                 MainActivity.testExecutor.execute(() -> {
