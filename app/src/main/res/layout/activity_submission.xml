@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/submissionTitle"
         android:layout_width="265dp"
         android:layout_height="35dp"
         android:layout_marginStart="16dp"
@@ -16,62 +16,62 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView7"
+        android:id="@+id/submissionUser"
         android:layout_width="104dp"
         android:layout_height="22dp"
         android:layout_marginTop="4dp"
-        android:text="posterName"
-        app:layout_constraintStart_toEndOf="@+id/imageView7"
-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+        android:text="submissionUser"
+        app:layout_constraintStart_toEndOf="@+id/userAvatar"
+        app:layout_constraintTop_toBottomOf="@+id/submissionTitle" />
 
     <ImageView
-        android:id="@+id/imageView6"
+        android:id="@+id/submissionImage"
         android:layout_width="348dp"
         android:layout_height="423dp"
         android:layout_marginStart="16dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView7"
+        app:layout_constraintTop_toBottomOf="@+id/userAvatar"
         tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/Upvote"
         android:layout_width="56dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
         android:text="upvote"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView6" />
+        app:layout_constraintTop_toBottomOf="@+id/submissionImage" />
 
     <ImageView
-        android:id="@+id/imageView7"
+        android:id="@+id/userAvatar"
         android:layout_width="30dp"
         android:layout_height="33dp"
         android:layout_marginStart="16dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6"
+        app:layout_constraintTop_toBottomOf="@+id/submissionTitle"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/textView8"
+        android:id="@+id/submissionScore"
         android:layout_width="67dp"
         android:layout_height="54dp"
         android:text="#"
-        app:layout_constraintStart_toEndOf="@+id/button"
-        app:layout_constraintTop_toBottomOf="@+id/imageView6" />
+        app:layout_constraintStart_toEndOf="@+id/Upvote"
+        app:layout_constraintTop_toBottomOf="@+id/submissionImage" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/downvote"
         android:layout_width="57dp"
         android:layout_height="53dp"
         android:text="downvote"
-        app:layout_constraintStart_toEndOf="@+id/textView8"
-        app:layout_constraintTop_toBottomOf="@+id/imageView6" />
+        app:layout_constraintStart_toEndOf="@+id/submissionScore"
+        app:layout_constraintTop_toBottomOf="@+id/submissionImage" />
 
     <TextView
-        android:id="@+id/textView9"
+        android:id="@+id/commentScore"
         android:layout_width="170dp"
         android:layout_height="51dp"
         android:text="Comments"
-        app:layout_constraintStart_toEndOf="@+id/button2"
-        app:layout_constraintTop_toBottomOf="@+id/imageView6" />
+        app:layout_constraintStart_toEndOf="@+id/downvote"
+        app:layout_constraintTop_toBottomOf="@+id/submissionImage" />
 </androidx.constraintlayout.widget.ConstraintLayout>
