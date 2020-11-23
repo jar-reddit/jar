@@ -4,15 +4,24 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.JAR.RAW.Submission;
+
 public class SubmissionActivity extends AppCompatActivity {
+
+    private Submission post;
 
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_submission);
+
     }
 
-
+    private void getPost()
+    {
+        Bundle extras =getIntent().getExtras();
+        post = (Submission) extras.get("Post");
+    }
     /*public void getComments()
             // https://mattbdean.gitbooks.io/jraw/content/cookbook.html
     {
