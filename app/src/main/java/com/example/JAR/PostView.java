@@ -77,7 +77,7 @@ public class PostView extends ConstraintLayout implements View.OnClickListener {
             //getContext().startActivity(new Intent(getContext(), SubmissionActivity.class));
             Intent submissionIntent = new Intent(getContext(), SubmissionActivity.class);
             submissionIntent.putExtra("Post", this.post); // This should transfer the post to SubmissionActivity
-            //submissionIntent.putExtra("upvoteScore","100");
+            //submissionIntent.putExtra("title",post.txtTitle);
             //submissionIntent.putExtra("comments","1010");
             //submissionIntent.putExtra("image","image");
             getContext().startActivity(submissionIntent);
