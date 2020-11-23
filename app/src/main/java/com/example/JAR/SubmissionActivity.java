@@ -4,7 +4,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class submissionView extends AppCompatActivity {
+public class SubmissionActivity extends AppCompatActivity {
 
     public void onCreate(Bundle savedInstanceState)
     {

@@ -20,6 +20,10 @@
                 android:value=".SearchActivity" />
         </activity>
         <activity
+            android:name=".SubmissionActivity" >
+
+        </activity>
+        <activity
             android:name=".SearchActivity"
             android:launchMode="singleInstance">
             <meta-data android:name="android.app.searchable"

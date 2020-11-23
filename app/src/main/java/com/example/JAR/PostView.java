@@ -2,35 +2,22 @@ package com.example.JAR;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
-import android.media.Image;
-import android.media.ImageReader;
-import android.net.Uri;
-import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.JAR.databinding.ViewPostBinding;
 
-import net.dean.jraw.models.PublicContribution;
 import net.dean.jraw.models.Submission;
-import net.dean.jraw.tree.RootCommentNode;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-
-import static androidx.core.content.ContextCompat.startActivity;
 
 // This is the code for a singular post
 public class PostView extends ConstraintLayout implements View.OnClickListener {
@@ -87,8 +74,7 @@ public class PostView extends ConstraintLayout implements View.OnClickListener {
 
     public void onClick(View v) {
             Log.d("Test Click","Clicked Post");
-            //startActivity(new Intent(MainActivity.this, submissionView.class));
-
+            getContext().startActivity(new Intent(getContext(), SubmissionActivity.class));
     }
 
     public void setThumbnail(Drawable d) {
