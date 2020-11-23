@@ -16,6 +16,9 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.text.Layout;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.SearchView;
 import android.widget.Button;
@@ -45,6 +48,7 @@ import java.util.concurrent.Executors;
 // Steve Comment
 public class MainActivity extends AppCompatActivity {
     public TextView testView;
+    public MenuItem item;
     public SearchView search;
     private DefaultPaginator<Submission> page;
     private boolean loadingPosts = false;
@@ -60,10 +64,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        search = (SearchView) findViewById(R.id.searchView1);
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        search.setSearchableInfo(searchManager.getSearchableInfo(new ComponentName(this, SearchActivity.class)));
-        search.setQueryHint(getResources().getString(R.string.search_hint));
+//        search = (SearchView) findViewById(R.id.searchView1);
+//        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+//        search.setSearchableInfo(searchManager.getSearchableInfo(new ComponentName(this, SearchActivity.class)));
+//        search.setQueryHint(getResources().getString(R.string.search_hint));
 
         testView = findViewById(R.id.test_text);
         testView.setText("please wait");
@@ -75,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
         PostAdapter postAdapter = new PostAdapter(allPosts);
         postList.setAdapter(postAdapter);
         postList.setLayoutManager(new LinearLayoutManager(this));
+
         testExecutor.execute(()->{
             loadingPosts =true;
             RedditClient reddit =  JRAW.getInstance(this); // Gets the client
@@ -107,5 +112,19 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater mI = getMenuInflater();
+        mI.inflate(R.menu.manu_main, menu);
+        item = menu.findItem(R.id.action_search);
+        search = (SearchView) item.getActionView();
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        search.setSearchableInfo(searchManager.getSearchableInfo(new ComponentName(this, SearchActivity.class)));
+        search.setQueryHint(getResources().getString(R.string.search_hint));
+        return super.onCreateOptionsMenu(menu);
+    }
+
 }

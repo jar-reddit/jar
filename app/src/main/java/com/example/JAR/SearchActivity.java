@@ -12,6 +12,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Looper;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,6 +37,7 @@ public class SearchActivity extends AppCompatActivity {
 
     List<SubredditSearchResult> results;
     public String query;
+    public MenuItem item;
     public TextView testView;
     public SearchView search;
     public ActivityMainBinding activityMainBinding;
@@ -54,9 +58,9 @@ public class SearchActivity extends AppCompatActivity {
             query = intent.getStringExtra(SearchManager.QUERY);
         }
 
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        search.setSearchableInfo(searchManager.getSearchableInfo(new ComponentName(this, SearchActivity.class)));
-        search.setQueryHint(getResources().getString(R.string.search_hint));
+//        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+//        search.setSearchableInfo(searchManager.getSearchableInfo(new ComponentName(this, SearchActivity.class)));
+//        search.setQueryHint(getResources().getString(R.string.search_hint));
 
         testView = findViewById(R.id.test_text);
         testView.setText("please wait");
@@ -142,12 +146,31 @@ public class SearchActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater mI = getMenuInflater();
+        mI.inflate(R.menu.manu_main, menu);
+        item = menu.findItem(R.id.action_search);
+        search = (SearchView) item.getActionView();
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        search.setSearchableInfo(searchManager.getSearchableInfo(new ComponentName(this, SearchActivity.class)));
+        search.setQueryHint(getResources().getString(R.string.search_hint));
+        return super.onCreateOptionsMenu(menu);
+    }
+
+
     public List<SubredditSearchResult> checkSubreddit(String query)
     {
        RedditClient subSearch = JRAW.getInstance(getApplicationContext());
        results = subSearch.searchSubredditsByName(query);
        return results;
     }
+
+//    @Override
+//    public void onBackPressed() {
+//        finish();
+//        super.onBackPressed();
+//    }
 }
 
 
