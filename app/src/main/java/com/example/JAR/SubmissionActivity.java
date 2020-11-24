@@ -37,7 +37,6 @@ public class SubmissionActivity extends AppCompatActivity {
     {
         Bundle extras = getIntent().getExtras();
         post = (Submission) extras.get("Post");
-        //title = extras.get("title");
     }
 
     private void setContent()
@@ -50,10 +49,8 @@ public class SubmissionActivity extends AppCompatActivity {
         TextView score = (TextView) findViewById(R.id.submissionScore);
         score.setText(String.valueOf(post.getScore()));
         commentScore.setText(""+post.getCommentCount());
-       /* if (post.hasThumbnail()) {
+/*        if (post.hasThumbnail()) {
             if (thumbnail==null) {
-                MainActivity.testExecutor.execute(() -> {
-
                     Log.d("Jar: GET", post.getThumbnail());
                     try {
 
@@ -68,7 +65,7 @@ public class SubmissionActivity extends AppCompatActivity {
                     });
                 });
             } else {
-                imgThumbnail.setImageDrawable(thumbnail);
+                image.setImageDrawable(thumbnail);
             }
         }*/
 
