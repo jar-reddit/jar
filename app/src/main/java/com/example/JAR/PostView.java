@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.bumptech.glide.Glide;
 import com.example.JAR.databinding.ViewPostBinding;
 
 import net.dean.jraw.models.Submission;
@@ -69,6 +70,7 @@ public class PostView extends ConstraintLayout implements View.OnClickListener {
         this.post = post;
         imgThumbnail.setOnClickListener(this);
         txtTitle.setOnClickListener(this);
+        Glide.with(this).load(post.getUrl()).into(imgThumbnail);
         setData(post.getTitle(),post.getThumbnail(), String.valueOf(post.getScore()),""+post.getCommentCount());
     }
 
@@ -93,26 +95,26 @@ public class PostView extends ConstraintLayout implements View.OnClickListener {
     @Override
     protected void onVisibilityChanged(@NonNull View changedView, int visibility) {
         super.onVisibilityChanged(changedView, visibility);
-        if (post.hasThumbnail()) {
-            if (thumbnail==null) {
-                MainActivity.testExecutor.execute(() -> {
-
-                    Log.d("Jar: GET", post.getThumbnail());
-                    try {
-
-                        thumbnail = Drawable.createFromStream((InputStream) new URL(post.getUrl()).getContent(), "src");
-
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    this.post(() -> {
-                        imgThumbnail.setImageDrawable(thumbnail);
-                    });
-                });
-            } else {
-                imgThumbnail.setImageDrawable(thumbnail);
-            }
-        }
+//        if (post.hasThumbnail()) {
+//            if (thumbnail==null) {
+//                MainActivity.testExecutor.execute(() -> {
+//
+//                    Log.d("Jar: GET", post.getThumbnail());
+//                    try {
+//
+//                        thumbnail = Drawable.createFromStream((InputStream) new URL(post.getUrl()).getContent(), "src");
+//
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                    this.post(() -> {
+//                        imgThumbnail.setImageDrawable(thumbnail);
+//                    });
+//                });
+//            } else {
+//                imgThumbnail.setImageDrawable(thumbnail);
+//            }
+//        }
 
     }
 }
