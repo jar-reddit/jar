@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
+
 import net.dean.jraw.models.Submission;
 
 import java.io.IOException;
@@ -44,31 +46,11 @@ public class SubmissionActivity extends AppCompatActivity {
         TextView title = (TextView) findViewById(R.id.submissionTitle);
         ImageView image = (ImageView) findViewById(R.id.submissionImage);
         TextView commentScore = (TextView) findViewById(R.id.commentScore);
-        //image.setImageResource(R.drawable.post.getThumbnail());
+        Glide.with(this).load(post.getUrl()).into(image);
         title.setText(post.getTitle()); // This sets the title of the post to the one retrieved from the post variable
         TextView score = (TextView) findViewById(R.id.submissionScore);
         score.setText(String.valueOf(post.getScore()));
         commentScore.setText(""+post.getCommentCount());
-/*        if (post.hasThumbnail()) {
-            if (thumbnail==null) {
-                    Log.d("Jar: GET", post.getThumbnail());
-                    try {
-
-                        thumbnail = Drawable.createFromStream((InputStream) new URL(post.getUrl()).getContent(), "src");
-
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    this.post(() -> {
-                        //imgThumbnail.setImageDrawable(thumbnail);
-                        image.setImageDrawable(thumbnail);
-                    });
-                });
-            } else {
-                image.setImageDrawable(thumbnail);
-            }
-        }*/
-
     }
 
 
