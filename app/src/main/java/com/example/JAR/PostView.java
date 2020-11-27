@@ -1,7 +1,9 @@
 package com.example.JAR;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.View;
@@ -12,9 +14,11 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.JAR.databinding.ViewPostBinding;
 
 import net.dean.jraw.models.Submission;
+import net.dean.jraw.models.SubmissionPreview;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -68,10 +72,28 @@ public class PostView extends ConstraintLayout implements View.OnClickListener {
 
     public void setPost(Submission post) {
         this.post = post;
+        setData(post.getTitle(),post.getThumbnail(), String.valueOf(post.getScore()),""+post.getCommentCount());
         imgThumbnail.setOnClickListener(this);
         txtTitle.setOnClickListener(this);
-        Glide.with(this).load(post.getUrl()).into(imgThumbnail);
-        setData(post.getTitle(),post.getThumbnail(), String.valueOf(post.getScore()),""+post.getCommentCount());
+        String previewUrl = "";
+        if (post.hasThumbnail()) {
+            // fallback image
+            previewUrl = post.getThumbnail();
+        }
+        int largestWidth = 1080; // could be set from settings
+        if (post.getPreview()!=null/* && post.getPreview().isEnabled()*/) {
+            SubmissionPreview.ImageSet img = post.getPreview().getImages().get(0);
+            for (SubmissionPreview.Variation variation : img.getResolutions()) {
+
+                if (variation.getWidth() > largestWidth) {
+                    break;
+                }
+                previewUrl = variation.getUrl();
+            }
+
+        }
+        Glide.with(this).load(previewUrl).into(imgThumbnail);
+
     }
 
     public void onClick(View v) {
