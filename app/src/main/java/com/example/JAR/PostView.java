@@ -37,7 +37,7 @@ public class PostView extends ConstraintLayout implements View.OnClickListener {
     // https://medium.com/@Sserra90/android-writing-a-compound-view-1eacbf1957fc
     public PostView(Context context) {
         super(context);
-
+        this.setOnClickListener(this);
         init();
     }
 
@@ -73,8 +73,8 @@ public class PostView extends ConstraintLayout implements View.OnClickListener {
     public void setPost(Submission post) {
         this.post = post;
         setData(post.getTitle(),post.getThumbnail(), String.valueOf(post.getScore()),""+post.getCommentCount());
-        imgThumbnail.setOnClickListener(this);
-        txtTitle.setOnClickListener(this);
+//        imgThumbnail.setOnClickListener(this);
+//        txtTitle.setOnClickListener(this);
         String previewUrl = "";
         if (post.hasThumbnail()) {
             // fallback image
@@ -100,43 +100,10 @@ public class PostView extends ConstraintLayout implements View.OnClickListener {
             Log.d("Test Click","Clicked Post");
             Intent submissionIntent = new Intent(getContext(), SubmissionActivity.class);
             submissionIntent.putExtra("Post", this.post); // This should transfer the post to SubmissionActivity
-
             getContext().startActivity(submissionIntent);
-    }
-
-    public void setThumbnail(Drawable d) {
-        thumbnail=d;
-//        imgThumbnail.setMinimumWidth(LayoutParams.MATCH_PARENT);
     }
 
     public Submission getPost() {
         return post;
-    }
-
-
-    @Override
-    protected void onVisibilityChanged(@NonNull View changedView, int visibility) {
-        super.onVisibilityChanged(changedView, visibility);
-//        if (post.hasThumbnail()) {
-//            if (thumbnail==null) {
-//                MainActivity.testExecutor.execute(() -> {
-//
-//                    Log.d("Jar: GET", post.getThumbnail());
-//                    try {
-//
-//                        thumbnail = Drawable.createFromStream((InputStream) new URL(post.getUrl()).getContent(), "src");
-//
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
-//                    this.post(() -> {
-//                        imgThumbnail.setImageDrawable(thumbnail);
-//                    });
-//                });
-//            } else {
-//                imgThumbnail.setImageDrawable(thumbnail);
-//            }
-//        }
-
     }
 }
