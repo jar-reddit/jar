@@ -80,7 +80,7 @@
             tools:layout_editor_absoluteX="360dp"
             tools:layout_editor_absoluteY="294dp" />
 
-        <ImageView
+        <com.github.chrisbanes.photoview.PhotoView
             android:id="@+id/subImage"
             android:layout_width="407dp"
             android:layout_height="273dp"
