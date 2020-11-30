@@ -28,6 +28,10 @@
             android:name=".SubmissionActivity" >
 
         </activity>
+
+        <activity
+            android:name=".MediaActivity" >
+        </activity>
         <activity
             android:name=".SubredditActivity"
             >
