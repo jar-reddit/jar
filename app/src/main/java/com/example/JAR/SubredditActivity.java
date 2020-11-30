@@ -102,7 +102,7 @@ public class SubredditActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater mI = getMenuInflater();
-        mI.inflate(R.menu.manu_main, menu);
+        mI.inflate(R.menu.menu_main, menu);
         MenuItem item = menu.findItem(R.id.action_search);
         SearchView search = (SearchView) item.getActionView();
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
