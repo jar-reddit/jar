@@ -59,10 +59,10 @@ public class MainActivity extends SubredditActivity {
 //    public ActivityMainBinding activityMainBinding;
     static final ExecutorService testExecutor = Executors.newFixedThreadPool(4); // TODO: 16/11/20 How executors work?
 
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+//    @Override
+//    protected void onCreate(@Nullable Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//    }
 
 //    @Override
 //    protected void onCreate(Bundle savedInstanceState) {
@@ -158,16 +158,16 @@ public class MainActivity extends SubredditActivity {
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater mI = getMenuInflater();
-        mI.inflate(R.menu.manu_main, menu);
-        item = menu.findItem(R.id.action_search);
-        search = (SearchView) item.getActionView();
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        search.setSearchableInfo(searchManager.getSearchableInfo(new ComponentName(this, SearchActivity.class)));
-        search.setQueryHint(getResources().getString(R.string.search_hint));
-        return super.onCreateOptionsMenu(menu);
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        MenuInflater mI = getMenuInflater();
+//        mI.inflate(R.menu.manu_main, menu);
+//        item = menu.findItem(R.id.action_search);
+//        search = (SearchView) item.getActionView();
+//        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+//        search.setSearchableInfo(searchManager.getSearchableInfo(new ComponentName(this, SearchActivity.class)));
+//        search.setQueryHint(getResources().getString(R.string.search_hint));
+//        return super.onCreateOptionsMenu(menu);
+//    }
 
 }

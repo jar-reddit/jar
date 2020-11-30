@@ -1,7 +1,14 @@
 package com.example.JAR;
 
+import android.app.SearchManager;
+import android.content.ComponentName;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -73,5 +80,17 @@ public class SubredditActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater mI = getMenuInflater();
+        mI.inflate(R.menu.manu_main, menu);
+        MenuItem item = menu.findItem(R.id.action_search);
+        SearchView search = (SearchView) item.getActionView();
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        search.setSearchableInfo(searchManager.getSearchableInfo(new ComponentName(this, SearchActivity.class)));
+        search.setQueryHint(getResources().getString(R.string.search_hint));
+        return super.onCreateOptionsMenu(menu);
     }
 }
