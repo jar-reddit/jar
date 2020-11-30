@@ -22,15 +22,15 @@
             </intent-filter>
             <meta-data
                 android:name="android.app.default_searchable"
-                android:value=".SearchActivity" />
+                android:value=".SubredditActivity" />
         </activity>
         <activity
             android:name=".SubmissionActivity" >
 
         </activity>
         <activity
-            android:name=".SearchActivity"
-            android:launchMode="singleInstance">
+            android:name=".SubredditActivity"
+            >
             <meta-data android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
             <intent-filter>

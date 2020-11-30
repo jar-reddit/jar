@@ -52,12 +52,12 @@ import java.util.concurrent.Executors;
 // Steve Comment
 public class MainActivity extends SubredditActivity {
 //    public TextView testView;
-    public MenuItem item;
-    public SearchView search;
+//    public MenuItem item;
+//    public SearchView search;
 //    private DefaultPaginator<Submission> page;
 //    private boolean loadingPosts = false;
 //    public ActivityMainBinding activityMainBinding;
-    static final ExecutorService testExecutor = Executors.newFixedThreadPool(4); // TODO: 16/11/20 How executors work?
+//    static final ExecutorService testExecutor = Executors.newFixedThreadPool(4); // TODO: 16/11/20 How executors work?
 
 //    @Override
 //    protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -134,29 +134,29 @@ public class MainActivity extends SubredditActivity {
 //    }
 
 
-    //TODO: Figure out why same method doesn't work in settings class
-    public void defaultSettings() throws IOException{
-        try {
-
-            //TODO: This is test code - remove
-            FileOutputStream fos = null;
-            try {
-                fos = openFileOutput("settings.txt", MODE_PRIVATE);
-                //Example default settings
-                String l1 = "testing testing 1 2 3";
-                fos.write(l1.getBytes());
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } finally{
-                if(fos != null){
-                    fos.close();
-                }
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+//    //TODO: Figure out why same method doesn't work in settings class
+//    public void defaultSettings() throws IOException{
+//        try {
+//
+//            //TODO: This is test code - remove
+//            FileOutputStream fos = null;
+//            try {
+//                fos = openFileOutput("settings.txt", MODE_PRIVATE);
+//                //Example default settings
+//                String l1 = "testing testing 1 2 3";
+//                fos.write(l1.getBytes());
+//            } catch (FileNotFoundException e) {
+//                e.printStackTrace();
+//            } finally{
+//                if(fos != null){
+//                    fos.close();
+//                }
+//            }
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
 //    @Override
 //    public boolean onCreateOptionsMenu(Menu menu) {
