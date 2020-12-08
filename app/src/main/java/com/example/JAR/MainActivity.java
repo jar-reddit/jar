@@ -122,40 +122,6 @@ public class MainActivity extends SubredditActivity {
 //                }
 //            }
 //        });
-//
-//        //TODO: remove this test code
-//        //Settings s = new Settings();
-//        try {
-//            defaultSettings();
-//            Log.d("Settings:", "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
-
-//    //TODO: Figure out why same method doesn't work in settings class
-//    public void defaultSettings() throws IOException{
-//        try {
-//
-//            //TODO: This is test code - remove
-//            FileOutputStream fos = null;
-//            try {
-//                fos = openFileOutput("settings.txt", MODE_PRIVATE);
-//                //Example default settings
-//                String l1 = "testing testing 1 2 3";
-//                fos.write(l1.getBytes());
-//            } catch (FileNotFoundException e) {
-//                e.printStackTrace();
-//            } finally{
-//                if(fos != null){
-//                    fos.close();
-//                }
-//            }
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
 //    }
 
 //    @Override

@@ -1,91 +1,115 @@
 package com.example.JAR;
 
-import android.os.FileObserver;
-import android.util.Log;
+import android.content.Context;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.HashMap;
 
-//Need to figure out how we're formatting the settings file
 public class Settings extends AppCompatActivity {
     //Example settings as placeholders
-    File settings;
     private Boolean autoplay_video = false;
     private Boolean dark_mode = false;
     private Boolean allow_dms = true;
+    private Context context;
+    private HashMap<String, String> settings;
 
-    /***
-     *
-     */
-    public Settings(){
-        /*settings = new File("settings.txt");
-        if(settings.exists()){
-            readFile();
+    public Settings(Context context){
+        this.context = context;
+        settings = new HashMap<>();
+        File file = new File(context.getFilesDir(),"settings.txt");
+        if(file.exists()){
+            readSettings();
         }else{
-            try {
-                defaultSettings();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }*/
-    }
-
-    /***
-     *
-     */
-    public void writeFile(){
-        FileOutputStream fos = null;
-        try {
-            fos = openFileOutput("settings.txt", MODE_PRIVATE);
-
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            defaultSettings();
         }
     }
 
-    /**
-     * Gets information from existing settings.txt file and
-     * initialises the variables
+    /***
+     * Overwrite settings in setting.txt with current settings
      */
-    public void readFile(){
-
+    public void writeFile(){
+        try {
+            FileOutputStream fos = null;
+            try {
+                fos = context.openFileOutput("settings.txt", context.MODE_PRIVATE);
+                //Example user settings
+                String l1 = "autoplay:"+settings.get("autoplay")+'\n'+"darkmode:"+settings.get("darkmode")+'\n'+"allow_dms:"+settings.get("allow_dms");
+                fos.write(l1.getBytes());
+            }catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                if (fos != null) {
+                    fos.close();
+                }
+            }
+        }catch(IOException e){
+            e.printStackTrace();
+        }
     }
 
     /***
      * Set default settings when first using the app or
      * when resetting the settings through an option
      */
-    public void defaultSettings() throws IOException{
+    public void defaultSettings() {
         try {
-            //Delete existing settings file
-            /*if(settings.exists()){
-                settings.delete();
-            }*/
-
-            //TODO: This is test code - remove
-
-
-            //Create settings file and write default settings
+            settings.clear();
             FileOutputStream fos = null;
             try {
-                fos = openFileOutput("settings.txt", MODE_PRIVATE);
+                fos = context.openFileOutput("settings.txt", context.MODE_PRIVATE);
                 //Example default settings
-                String l1 = "testing testing 1 2 3";
+                String l1 = "autoplay:false"+'\n'+"darkmode:false"+'\n'+"allow_dms:true";
+                settings.put("autoplay","false");
+                settings.put("darkmode","false");
+                settings.put("allow_dms","true");
                 fos.write(l1.getBytes());
-            } catch (FileNotFoundException e) {
+            }catch (Exception e) {
                 e.printStackTrace();
-            } finally{
-                if(fos != null){
+            } finally {
+                if (fos != null) {
                     fos.close();
                 }
             }
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+    }
 
+    /**
+     * Gets information from existing settings.txt file and
+     * replaces their values in the settings map
+     */
+    public void readSettings() {
+        try {
+            FileInputStream fis = null;
+            try {
+                fis = context.openFileInput("settings.txt");
+                InputStreamReader reader = new InputStreamReader(fis);
+                BufferedReader br = new BufferedReader(reader);
+                String text = br.readLine();
+                String option = "";
+                String value = "";
+                while (text != null) {
+                    option = text.substring(0,text.indexOf(":"));
+                    value = text.substring(text.indexOf(":"), text.length());
+                    text = br.readLine();
+                    settings.replace(option, value);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally{
+                if(fis != null){
+                    fis.close();
+                }
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
