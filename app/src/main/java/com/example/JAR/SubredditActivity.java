@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -38,12 +39,13 @@ public class SubredditActivity extends AppCompatActivity {
     private List<Submission> allPosts;
     private boolean frontpage = true;
     private boolean isUri = false;
+    private Settings s;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
+        s = new Settings(this);
         binding = ActivitySubredditBinding.inflate(getLayoutInflater()); // Joining views to Java
         if (allPosts==null) {
             allPosts = Listing.empty(); // initialise an empty list
