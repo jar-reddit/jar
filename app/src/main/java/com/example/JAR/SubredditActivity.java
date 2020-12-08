@@ -61,25 +61,16 @@ public class SubredditActivity extends AppCompatActivity {
             query = intent.getStringExtra(SearchManager.QUERY);
             Log.d("JAR",query);
         } else if (Intent.ACTION_VIEW.equals(intent.getAction())) {
-            frontpage=false;
-            isUri = true;
+//            frontpage=false;
+//            isUri = true;
+            LinkHandler.openUri(intent.getData(),this);
+            return;
         }
 
         Background.execute(()->{
             loadingPosts =true;
             RedditClient reddit =  JRAW.getInstance(this); // Gets the client
-            if (isUri) {
-                Uri uri = intent.getData();
-                List<String> uriPath = uri.getPathSegments();
-
-                if (uriPath.get(0).equals("r")) {
-                    Log.d("JAR URL",uriPath.get(1));
-                    page = reddit.subreddit(uriPath.get(1)).posts().build();
-                } else {
-                    frontpage=true;
-                }
-
-            } else if (frontpage) {
+            if (frontpage) {
                 page = reddit.frontPage().build(); // Gets The Front Page
 
             } else if (intent.getStringExtra(SearchManager.QUERY) !=null) {
