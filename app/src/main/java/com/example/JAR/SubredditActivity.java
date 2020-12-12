@@ -39,12 +39,12 @@ public class SubredditActivity extends AppCompatActivity {
     private List<Submission> allPosts;
     private boolean frontpage = true;
     private boolean isUri = false;
+    private SearchView search;
     private Settings s;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         s = new Settings(this);
         binding = ActivitySubredditBinding.inflate(getLayoutInflater()); // Joining views to Java
         if (allPosts==null) {
@@ -75,24 +75,31 @@ public class SubredditActivity extends AppCompatActivity {
             if (frontpage) {
                 page = reddit.frontPage().build(); // Gets The Front Page
 
-            } else if (intent.getStringExtra(SearchManager.QUERY) !=null) {
-                String subreddit = checkSubreddit(intent.getStringExtra(SearchManager.QUERY)).get(0).getName();
-                page = reddit.subreddit(subreddit).posts().build();
-            }
-//            if (intent.getStringExtra(SearchManager.QUERY) !=null) {
-//                String subreddit = checkSubreddit(intent.getStringExtra(SearchManager.QUERY)).get(0).getName();
-//                page = reddit.subreddit(subreddit).posts().build();
-//            } else {
-//                page = reddit.frontPage().build(); // Gets The Front Page
-//            }
-            List<Submission> posts = page.next().getChildren(); // This retrieves all the posts
-            allPosts.addAll(posts);
-            loadingPosts=false;
-            Log.d("Jar","added posts");
-            runOnUiThread(()->{
-                postAdapter.notifyDataSetChanged();
+                List<Submission> posts = page.next().getChildren(); // This retrieves all the posts
+                allPosts.addAll(posts);
+                loadingPosts=false;
+                Log.d("Jar","added posts");
+                runOnUiThread(()->{
+                    postAdapter.notifyDataSetChanged();
 
-            });
+                });
+            } else if (intent.getStringExtra(SearchManager.QUERY) !=null) {
+                List<SubredditSearchResult> sub = checkSubreddit(intent.getStringExtra(SearchManager.QUERY));
+                if (sub.size() > 0) {
+                 page = reddit.subreddit(sub.get(0).getName()).posts().build();
+                List<Submission> posts = page.next().getChildren(); // This retrieves all the posts
+                allPosts.addAll(posts);
+                loadingPosts=false;
+                Log.d("Jar","added posts");
+                runOnUiThread(()->{
+                    postAdapter.notifyDataSetChanged();
+                });
+                }
+                else
+                {
+                    finish();
+                }
+            }
         });
 
         postList.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -120,10 +127,12 @@ public class SubredditActivity extends AppCompatActivity {
         MenuInflater mI = getMenuInflater();
         mI.inflate(R.menu.menu_main, menu);
         MenuItem item = menu.findItem(R.id.action_search);
-        SearchView search = (SearchView) item.getActionView();
+        search = (SearchView) item.getActionView();
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         search.setSearchableInfo(searchManager.getSearchableInfo(new ComponentName(this, this.getClass() )));
         search.setQueryHint(getResources().getString(R.string.search_hint));
+        search.setIconifiedByDefault(false);
+        search.requestFocus();
         return super.onCreateOptionsMenu(menu);
     }
 
