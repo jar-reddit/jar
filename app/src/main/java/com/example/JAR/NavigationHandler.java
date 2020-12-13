@@ -1,13 +1,12 @@
 package com.example.JAR;
 
-import android.app.Activity;
-import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 
 import net.dean.jraw.models.Submission;
+import net.dean.jraw.pagination.DefaultPaginator;
 
 import java.util.List;
 
@@ -23,12 +22,12 @@ public class NavigationHandler {
     public static void openUri(Uri uri, Context context) {
         List<String> uriPath = uri.getPathSegments();
         String subreddit;
-        if (uriPath.get(0).equals("r")) {
+        if (uriPath.size() >=2 && uriPath.get(0).equals("r")) {
             Log.d("JAR URL",uriPath.get(1));
             subreddit = uriPath.get(1);
             if (uriPath.size() >=4 && uriPath.get(2).equals("comments")) {
                 openSubmission(uriPath.get(3),context);
-                Intent submissionIntent = new Intent(context, SubmissionActivity.class);
+//                Intent submissionIntent = new Intent(context, SubmissionActivity.class);
 //                Background.execute(() -> {
 //                    Log.d("Post URL",uriPath.get(3));
 //                    Submission s = JRAW.getInstance(context).submission(uriPath.get(3)).inspect();
@@ -40,14 +39,16 @@ public class NavigationHandler {
 
 
             } else {
-                Intent subredditIntent = new Intent(context, SubredditActivity.class);
-                subredditIntent.setAction(Intent.ACTION_SEARCH);
-                subredditIntent.putExtra("query", subreddit);
-                context.startActivity(subredditIntent);
+                openSubreddit(subreddit,context);
+//                Intent subredditIntent = new Intent(context, SubredditActivity.class);
+//                subredditIntent.setAction(Intent.ACTION_SEARCH);
+//                subredditIntent.putExtra("query", subreddit);
+//                context.startActivity(subredditIntent);
             }
         } else {
-            Intent subredditIntent = new Intent(context, SubredditActivity.class);
-            context.startActivity(subredditIntent);
+            openFrontpage(context);
+//            Intent subredditIntent = new Intent(context, SubredditActivity.class);
+//            context.startActivity(subredditIntent);
         }
     }
 
@@ -75,5 +76,21 @@ public class NavigationHandler {
         Intent submissionIntent = new Intent(context, SubmissionActivity.class);
         submissionIntent.putExtra("Post",submission);
         context.startActivity(submissionIntent);
+    }
+
+    public static void openSubreddit(String subreddit, Context context) {
+        Intent subredditIntent = new Intent(context, SubredditActivity.class);
+        subredditIntent.setAction(Intent.ACTION_SEARCH);
+        subredditIntent.putExtra("query", subreddit);
+        context.startActivity(subredditIntent);
+//        Background.execute(()->{
+//            DefaultPaginator<Submission> page = JRAW.getInstance(context).subreddit(subreddit).posts().build();
+//
+//        });
+    }
+
+    public static void openFrontpage(Context context) {
+        Intent subredditIntent = new Intent(context, SubredditActivity.class);
+        context.startActivity(subredditIntent);
     }
 }
