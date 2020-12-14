@@ -4,6 +4,7 @@ import android.app.SearchManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Looper;
 import android.util.Log;
@@ -56,6 +57,7 @@ public class SubredditActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         s = new Settings(this);
         binding = ActivitySubredditBinding.inflate(getLayoutInflater()); // Joining views to Java
         if (allPosts == null) {
@@ -82,7 +84,7 @@ public class SubredditActivity extends AppCompatActivity {
         } else if (Intent.ACTION_VIEW.equals(intent.getAction())) {
 //            frontpage=false;
 //            isUri = true;
-            LinkHandler.openUri(intent.getData(), this);
+            NavigationHandler.openUri(intent.getData(),this);
             return;
         }
 

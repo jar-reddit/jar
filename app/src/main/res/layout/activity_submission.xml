@@ -1,88 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000">
-
-    <TextView
-        android:id="@+id/submissionTitle"
+    >
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:textColor="#ffffff"
-        android:text="postTitle"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent"
+        android:background="#000000">
 
-    <TextView
-        android:id="@+id/submissionUser"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:text="submissionUser"
-        android:textColor="#ffffff"
-        app:layout_constraintStart_toEndOf="@+id/userAvatar"
-        app:layout_constraintTop_toBottomOf="@+id/submissionTitle" />
 
-    <ImageView
-        android:id="@+id/submissionImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userAvatar"
-        tools:srcCompat="@tools:sample/backgrounds/scenic" />
+        <TextView
+            android:id="@+id/submissionTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:textColor="#ffffff"
+            android:text="postTitle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/Upvote"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="20dp"
-        android:text="upvote"
-        app:layout_constraintEnd_toStartOf="@+id/submissionScore"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/submissionImage" />
+        <TextView
+            android:id="@+id/submissionUser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="submissionUser"
+            android:textColor="#ffffff"
+            app:layout_constraintStart_toEndOf="@+id/userAvatar"
+            app:layout_constraintTop_toBottomOf="@+id/submissionTitle" />
 
-    <ImageView
-        android:id="@+id/userAvatar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/submissionTitle"
-        tools:srcCompat="@tools:sample/avatars" />
+        <ImageView
+            android:id="@+id/submissionImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/userAvatar"
+            tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
-    <TextView
-        android:id="@+id/submissionScore"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:textColor="#ffffff"
-        android:text="#"
-        app:layout_constraintStart_toEndOf="@+id/Upvote"
-        app:layout_constraintTop_toBottomOf="@+id/submissionImage" />
+        <Button
+            android:id="@+id/Upvote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="20dp"
+            android:text="upvote"
+            app:layout_constraintEnd_toStartOf="@+id/submissionScore"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/submissionImage" />
 
-    <Button
-        android:id="@+id/downvote"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:text="downvote"
-        app:layout_constraintEnd_toStartOf="@+id/commentScore"
-        app:layout_constraintStart_toEndOf="@+id/submissionScore"
-        app:layout_constraintTop_toBottomOf="@+id/submissionImage" />
+        <ImageView
+            android:id="@+id/userAvatar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/submissionTitle"
+            tools:srcCompat="@tools:sample/avatars" />
 
-    <TextView
-        android:id="@+id/commentScore"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:textColor="#ffffff"
-        android:text="Comments"
-        app:layout_constraintStart_toEndOf="@+id/downvote"
-        app:layout_constraintTop_toBottomOf="@+id/submissionImage" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/submissionScore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:textColor="#ffffff"
+            android:text="#"
+            app:layout_constraintStart_toEndOf="@+id/Upvote"
+            app:layout_constraintTop_toBottomOf="@+id/submissionImage" />
+
+        <Button
+            android:id="@+id/downvote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:text="downvote"
+            app:layout_constraintEnd_toStartOf="@+id/commentScore"
+            app:layout_constraintStart_toEndOf="@+id/submissionScore"
+            app:layout_constraintTop_toBottomOf="@+id/submissionImage" />
+
+        <TextView
+            android:id="@+id/commentScore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:textColor="#ffffff"
+            android:text="Comments"
+            app:layout_constraintStart_toEndOf="@+id/downvote"
+            app:layout_constraintTop_toBottomOf="@+id/submissionImage" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
