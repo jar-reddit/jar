@@ -83,8 +83,6 @@ public class SubredditActivity extends AppCompatActivity {
             query = intent.getStringExtra(SearchManager.QUERY);
             Log.d("JAR", query);
         } else if (Intent.ACTION_VIEW.equals(intent.getAction())) {
-//            frontpage=false;
-//            isUri = true;
             NavigationHandler.openUri(intent.getData(),this);
             return;
         }
@@ -95,29 +93,24 @@ public class SubredditActivity extends AppCompatActivity {
             if (frontpage) {
                 page = reddit.frontPage().build(); // Gets The Front Page
 
-                List<Submission> posts = page.next().getChildren(); // This retrieves all the posts
-                allPosts.addAll(posts);
-                loadingPosts = false;
-                Log.d("Jar", "added posts");
-                runOnUiThread(() -> {
-                    postAdapter.notifyDataSetChanged();
 
-                });
             } else if (intent.getStringExtra(SearchManager.QUERY) != null) {
                 List<SubredditSearchResult> sub = checkSubreddit(intent.getStringExtra(SearchManager.QUERY));
                 if (sub.size() > 0) {
                     page = reddit.subreddit(sub.get(0).getName()).posts().build();
-                    List<Submission> posts = page.next().getChildren(); // This retrieves all the posts
-                    allPosts.addAll(posts);
-                    loadingPosts = false;
-                    Log.d("Jar", "added posts");
-                    runOnUiThread(() -> {
-                        postAdapter.notifyDataSetChanged();
-                    });
                 } else {
                     finish();
                 }
             }
+
+            List<Submission> posts = page.next().getChildren(); // This retrieves all the posts
+            allPosts.addAll(posts);
+            loadingPosts = false;
+            Log.d("Jar", "added posts");
+            runOnUiThread(() -> {
+                postAdapter.notifyDataSetChanged();
+
+            });
         });
 
         postList.addOnScrollListener(new RecyclerView.OnScrollListener() {
