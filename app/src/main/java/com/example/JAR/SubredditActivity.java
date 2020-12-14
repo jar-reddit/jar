@@ -166,20 +166,24 @@ public class SubredditActivity extends AppCompatActivity {
                     {
                         RedditClient subSub = JRAW.getInstance(getApplicationContext());
                         if (query.length() > 0) {
-                            List<SubredditSearchResult> x = subSub.searchSubredditsByName(query);
-                            if (x.size() > 0) {
-                                for (int i = 0; i < x.size(); i++) {
-                                    suggestionList.add(x.get(i).getName());
+                            List<SubredditSearchResult> subSuggestList = subSub.searchSubredditsByName(query);
+                            suggestionList.clear();
+                            if (subSuggestList.size() > 0 ) {
+                                for (int i = 0; i < subSuggestList.size(); i++) {
+                                    suggestionList.add(subSuggestList.get(i).getName());
                                 }
                             }
-                            suggestionList = suggestionList.stream().distinct().collect(Collectors.toList());
                             searchSuggestions.setTextFilterEnabled(true);
                             Looper lx = getMainLooper();
                             if (Looper.myLooper() == null) {
                                 lx.prepare();
                             }
                         } else {
-                            suggestionList.clear();
+                            runOnUiThread(() -> {
+                                suggestionList.clear();
+                                searchSuggestions.setVisibility(View.INVISIBLE);
+                                postList.setVisibility(View.VISIBLE);
+                            });
                         }
                     });
                     suggestionAdapter.getFilter().filter((query));
@@ -189,7 +193,7 @@ public class SubredditActivity extends AppCompatActivity {
                 searchSuggestions.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int listPos, long l) {
-                        Toast.makeText(getApplicationContext(), "Listview clicked " + suggestionList.get(listPos), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Listview clicked " + suggestionAdapter.getItem(listPos), Toast.LENGTH_SHORT).show();
                         // Open selected subreddit
                     }
                 });
