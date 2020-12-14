@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -141,6 +142,7 @@ public class SubredditActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+
         MenuInflater mI = getMenuInflater();
         mI.inflate(R.menu.menu_main, menu);
         MenuItem item = menu.findItem(R.id.action_search);
@@ -150,6 +152,13 @@ public class SubredditActivity extends AppCompatActivity {
         search.setQueryHint(getResources().getString(R.string.search_hint));
         search.setIconifiedByDefault(false);
         search.requestFocus();
+
+        Intent intent = getIntent();
+        if (intent.getStringExtra("query") != null) {
+            String message = "r/" + intent.getStringExtra("query");
+            ActionBar aB = getSupportActionBar();
+            aB.setTitle(message);
+        }
 
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
