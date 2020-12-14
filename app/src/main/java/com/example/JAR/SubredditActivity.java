@@ -195,8 +195,10 @@ public class SubredditActivity extends AppCompatActivity {
                 searchSuggestions.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int listPos, long l) {
-                        Toast.makeText(getApplicationContext(), "Listview clicked " + suggestionAdapter.getItem(listPos), Toast.LENGTH_SHORT).show();
-                        // Open selected subreddit
+                        NavigationHandler.openSubreddit(suggestionAdapter.getItem(listPos), getApplicationContext());
+
+//                        Toast.makeText(getApplicationContext(), "Listview clicked " + suggestionAdapter.getItem(listPos), Toast.LENGTH_SHORT).show();
+//                        // Open selected subreddit
                     }
                 });
                 return true;
