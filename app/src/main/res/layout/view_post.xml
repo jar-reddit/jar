@@ -5,7 +5,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000"
+    android:background="@android:color/white"
+    android:layout_margin="10dp"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <TextView
@@ -14,7 +15,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif"
         android:text="postTitle"
-        android:textColor="#ffffff"
+        android:textColor="@android:color/black"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,7 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:src="@drawable/ic_baseline_arrow_upward_24"
-        android:textColor="#ffffff"
+        app:tint="@android:color/black"
         app:layout_constraintTop_toTopOf="@id/commentsIcon"
         app:layout_constraintBottom_toBottomOf="@id/commentsIcon"
         app:layout_constraintStart_toStartOf="parent" />
@@ -46,7 +47,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="upvotes"
-        android:textColor="#ffffff"
+        android:textColor="@android:color/black"
         app:layout_constraintTop_toTopOf="@id/commentsIcon"
         app:layout_constraintBottom_toBottomOf="@id/commentsIcon"
         app:layout_constraintStart_toEndOf="@id/scoreIcon"
@@ -58,12 +59,13 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:src="@drawable/ic_baseline_comment_24"
+        app:tint="@android:color/black"
         app:layout_constraintTop_toBottomOf="@id/postImage"
         app:layout_constraintStart_toEndOf="@id/textScore"/>
 
     <TextView
         android:id="@+id/textComments"
-        android:textColor="#ffffff"
+        android:textColor="@android:color/black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -78,6 +80,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:src="@drawable/ic_baseline_arrow_upward_24"
+        app:tint="@android:color/holo_orange_light"
         app:layout_constraintEnd_toStartOf="@id/postDownvoteButton"
         app:layout_constraintTop_toBottomOf="@id/postImage"
         />
@@ -87,7 +90,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+
         android:src="@drawable/ic_baseline_arrow_downward_24"
+        app:tint="@android:color/holo_blue_light"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/postImage"/>
 
