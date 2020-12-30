@@ -93,4 +93,9 @@ public class NavigationHandler {
         Intent subredditIntent = new Intent(context, SubredditActivity.class);
         context.startActivity(subredditIntent);
     }
+
+    public static void openWebSearch(Context context, String query, String searchEngine) {
+        Intent searchIntent = new Intent(context, SearchActivity.class);
+        context.startActivity(searchIntent);
+    }
 }

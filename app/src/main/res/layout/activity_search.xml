@@ -10,13 +10,17 @@
         <SearchView
             android:id="@+id/searchView1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/postList"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            android:commitIcon="@android:drawable/ic_menu_send"
+            />
+        <WebView
+            android:id="@+id/search_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:listitem="@layout/view_post"></androidx.recyclerview.widget.RecyclerView>
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/searchView1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
 
 
 

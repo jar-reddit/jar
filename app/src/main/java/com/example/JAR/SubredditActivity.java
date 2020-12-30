@@ -4,7 +4,6 @@ import android.app.SearchManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Looper;
 import android.util.Log;
@@ -16,7 +15,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -33,9 +31,10 @@ import net.dean.jraw.models.Submission;
 import net.dean.jraw.models.SubredditSearchResult;
 import net.dean.jraw.pagination.DefaultPaginator;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Super class for any subreddit activity
@@ -46,9 +45,6 @@ public class SubredditActivity extends AppCompatActivity {
     public ActivitySubredditBinding binding;
     private List<Submission> allPosts;
     private boolean frontpage = true;
-    private boolean isUri = false;
-    private SearchView search;
-    private Settings s;
     private ListView searchSuggestions;
     RecyclerView postList;
     List<String> suggestionList = new ArrayList<>();
@@ -59,7 +55,8 @@ public class SubredditActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        s = new Settings(this);
+        Settings s = new Settings(this);
+        s.readSettings();
         binding = ActivitySubredditBinding.inflate(getLayoutInflater()); // Joining views to Java
         if (allPosts == null) {
             allPosts = Listing.empty(); // initialise an empty list
@@ -69,6 +66,8 @@ public class SubredditActivity extends AppCompatActivity {
         postList.setAdapter(postAdapter);
         postList.setLayoutManager(new LinearLayoutManager(this));
         setContentView(binding.getRoot()); // set the layout
+
+
 
         searchSuggestions = (ListView) findViewById(R.id.listview);
 
@@ -139,7 +138,7 @@ public class SubredditActivity extends AppCompatActivity {
         MenuInflater mI = getMenuInflater();
         mI.inflate(R.menu.menu_main, menu);
         MenuItem item = menu.findItem(R.id.action_search);
-        search = (SearchView) item.getActionView();
+        SearchView search = (SearchView) item.getActionView();
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         search.setSearchableInfo(searchManager.getSearchableInfo(new ComponentName(this, this.getClass())));
         search.setQueryHint(getResources().getString(R.string.search_hint));
@@ -207,6 +206,22 @@ public class SubredditActivity extends AppCompatActivity {
             }
         });
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull @NotNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.web_search:
+                Log.d("JAR Menu click","web search");
+                NavigationHandler.openWebSearch(this, "Nothing","Google");
+                return true;
+            case R.id.action_search:
+                Log.d("JAR Menu click","Action search");
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
     }
 
     public List<SubredditSearchResult> checkSubreddit(String query) {

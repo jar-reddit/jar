@@ -7,4 +7,8 @@
         android:title="@string/app_name"
         app:actionViewClass="android.widget.SearchView"
         app:showAsAction="ifRoom|collapseActionView" />
+    <item
+        android:id="@+id/web_search"
+        android:title="Reddit search"
+        />
 </menu>
