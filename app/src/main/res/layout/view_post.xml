@@ -81,6 +81,7 @@
         android:layout_weight="1"
         android:src="@drawable/ic_baseline_arrow_upward_24"
         app:tint="@android:color/holo_orange_light"
+        android:backgroundTint="@android:color/black"
         app:layout_constraintEnd_toStartOf="@id/postDownvoteButton"
         app:layout_constraintTop_toBottomOf="@id/postImage"
         />
@@ -90,7 +91,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-
+        android:backgroundTint="@android:color/black"
         android:src="@drawable/ic_baseline_arrow_downward_24"
         app:tint="@android:color/holo_blue_light"
         app:layout_constraintEnd_toEndOf="parent"

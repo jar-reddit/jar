@@ -5,15 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:background="#000000">
-
+    android:background="@android:color/white">
+    <!--TODO: fix this layout -->
     <TextView
         android:id="@+id/textView10"
         android:layout_width="410dp"
         android:layout_height="19dp"
         android:gravity="center"
         android:text="postTitle"
-        android:textColor="#FFFFFF"
+        android:textColor="@android:color/black"
         tools:layout_editor_absoluteX="-2dp"
         tools:layout_editor_absoluteY="-2dp" />
 
@@ -39,7 +39,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="subReddit"
-        android:textColor="#FFFFFF"
+        android:textColor="@android:color/black"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="294dp" />
 
@@ -48,7 +48,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Poster"
-        android:textColor="#FFFFFF"
+        android:textColor="@android:color/black"
         tools:layout_editor_absoluteX="83dp"
         tools:layout_editor_absoluteY="294dp" />
 
@@ -57,7 +57,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Score"
-        android:textColor="#FFFFFF"
+        android:textColor="@android:color/black"
         tools:layout_editor_absoluteX="146dp"
         tools:layout_editor_absoluteY="294dp" />
 
@@ -76,23 +76,27 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Comments"
-        android:textColor="#FFFFFF"
+        android:textColor="@android:color/black"
         tools:layout_editor_absoluteX="206dp"
         tools:layout_editor_absoluteY="294dp" />
 
-    <ImageView
+    <ImageButton
         android:id="@+id/imageView10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@android:drawable/stat_sys_download_done"
+        android:backgroundTint="@android:color/black"
+        android:src="@drawable/ic_baseline_arrow_downward_24"
+        app:tint="@android:color/holo_blue_light"
         tools:layout_editor_absoluteX="384dp"
         tools:layout_editor_absoluteY="294dp" />
 
-    <ImageView
+    <ImageButton
         android:id="@+id/imageView11"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@android:drawable/stat_sys_upload_done"
+        android:src="@drawable/ic_baseline_arrow_upward_24"
+        app:tint="@android:color/holo_orange_light"
+        android:backgroundTint="@android:color/black"
         tools:layout_editor_absoluteX="360dp"
         tools:layout_editor_absoluteY="294dp" />
 

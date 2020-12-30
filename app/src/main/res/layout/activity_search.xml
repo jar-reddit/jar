@@ -6,11 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <LinearLayout
-        android:id="@+id/submissionBuilder"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
 
         <SearchView
             android:id="@+id/searchView1"
@@ -23,12 +18,6 @@
             android:layout_height="match_parent"
             tools:listitem="@layout/view_post"></androidx.recyclerview.widget.RecyclerView>
 
-        <TextView
-            android:id="@+id/test_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Hello World!" />
-    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

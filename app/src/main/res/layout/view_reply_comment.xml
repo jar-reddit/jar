@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000">
+    android:background="@android:color/white">
 
     <Button
         android:id="@+id/button5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="submit"
-        android:textColor="#000000"
+        android:textColor="@android:color/black"
         tools:layout_editor_absoluteX="321dp"
         tools:layout_editor_absoluteY="296dp" />
 
@@ -21,7 +21,7 @@
         android:layout_height="23dp"
         android:gravity="center"
         android:text="Reply to comment"
-        android:textColor="#FFFFFF"
+        android:textColor="@android:color/black"
         tools:layout_editor_absoluteX="-1dp"
         tools:layout_editor_absoluteY="2dp" />
 
@@ -31,7 +31,7 @@
         android:layout_height="121dp"
         android:gravity="center"
         android:text="origiinal comment"
-        android:textColor="#FFFFFF"
+        android:textColor="@android:color/black"
         tools:layout_editor_absoluteX="1dp"
         tools:layout_editor_absoluteY="41dp" />
 
@@ -40,7 +40,7 @@
         android:layout_width="409dp"
         android:layout_height="92dp"
         android:text="reply"
-        android:textColor="#FFFFFF"
+        android:textColor="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:layout_editor_absoluteY="204dp" />
@@ -51,7 +51,7 @@
         android:layout_height="41dp"
         android:gravity="center|center_horizontal"
         android:text="Reply options (drafts, bold, italics, upload image)"
-        android:textColor="#FFFFFF"
+        android:textColor="@android:color/black"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="163dp" />
 
@@ -60,7 +60,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="preview"
-        android:textColor="#000000"
+        android:textColor="@android:color/black"
         tools:layout_editor_absoluteX="205dp"
         tools:layout_editor_absoluteY="296dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

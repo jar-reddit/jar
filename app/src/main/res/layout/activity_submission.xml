@@ -8,14 +8,14 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#000000">
+        android:background="@android:color/white">
 
 
         <TextView
             android:id="@+id/submissionTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="#ffffff"
+            android:textColor="@android:color/black"
             android:textSize="24sp"
             android:textStyle="bold"
             android:text="postTitle"
@@ -34,7 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="submissionUser"
-            android:textColor="#ffffff"
+            android:textColor="@android:color/black"
             app:layout_constraintStart_toEndOf="@id/userAvatar"
             app:layout_constraintTop_toTopOf="@id/userAvatar"
             app:layout_constraintBottom_toBottomOf="@id/userAvatar"
@@ -54,6 +54,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_baseline_arrow_upward_24"
+            app:tint="@android:color/holo_orange_light"
+            android:backgroundTint="@android:color/black"
             app:layout_constraintTop_toBottomOf="@id/userAvatar"
             app:layout_constraintEnd_toStartOf="@id/submissionScore"
             />
@@ -70,7 +72,7 @@
             android:id="@+id/submissionScore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#ffffff"
+            android:textColor="@android:color/black"
             android:text="#"
             app:layout_constraintEnd_toStartOf="@id/downvote"
             app:layout_constraintTop_toTopOf="@id/downvote"
@@ -82,6 +84,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_baseline_arrow_downward_24"
+            app:tint="@android:color/holo_blue_light"
+            android:backgroundTint="@android:color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/userAvatar"
             />
@@ -100,7 +104,7 @@
             android:id="@+id/commentScore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#ffffff"
+            android:textColor="@android:color/black"
             android:text="Comments"
             app:layout_constraintTop_toTopOf="@id/downvote"
             app:layout_constraintBottom_toBottomOf="@id/downvote"
