@@ -16,6 +16,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.JAR.databinding.ViewPostBinding;
+import com.google.android.material.card.MaterialCardView;
 
 import net.dean.jraw.models.Submission;
 import net.dean.jraw.models.SubmissionPreview;
@@ -25,7 +26,7 @@ import java.io.InputStream;
 import java.net.URL;
 
 // This is the code for a singular post
-public class PostView extends ConstraintLayout implements View.OnClickListener {
+public class PostView extends MaterialCardView implements View.OnClickListener {
     private TextView txtTitle;
     private ImageView imgThumbnail;
     private TextView txtScore;

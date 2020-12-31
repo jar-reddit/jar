@@ -1,100 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
-    android:layout_margin="10dp"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:strokeWidth="1dp"
+    app:strokeColor="@android:color/black"
+    app:cardElevation="0dp"
+    android:layout_margin="5dp"
+    >
 
-    <TextView
-        android:id="@+id/postTitle"
+    <androidx.constraintlayout.widget.ConstraintLayout
+
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif"
-        android:text="postTitle"
-        android:textColor="@android:color/black"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        >
 
-    <ImageView
-        android:id="@+id/postImage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/postTitle" />
+        <TextView
+            android:id="@+id/postTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/TextAppearance.MaterialComponents.Headline6"
+            android:text="postTitle"
+            android:textColor="@android:color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/postImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/postTitle" />
 
 
-    <ImageView
-        android:id="@+id/scoreIcon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:src="@drawable/ic_baseline_arrow_upward_24"
-        app:tint="@android:color/black"
-        app:layout_constraintTop_toTopOf="@id/commentsIcon"
-        app:layout_constraintBottom_toBottomOf="@id/commentsIcon"
-        app:layout_constraintStart_toStartOf="parent" />
+        <ImageView
+            android:id="@+id/scoreIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/ic_baseline_arrow_upward_24"
+            app:tint="@android:color/black"
+            app:layout_constraintTop_toTopOf="@id/commentsIcon"
+            app:layout_constraintBottom_toBottomOf="@id/commentsIcon"
+            app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
-        android:id="@+id/textScore"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="upvotes"
-        android:textColor="@android:color/black"
-        app:layout_constraintTop_toTopOf="@id/commentsIcon"
-        app:layout_constraintBottom_toBottomOf="@id/commentsIcon"
-        app:layout_constraintStart_toEndOf="@id/scoreIcon"
-        />
+        <TextView
+            android:id="@+id/textScore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="upvotes"
+            android:textColor="@android:color/black"
+            app:layout_constraintTop_toTopOf="@id/commentsIcon"
+            app:layout_constraintBottom_toBottomOf="@id/commentsIcon"
+            app:layout_constraintStart_toEndOf="@id/scoreIcon"
+            />
 
-    <ImageButton
-        android:id="@+id/commentsIcon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:src="@drawable/ic_baseline_comment_24"
-        app:tint="@android:color/black"
-        app:layout_constraintTop_toBottomOf="@id/postImage"
-        app:layout_constraintStart_toEndOf="@id/textScore"/>
+        <ImageButton
+            android:id="@+id/commentsIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/ic_baseline_comment_24"
+            app:tint="@android:color/black"
+            app:layout_constraintTop_toBottomOf="@id/postImage"
+            app:layout_constraintStart_toEndOf="@id/textScore"/>
 
-    <TextView
-        android:id="@+id/textComments"
-        android:textColor="@android:color/black"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="comments"
-        app:layout_constraintTop_toTopOf="@id/commentsIcon"
-        app:layout_constraintBottom_toBottomOf="@id/commentsIcon"
-        app:layout_constraintStart_toEndOf="@id/commentsIcon"/>
+        <TextView
+            android:id="@+id/textComments"
+            android:textColor="@android:color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="comments"
+            app:layout_constraintTop_toTopOf="@id/commentsIcon"
+            app:layout_constraintBottom_toBottomOf="@id/commentsIcon"
+            app:layout_constraintStart_toEndOf="@id/commentsIcon"/>
 
-    <ImageButton
-        android:id="@+id/postUpvoteButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:src="@drawable/ic_baseline_arrow_upward_24"
-        app:tint="@android:color/holo_orange_light"
-        android:backgroundTint="@android:color/black"
-        app:layout_constraintEnd_toStartOf="@id/postDownvoteButton"
-        app:layout_constraintTop_toBottomOf="@id/postImage"
-        />
+        <ImageButton
+            android:id="@+id/postUpvoteButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/ic_baseline_arrow_upward_24"
+            app:tint="@android:color/holo_orange_light"
+            android:backgroundTint="@android:color/black"
+            app:layout_constraintEnd_toStartOf="@id/postDownvoteButton"
+            app:layout_constraintTop_toBottomOf="@id/postImage"
+            />
 
-    <ImageButton
-        android:id="@+id/postDownvoteButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:backgroundTint="@android:color/black"
-        android:src="@drawable/ic_baseline_arrow_downward_24"
-        app:tint="@android:color/holo_blue_light"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/postImage"/>
+        <ImageButton
+            android:id="@+id/postDownvoteButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="@android:color/black"
+            android:src="@drawable/ic_baseline_arrow_downward_24"
+            app:tint="@android:color/holo_blue_light"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/postImage"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>
