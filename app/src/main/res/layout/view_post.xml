@@ -3,15 +3,11 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:strokeWidth="1dp"
-    app:strokeColor="@android:color/black"
-    app:cardElevation="0dp"
+    app:cardElevation="5dp"
     android:layout_margin="5dp"
     >
 
     <androidx.constraintlayout.widget.ConstraintLayout
-
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -30,6 +26,7 @@
             android:id="@+id/postImage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/postTitle" />
@@ -41,8 +38,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:src="@drawable/ic_baseline_arrow_upward_24"
-            app:layout_constraintTop_toTopOf="@id/commentsIcon"
-            app:layout_constraintBottom_toBottomOf="@id/commentsIcon"
+            app:layout_constraintTop_toTopOf="@id/postUpvoteButton"
+            app:layout_constraintBottom_toBottomOf="@id/postDownvoteButton"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
@@ -50,28 +47,29 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            app:layout_constraintTop_toTopOf="@id/commentsIcon"
-            app:layout_constraintBottom_toBottomOf="@id/commentsIcon"
+            app:layout_constraintTop_toTopOf="@id/postUpvoteButton"
+            app:layout_constraintBottom_toBottomOf="@id/postDownvoteButton"
             app:layout_constraintStart_toEndOf="@id/scoreIcon"
             />
 
-        <ImageButton
+        <ImageView
             android:id="@+id/commentsIcon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:src="@drawable/ic_baseline_comment_24"
+            app:layout_constraintTop_toTopOf="@id/postUpvoteButton"
+            app:layout_constraintBottom_toBottomOf="@id/postDownvoteButton"
             app:layout_constraintTop_toBottomOf="@id/postImage"
-            app:layout_constraintStart_toEndOf="@id/textScore"/>
-
+            app:layout_constraintStart_toEndOf="@id/textScore"
+        />
         <TextView
             android:id="@+id/textComments"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="comments"
-            app:layout_constraintTop_toTopOf="@id/commentsIcon"
-            app:layout_constraintBottom_toBottomOf="@id/commentsIcon"
+            app:layout_constraintTop_toTopOf="@id/postUpvoteButton"
+            app:layout_constraintBottom_toBottomOf="@id/postDownvoteButton"
             app:layout_constraintStart_toEndOf="@id/commentsIcon"/>
 
         <ImageButton

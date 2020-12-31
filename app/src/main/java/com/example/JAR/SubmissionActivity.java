@@ -3,12 +3,18 @@ package com.example.JAR;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 
 import net.dean.jraw.models.Submission;
 
@@ -45,8 +51,23 @@ public class SubmissionActivity extends AppCompatActivity {
     {
         TextView title = (TextView) findViewById(R.id.submissionTitle);
         ImageView image = (ImageView) findViewById(R.id.submissionImage);
+
         TextView commentScore = (TextView) findViewById(R.id.commentScore);
-        Glide.with(this).load(post.getUrl()).into(image);
+        Glide.with(this)
+                .load(post.getUrl())
+                .listener(new RequestListener<Drawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable @org.jetbrains.annotations.Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                        image.setVisibility(View.GONE);
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                        return false;
+                    }
+                })
+                .into(image);
         title.setText(post.getTitle()); // This sets the title of the post to the one retrieved from the post variable
         TextView score = (TextView) findViewById(R.id.submissionScore);
         score.setText(String.valueOf(post.getScore()));
