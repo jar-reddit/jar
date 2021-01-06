@@ -1,5 +1,6 @@
 package com.example.JAR;
 
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -24,14 +25,24 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 WebView search = binding.searchView;
+                search.getSettings().setJavaScriptEnabled(true);
                 search.setWebViewClient(new WebViewClient() {
+//                    @Override
+//                    public void onPageFinished(WebView view, String url) {
+//                        Uri uri = Uri.parse(url);
+//                        if (uri.getAuthority().contains("reddit.com")) {
+//                            NavigationHandler.openUri(Uri.parse(url), SearchActivity.this);
+//                        }
+//                        super.onPageFinished(view, url);
+//                    }
+
                     @Override
-                    public void onPageFinished(WebView view, String url) {
+                    public void onPageStarted(WebView view, String url, Bitmap favicon) {
                         Uri uri = Uri.parse(url);
                         if (uri.getAuthority().contains("reddit.com")) {
                             NavigationHandler.openUri(Uri.parse(url), SearchActivity.this);
                         }
-                        super.onPageFinished(view, url);
+                        super.onPageStarted(view, url, favicon);
                     }
                 });
                 search.loadUrl("https://google.co.uk/search?q="+ Uri.encode("site:reddit.com "+query));
