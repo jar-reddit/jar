@@ -85,13 +85,11 @@ public class SubredditActivity extends AppCompatActivity {
             NavigationHandler.openUri(intent.getData(),this);
             return;
         }
-
         Background.execute(() -> {
             loadingPosts = true;
             RedditClient reddit = JRAW.getInstance(this); // Gets the client
             if (frontpage) {
                 page = reddit.frontPage().build(); // Gets The Front Page
-
 
             } else if (intent.getStringExtra(SearchManager.QUERY) != null) {
                 List<SubredditSearchResult> sub = checkSubreddit(intent.getStringExtra(SearchManager.QUERY));
@@ -227,5 +225,12 @@ public class SubredditActivity extends AppCompatActivity {
     public List<SubredditSearchResult> checkSubreddit(String query) {
         RedditClient subSearch = JRAW.getInstance(getApplicationContext());
         return subSearch.searchSubredditsByName(query);
+    }
+
+    public void enableNav() {
+        binding.nav.setVisibility(View.VISIBLE);
+    }
+    public void disableNav() {
+        binding.nav.setVisibility(View.GONE);
     }
 }
