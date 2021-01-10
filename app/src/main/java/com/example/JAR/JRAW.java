@@ -22,12 +22,14 @@ public class JRAW {
     private static RedditClient INSTANCE = null;
      static RedditClient init(Context context) {
 
-        UserAgent ua = new UserAgent("android", context.getPackageName(),context.getString(R.string.app_version),"JARForReddit");
-        Credentials creds = Credentials.userlessApp("fxPqP8pMEuu-Tw", UUID.randomUUID());
-        NetworkAdapter na = new OkHttpNetworkAdapter(ua);
-        RedditClient redditClient = OAuthHelper.automatic(na,creds);
-        Log.d("JAR",redditClient.getHttp().getUserAgent().toString());
-        return redditClient;
+//        UserAgent ua = new UserAgent("android", context.getPackageName(),context.getString(R.string.app_version),"JARForReddit");
+//        Credentials creds = Credentials.userlessApp("fxPqP8pMEuu-Tw", UUID.randomUUID());
+//        NetworkAdapter na = new OkHttpNetworkAdapter(ua);
+//        RedditClient redditClient = OAuthHelper.automatic(na,creds);
+//        Log.d("JAR",redditClient.getHttp().getUserAgent().toString());
+         App.getAccountHelper().switchToUserless();
+
+        return App.getAccountHelper().getReddit();
     }
 
 //    public static RedditClient login() {
