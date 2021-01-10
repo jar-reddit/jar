@@ -30,6 +30,12 @@ public class JRAW {
         return redditClient;
     }
 
+//    public static RedditClient login() {
+//
+//    }
+
+
+
     public static RedditClient getInstance(Context context)
     {
         if (INSTANCE == null)

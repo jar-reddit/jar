@@ -98,4 +98,9 @@ public class NavigationHandler {
         Intent searchIntent = new Intent(context, SearchActivity.class);
         context.startActivity(searchIntent);
     }
+
+    public static void openLogin(Context context) {
+        Intent loginIntent = new Intent(context, LoginActivity.class);
+        context.startActivity(loginIntent);
+    }
 }
