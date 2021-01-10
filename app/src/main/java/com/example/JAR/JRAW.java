@@ -12,6 +12,7 @@ import net.dean.jraw.http.UserAgent;
 import net.dean.jraw.models.Flair;
 import net.dean.jraw.oauth.Credentials;
 import net.dean.jraw.oauth.OAuthHelper;
+import net.dean.jraw.oauth.StatefulAuthHelper;
 
 import java.util.List;
 import java.util.UUID;
@@ -32,9 +33,14 @@ public class JRAW {
         return App.getAccountHelper().getReddit();
     }
 
-//    public static RedditClient login() {
-//
-//    }
+    public static StatefulAuthHelper getLoginHelper() {
+        StatefulAuthHelper authHelper = App.getAccountHelper().switchToNewUser();
+        return authHelper;
+    }
+
+    public static void setINSTANCE(RedditClient reddit) {
+         INSTANCE = reddit;
+    }
 
 
 

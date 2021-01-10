@@ -21,7 +21,7 @@ import java.util.UUID;
 public class App extends Application {
     private static AccountHelper accountHelper;
     private static SharedPreferencesTokenStore tokenStore;
-
+    private static UserAgent ua;
     @Override
     public void onCreate() {
         super.onCreate();
@@ -30,7 +30,7 @@ public class App extends Application {
             @Override
             public AppInfo provide() {
                 Context context = getApplicationContext();
-                UserAgent ua = new UserAgent("android", context.getPackageName(),context.getString(R.string.app_version),"JARForReddit");
+                ua = new UserAgent("android", context.getPackageName(),context.getString(R.string.app_version),"JARForReddit");
                 return new AppInfo("fxPqP8pMEuu-Tw",
                         "http://localhost:8080/",
                         ua
@@ -70,4 +70,5 @@ public class App extends Application {
     }
     public static AccountHelper getAccountHelper() { return accountHelper; }
     public static SharedPreferencesTokenStore getTokenStore() { return tokenStore; }
+    public static UserAgent getUserAgent() { return ua; }
 }
