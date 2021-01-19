@@ -1,15 +1,18 @@
 package com.example.JAR;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.example.JAR.RAW.Reddit;
 
 import net.dean.jraw.RedditClient;
+import net.dean.jraw.android.SharedPreferencesTokenStore;
 import net.dean.jraw.http.NetworkAdapter;
 import net.dean.jraw.http.OkHttpNetworkAdapter;
 import net.dean.jraw.http.UserAgent;
 import net.dean.jraw.models.Flair;
+import net.dean.jraw.oauth.AccountHelper;
 import net.dean.jraw.oauth.Credentials;
 import net.dean.jraw.oauth.OAuthHelper;
 import net.dean.jraw.oauth.StatefulAuthHelper;
@@ -46,10 +49,17 @@ public class JRAW {
 
     public static RedditClient getInstance(Context context)
     {
-        if (INSTANCE == null)
-        {
-            INSTANCE = init(context);
+        SharedPreferencesTokenStore tokenStore = App.getTokenStore();
+        SharedPreferences sharedPreferences = context.getSharedPreferences(context.getPackageName().concat("users"), Context.MODE_PRIVATE);
+        AccountHelper accountHelper = App.getAccountHelper();
+        if (INSTANCE==null) {
+            if (tokenStore.getUsernames().size()<=1) {
+                accountHelper.switchToUserless();
+            } else {
+                accountHelper.trySwitchToUser(sharedPreferences.getString("lastUser","<userless>"));
+            }
         }
+        INSTANCE = App.getAccountHelper().getReddit();
         return INSTANCE;
     }
 }

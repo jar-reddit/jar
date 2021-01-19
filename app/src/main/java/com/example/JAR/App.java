@@ -54,6 +54,13 @@ public class App extends Application {
         accountHelper.onSwitch(redditClient -> {
             // By default, JRAW logs HTTP activity to System.out. We're going to use Log.i()
             // instead.
+
+            try {
+                getSharedPreferences(getPackageName().concat("users"), MODE_PRIVATE).edit().putString("lastUser", redditClient.me().getUsername()).apply();
+                Log.d("Current user",redditClient.me().getUsername());
+            } catch (IllegalStateException e) {
+                Log.d("Current user","<userless>");
+            }
             LogAdapter logAdapter = new SimpleAndroidLogAdapter(Log.INFO);
 
             // We're going to use the LogAdapter to write down the summaries produced by
@@ -66,6 +73,8 @@ public class App extends Application {
 
             return null;
         });
+        Log.d("Jar","usernames: "+tokenStore.getUsernames().toString());
+
 
     }
     public static AccountHelper getAccountHelper() { return accountHelper; }
