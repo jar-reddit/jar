@@ -66,7 +66,9 @@ public class SubredditActivity extends AppCompatActivity {
         postList.setAdapter(postAdapter);
         postList.setLayoutManager(new LinearLayoutManager(this));
         setContentView(binding.getRoot()); // set the layout
-
+        if ( !(this instanceof MainActivity)) {
+            disableNav();
+        }
 
 
         searchSuggestions = (ListView) findViewById(R.id.listview);
@@ -228,9 +230,9 @@ public class SubredditActivity extends AppCompatActivity {
     }
 
     public void enableNav() {
-        binding.nav.setVisibility(View.VISIBLE);
+        binding.getRoot().addView(binding.nav,binding.nav.getLayoutParams());
     }
     public void disableNav() {
-        binding.nav.setVisibility(View.GONE);
+        binding.getRoot().removeView(binding.nav);
     }
 }

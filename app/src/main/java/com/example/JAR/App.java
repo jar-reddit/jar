@@ -56,9 +56,14 @@ public class App extends Application {
             // instead.
 
             try {
-                getSharedPreferences(getPackageName().concat("users"), MODE_PRIVATE).edit().putString("lastUser", redditClient.me().getUsername()).apply();
+                getSharedPreferences(getPackageName().concat("users"), MODE_PRIVATE)
+                        .edit()
+                        .putString("lastUser", redditClient.me().getUsername()).apply();
                 Log.d("Current user",redditClient.me().getUsername());
             } catch (IllegalStateException e) {
+                getSharedPreferences(getPackageName().concat("users"), MODE_PRIVATE)
+                        .edit()
+                        .putString("lastUser", "<userless>").apply();
                 Log.d("Current user","<userless>");
             }
             LogAdapter logAdapter = new SimpleAndroidLogAdapter(Log.INFO);
@@ -70,7 +75,6 @@ public class App extends Application {
 
             // If you want to disable logging, use a NoopHttpLogger instead:
             // redditClient.setLogger(new NoopHttpLogger());
-
             return null;
         });
         Log.d("Jar","usernames: "+tokenStore.getUsernames().toString());
