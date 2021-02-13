@@ -4,6 +4,8 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.webkit.CookieManager;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -30,6 +32,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 super.onPageStarted(view, url, favicon);
+                Log.d("Opening URL",url);
                 if (helper.isFinalRedirectUrl(url)) {
                     view.stopLoading();
                     Log.d("JAR",url);
@@ -37,14 +40,18 @@ public class LoginActivity extends AppCompatActivity {
                         RedditClient reddit = helper.onUserChallenge(url);
 
 
-                        JRAW.setINSTANCE(reddit);
                         NavigationHandler.openFrontpage(LoginActivity.this);
+
                     });
 
 
                 }
             }
         });
+        CookieManager.getInstance().removeSessionCookies(value -> {
+
+        });
+        CookieManager.getInstance().flush();
         login.loadUrl(helper.getAuthorizationUrl(false,
                 true,
                 "read", "vote","identity"

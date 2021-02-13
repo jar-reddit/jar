@@ -94,6 +94,11 @@ public class NavigationHandler {
         context.startActivity(subredditIntent);
     }
 
+    public static void openMainActivty(Context context) {
+        Intent mainIntent = new Intent(context, MainActivity.class);
+        context.startActivity(mainIntent);
+    }
+
     public static void openWebSearch(Context context, String query, String searchEngine) {
         Intent searchIntent = new Intent(context, SearchActivity.class);
         context.startActivity(searchIntent);
