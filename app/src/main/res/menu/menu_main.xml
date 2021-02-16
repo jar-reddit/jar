@@ -2,6 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/sort_Posts"
+        android:title="SortBy"
+        android:icon="@drawable/ic_baseline_arrow_upward_24"
+        app:showAsAction="ifRoom"
+        />
+    <item
         android:id="@+id/action_search"
         android:icon="@drawable/ic_baseline_search_24"
         android:title="@string/app_name"
@@ -9,6 +15,5 @@
         app:showAsAction="ifRoom|collapseActionView" />
     <item
         android:id="@+id/web_search"
-        android:title="Reddit search"
-        />
+        android:title="Reddit search" />
 </menu>
