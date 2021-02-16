@@ -1,5 +1,6 @@
 package com.example.JAR;
 
+import android.app.FragmentManager;
 import android.app.SearchManager;
 import android.content.ComponentName;
 import android.content.Context;
@@ -14,12 +15,16 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -29,6 +34,7 @@ import net.dean.jraw.RedditClient;
 import net.dean.jraw.models.Listing;
 import net.dean.jraw.models.Submission;
 import net.dean.jraw.models.SubredditSearchResult;
+import net.dean.jraw.models.SubredditSort;
 import net.dean.jraw.pagination.DefaultPaginator;
 
 import org.jetbrains.annotations.NotNull;
@@ -51,12 +57,11 @@ public class SubredditActivity extends AppCompatActivity {
     ArrayAdapter<String> suggestionAdapter;
     PostAdapter postAdapter;
 
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Settings s = new Settings(this);
-        s.readSettings();
         binding = ActivitySubredditBinding.inflate(getLayoutInflater()); // Joining views to Java
         if (allPosts == null) {
             allPosts = Listing.empty(); // initialise an empty list
@@ -69,6 +74,7 @@ public class SubredditActivity extends AppCompatActivity {
         if ( !(this instanceof MainActivity)) {
             disableNav();
         }
+
 
 
         searchSuggestions = (ListView) findViewById(R.id.listview);
@@ -218,6 +224,11 @@ public class SubredditActivity extends AppCompatActivity {
             case R.id.action_search:
                 Log.d("JAR Menu click","Action search");
                 return true;
+            case R.id.sort_Posts:
+                FragmentManager fm = getFragmentManager();
+                SortFragment sf = new SortFragment();
+                sf.show(fm, "hello");
+//                Toast.makeText(this, "Hi I am working",Toast.LENGTH_SHORT).show();
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -227,6 +238,35 @@ public class SubredditActivity extends AppCompatActivity {
     public List<SubredditSearchResult> checkSubreddit(String query) {
         RedditClient subSearch = JRAW.getInstance(getApplicationContext());
         return subSearch.searchSubredditsByName(query);
+    }
+
+    public void showSortOptions(int sortCriteria)
+    {
+        RedditClient reddit = JRAW.getInstance(this);
+//        Toast.makeText(this, String.valueOf(sortCriteria),Toast.LENGTH_SHORT).show();
+
+        if (this instanceof MainActivity)
+        {
+            switch (sortCriteria)
+            {
+                case 0:
+                    Toast.makeText(this, String.valueOf(sortCriteria), Toast.LENGTH_LONG).show();
+//                      NavigationHandler.openSubreddit("pics", this);
+                    page = reddit.frontPage().sorting(SubredditSort.HOT).build();
+                case 1:
+                    Toast.makeText(this, String.valueOf(sortCriteria), Toast.LENGTH_LONG).show();
+//                      NavigationHandler.openSubreddit("pics", this);
+                    page = reddit.frontPage().sorting(SubredditSort.NEW).build();
+//                      JRAW.getInstance(this).frontPage().sorting(SubredditSort.NEW).build();
+                case 2:
+                    Toast.makeText(this, String.valueOf(sortCriteria), Toast.LENGTH_LONG).show();
+//                      NavigationHandler.openSubreddit("pics", this);
+                    page = reddit.frontPage().sorting(SubredditSort.TOP).build();
+//                      JRAW.getInstance(this).frontPage().sorting(SubredditSort.NEW).build();
+
+            }
+
+        }
     }
 
     public void enableNav() {
