@@ -37,8 +37,7 @@ public class JRAW {
     }
 
     public static StatefulAuthHelper getLoginHelper() {
-        StatefulAuthHelper authHelper = App.getAccountHelper().switchToNewUser();
-        return authHelper;
+        return App.getAccountHelper().switchToNewUser();
     }
 
     public static void setINSTANCE(RedditClient reddit) {
