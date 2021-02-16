@@ -55,6 +55,8 @@ public class SubredditActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        Settings s = new Settings(this);
+        s.readSettings();
         binding = ActivitySubredditBinding.inflate(getLayoutInflater()); // Joining views to Java
         if (allPosts == null) {
             allPosts = Listing.empty(); // initialise an empty list
@@ -67,6 +69,7 @@ public class SubredditActivity extends AppCompatActivity {
         if ( !(this instanceof MainActivity)) {
             disableNav();
         }
+
 
         searchSuggestions = (ListView) findViewById(R.id.listview);
 
