@@ -89,6 +89,13 @@ public class NavigationHandler {
 //        });
     }
 
+    public static void openSubreddit(String subreddit, int sortCriteria, Context context)
+    {
+
+    }
+
+
+
     public static void openFrontpage(Context context) {
         Intent subredditIntent = new Intent(context, SubredditActivity.class);
         context.startActivity(subredditIntent);
