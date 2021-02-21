@@ -31,6 +31,7 @@
         </activity>
 
         <activity
+            android:configChanges="orientation|screenSize"
             android:name=".MediaActivity" >
         </activity>
         <activity
