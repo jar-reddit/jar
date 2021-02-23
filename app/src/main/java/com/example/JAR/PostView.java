@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -18,6 +19,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.JAR.databinding.ViewPostBinding;
 import com.google.android.material.card.MaterialCardView;
 
+import net.dean.jraw.models.Comment;
 import net.dean.jraw.models.Submission;
 import net.dean.jraw.models.SubmissionPreview;
 
@@ -34,6 +36,7 @@ public class PostView extends MaterialCardView implements View.OnClickListener {
     private ViewPostBinding binding;
     private Submission post;
     private Drawable thumbnail;
+    private Comment comment;
 
     // https://medium.com/@Sserra90/android-writing-a-compound-view-1eacbf1957fc
     public PostView(Context context) {
@@ -71,7 +74,7 @@ public class PostView extends MaterialCardView implements View.OnClickListener {
      * @param score post score
      * @param comments number of comments
      */
-    public void setData(String title, String uri, String score, String comments) {
+    public void setData(String title, String uri, String score, String comments/*, String postID*/) {
         this.txtTitle.setText(title);
 
 //        if (post.hasThumbnail()) {
@@ -83,7 +86,7 @@ public class PostView extends MaterialCardView implements View.OnClickListener {
 
     public void setPost(Submission post) {
         this.post = post;
-        setData(post.getTitle(),post.getThumbnail(), String.valueOf(post.getScore()),""+post.getCommentCount());
+        setData(post.getTitle(),post.getThumbnail(), String.valueOf(post.getScore()),""+post.getCommentCount()/*,post.getSubmission()*/);
 //        imgThumbnail.setOnClickListener(this);
 //        txtTitle.setOnClickListener(this);
         String previewUrl = "";
@@ -107,10 +110,18 @@ public class PostView extends MaterialCardView implements View.OnClickListener {
 
     }
 
+    /*public String getComments()
+    {
+        String x = post.getId();
+        return x;
+    }*/
+
     public void onClick(View v) {
             Log.d("Test Click","Clicked Post");
             Intent submissionIntent = new Intent(getContext(), SubmissionActivity.class);
             submissionIntent.putExtra("Post", this.post); // This should transfer the post to SubmissionActivity
+            String x = post.getId();
+            Log.d("this",x);
             getContext().startActivity(submissionIntent);
     }
 
