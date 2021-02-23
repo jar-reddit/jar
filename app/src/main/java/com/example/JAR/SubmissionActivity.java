@@ -16,11 +16,16 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 
+import net.dean.jraw.RedditClient;
+import net.dean.jraw.models.PublicContribution;
 import net.dean.jraw.models.Submission;
+import net.dean.jraw.tree.CommentNode;
+import net.dean.jraw.tree.RootCommentNode;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.Iterator;
 
 
 public class SubmissionActivity extends AppCompatActivity {
@@ -31,6 +36,7 @@ public class SubmissionActivity extends AppCompatActivity {
     private Drawable thumbnail;
     private TextView score;
     private TextView commentScore;
+    //private String postID;
 
 
     public void onCreate(Bundle savedInstanceState)
@@ -38,6 +44,7 @@ public class SubmissionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_submission);
         getPost();
+        //getComments();
         setContent();
     }
 
@@ -71,6 +78,7 @@ public class SubmissionActivity extends AppCompatActivity {
         title.setText(post.getTitle()); // This sets the title of the post to the one retrieved from the post variable
         TextView score = (TextView) findViewById(R.id.submissionScore);
         score.setText(String.valueOf(post.getScore()));
+        //postID.setText(post.getSubmission());
         commentScore.setText(""+post.getCommentCount());
     }
 
@@ -79,9 +87,9 @@ public class SubmissionActivity extends AppCompatActivity {
 
 
     /*public void getComments()
-            // https://mattbdean.gitbooks.io/jraw/content/cookbook.html
     {
-        RootCommentNode comment = redditClient.submission("need to find a way to pull the post id");
+        RedditClient redditClient = JRAW.getInstance(this);
+        RootCommentNode root = redditClient.submission(postID).comments();
         // This line is used to retrieve the comments from the post
         Iterator<CommentNode<PublicContribution<?>>> it = root.walkTree().iterator();
 

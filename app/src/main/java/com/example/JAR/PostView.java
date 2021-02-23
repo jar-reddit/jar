@@ -74,7 +74,7 @@ public class PostView extends MaterialCardView implements View.OnClickListener {
      * @param score post score
      * @param comments number of comments
      */
-    public void setData(String title, String uri, String score, String comments, String postID) {
+    public void setData(String title, String uri, String score, String comments/*, String postID*/) {
         this.txtTitle.setText(title);
 
 //        if (post.hasThumbnail()) {
@@ -86,7 +86,7 @@ public class PostView extends MaterialCardView implements View.OnClickListener {
 
     public void setPost(Submission post) {
         this.post = post;
-        setData(post.getTitle(),post.getThumbnail(), String.valueOf(post.getScore()),""+post.getCommentCount(),post.getId());
+        setData(post.getTitle(),post.getThumbnail(), String.valueOf(post.getScore()),""+post.getCommentCount()/*,post.getSubmission()*/);
 //        imgThumbnail.setOnClickListener(this);
 //        txtTitle.setOnClickListener(this);
         String previewUrl = "";
