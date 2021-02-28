@@ -44,7 +44,7 @@ public class SubmissionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_submission);
         getPost();
-        //getComments();
+        getComments();
         setContent();
     }
 
@@ -78,24 +78,23 @@ public class SubmissionActivity extends AppCompatActivity {
         title.setText(post.getTitle()); // This sets the title of the post to the one retrieved from the post variable
         TextView score = (TextView) findViewById(R.id.submissionScore);
         score.setText(String.valueOf(post.getScore()));
-        //postID.setText(post.getSubmission());
         commentScore.setText(""+post.getCommentCount());
     }
 
-
-
-
-
-    /*public void getComments()
+    public void getComments()
     {
-        RedditClient redditClient = JRAW.getInstance(this);
-        RootCommentNode root = redditClient.submission(postID).comments();
-        // This line is used to retrieve the comments from the post
-        Iterator<CommentNode<PublicContribution<?>>> it = root.walkTree().iterator();
-
-        while (it.hasNext()) {
-            PublicContribution<?> thing = it.next().getSubject();
-            System.out.println(thing.getBody());
-        }
-    }*/
+        Background.execute(()->{
+            RedditClient redditClient = JRAW.getInstance(this);
+            RootCommentNode root = redditClient.submission(post.getId()).comments();
+            // This line is used to retrieve the comments from the post
+            //Iterator<CommentNode<PublicContribution<?>>> it = root.walkTree().iterator();
+            //root.getReplies();
+            //while (it.hasNext()) {
+               // PublicContribution<?> thing = it.next().getSubject();
+            for(CommentNode comments: root.getReplies()) {
+                Log.d("comments", comments.getSubject().getBody());
+            }
+                //}
+        });
+    }
 }

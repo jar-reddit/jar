@@ -113,6 +113,7 @@ public class SubredditActivity extends AppCompatActivity {
             loadingPosts = false;
             Log.d("Jar", "added posts");
             runOnUiThread(() -> {
+                binding.progressBar.setVisibility(View.INVISIBLE);
                 postAdapter.notifyDataSetChanged();
 
             });
