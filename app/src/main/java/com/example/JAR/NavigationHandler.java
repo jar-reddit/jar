@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
+import android.webkit.WebView;
 
 import net.dean.jraw.models.Submission;
 import net.dean.jraw.pagination.DefaultPaginator;
@@ -142,10 +143,10 @@ public class NavigationHandler {
         } else if (type.contains("video")) {
             if (type.contains("reddit")) {
                 openVideo(context, submission.getEmbeddedMedia().getRedditVideo().getDashUrl());
-            } else {
-                openLink(context,submission.getUrl());
             }
             
+        } else {
+            openLink(context,submission.getUrl());
         }
 //        if (submission.getPostHint().equals("image")) {
 //            openImage(context, submission.getUrl());
@@ -165,6 +166,9 @@ public class NavigationHandler {
             openImage(context, url.toString());
         } else if (UrlDetector.detect(url).contains("video")) {
             openVideo(context, url.toString());
+        } else {
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW,Uri.parse(url.toString()));
+            context.startActivity(browserIntent);
         }
         // TODO: 02/03/2021 add more link types like article to open in WebActivity 
     }
