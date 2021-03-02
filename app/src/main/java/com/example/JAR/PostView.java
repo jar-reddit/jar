@@ -56,10 +56,11 @@ public class PostView extends MaterialCardView implements View.OnClickListener {
         imgThumbnail.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("Test Click","Clicked Post");
-                Intent submissionIntent = new Intent(getContext(), MediaActivity.class);
-                submissionIntent.putExtra("Post", PostView.this.post); // This should transfer the post to SubmissionActivity
-                getContext().startActivity(submissionIntent);
+                Log.d("Test Click",post.getUrl());
+//                Intent submissionIntent = new Intent(getContext(), MediaActivity.class);
+//                submissionIntent.putExtra("Post", PostView.this.post); // This should transfer the post to SubmissionActivity
+//                getContext().startActivity(submissionIntent);
+                NavigationHandler.openLink(getContext(),post);
             }
         });
 

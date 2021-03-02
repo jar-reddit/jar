@@ -32,33 +32,50 @@ public class MediaActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         binding = ViewImageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        Submission submission = (Submission) getIntent().getExtras().get("Post");
-        Log.d("Post Hint", submission.getPostHint());
-        if (submission.getPostHint().equals("image")) {
+//        Submission submission = (Submission) getIntent().getExtras().get("Post");
+        
+        if (getIntent().getExtras().get("type").equals("image")) {
             binding.getRoot().removeView(binding.videoPlayer);
             Glide
                     .with(this)
-                    .load(submission.getUrl())
-                    .error(Glide.with(this).load(submission.getPreview().getImages().get(0).getSource().getUrl()))
-                    .into(binding.subImage)
-            ;
-        } else if (submission.getPostHint().contains("video")) {
-            Log.d("Playing Video",submission.getUrl());
+                    .load(getIntent().getExtras().get("url"))
+                    .into(binding.subImage);
+        } else if(getIntent().getExtras().get("type").equals("video")) {
             binding.getRoot().removeView(binding.subImage);
             player = new SimpleExoPlayer.Builder(this).build();
-            if (submission.getPostHint().contains("hosted")) {
-                String url = submission.getEmbeddedMedia().getRedditVideo().getDashUrl();
-                MediaItem video = MediaItem.fromUri(url);
-                binding.videoPlayer.setPlayer(player);
-                player.setMediaItem(video);
-                player.prepare();
-                player.play();
-            } else {
-                errorMessage(submission.getPostHint(),submission.getUrl());
-            }
-        } else {
-            errorMessage(submission.getPostHint(),submission.getUrl());
+            MediaItem video = MediaItem.fromUri(getIntent().getExtras().get("url").toString());
+            binding.videoPlayer.setPlayer(player);
+            player.setMediaItem(video);
+            player.prepare();
+            player.play();
         }
+        
+//        Log.d("Post Hint", submission.getPostHint());
+//        if (submission.getPostHint().equals("image")) {
+//            binding.getRoot().removeView(binding.videoPlayer);
+//            Glide
+//                    .with(this)
+//                    .load(submission.getUrl())
+//                    .error(Glide.with(this).load(submission.getPreview().getImages().get(0).getSource().getUrl()))
+//                    .into(binding.subImage)
+//            ;
+//        } else if (submission.getPostHint().contains("video")) {
+//            Log.d("Playing Video",submission.getUrl());
+//            binding.getRoot().removeView(binding.subImage);
+//            player = new SimpleExoPlayer.Builder(this).build();
+//            if (submission.getPostHint().contains("hosted")) {
+//                String url = submission.getEmbeddedMedia().getRedditVideo().getDashUrl();
+//                MediaItem video = MediaItem.fromUri(url);
+//                binding.videoPlayer.setPlayer(player);
+//                player.setMediaItem(video);
+//                player.prepare();
+//                player.play();
+//            } else {
+//                errorMessage(submission.getPostHint(),submission.getUrl());
+//            }
+//        } else {
+//            errorMessage(submission.getPostHint(),submission.getUrl());
+//        }
     }
 
     @Override

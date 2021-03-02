@@ -8,6 +8,8 @@ import android.util.Log;
 import net.dean.jraw.models.Submission;
 import net.dean.jraw.pagination.DefaultPaginator;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 
 /**
@@ -114,5 +116,74 @@ public class NavigationHandler {
     public static void openLogin(Context context) {
         Intent loginIntent = new Intent(context, LoginActivity.class);
         context.startActivity(loginIntent);
+    }
+
+    /**
+     * Open the link in the appropriate activity
+     * @param url URL to resource
+     */
+    public static void openLink(Context context, String url) {
+        try {
+            openLink(context, new URL(url));
+        } catch (MalformedURLException e) {
+            Log.d("JAR/URL",e.getMessage());
+        }
+    }
+
+    /**
+     * Open a link in a submission like the video or image
+     * @param submission the instance of the submission
+     */
+    public static void openLink(Context context, Submission submission) {
+        String type = UrlDetector.detect(submission.getUrl());
+        Log.d("type",type);
+        if (type.contains("image")) {
+            openImage(context,submission.getUrl());
+        } else if (type.contains("video")) {
+            if (type.contains("reddit")) {
+                openVideo(context, submission.getEmbeddedMedia().getRedditVideo().getDashUrl());
+            } else {
+                openLink(context,submission.getUrl());
+            }
+            
+        }
+//        if (submission.getPostHint().equals("image")) {
+//            openImage(context, submission.getUrl());
+//        } else if(submission.getPostHint().contains("video")) {
+//            if (submission.getPostHint().contains("hosted")) {
+//                openVideo(context, submission.getEmbeddedMedia().getRedditVideo().getDashUrl());
+//            }
+//        } else {
+//            Log.d("link",submission.getUrl());
+//            openLink(context, submission.getUrl());
+//        }
+        
+    }
+
+    private static void openLink(Context context, URL url) {
+        if (UrlDetector.detect(url).contains("image")) {
+            openImage(context, url.toString());
+        } else if (UrlDetector.detect(url).contains("video")) {
+            openVideo(context, url.toString());
+        }
+        // TODO: 02/03/2021 add more link types like article to open in WebActivity 
+    }
+    
+    public static void openVideo(Context context, String url) {
+        openMedia(context,url,"video");
+
+    }
+    
+    public static void openImage(Context context, String url) {
+        openMedia(context,url,"image");
+        
+    }
+    
+    private static void openMedia(Context context, String url, String type) {
+        Log.d("JAR","opening "+type);
+        Intent mediaIntent = new Intent(context,MediaActivity.class);
+        mediaIntent.putExtra("url",url);
+        mediaIntent.putExtra("type",type);
+        context.startActivity(mediaIntent);
     }
 }
