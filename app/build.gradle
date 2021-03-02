@@ -53,8 +53,8 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
     implementation 'com.github.chrisbanes:PhotoView:2.3.0'
     implementation 'com.moandjiezana.toml:toml4j:0.7.2'
-    implementation 'com.google.android.exoplayer:exoplayer:2.13.1'
-    
+    implementation 'com.google.android.exoplayer:exoplayer:2.13.2'
+    implementation 'me.saket:better-link-movement-method:2.2.0'
 
     // JetPack Compose
     implementation 'androidx.compose.ui:ui:1.0.0-alpha09'
