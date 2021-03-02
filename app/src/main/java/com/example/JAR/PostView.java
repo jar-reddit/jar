@@ -83,6 +83,19 @@ public class PostView extends MaterialCardView implements View.OnClickListener {
 //        }
         this.txtScore.setText(score);
         this.txtComments.setText(comments);
+        String format = Settings.getSettings(getContext()).getString("format");
+//        String format = "r/$subreddit | u/$username | $flair";
+//        format = format.replace("|","\uD83C\uDDF5\uD83C\uDDF0");
+        format = format.replace("|",Settings.getSettings(getContext()).getString("separator"));
+        format = format.replace("$subreddit",post.getSubreddit());
+        format = format.replace("$username",post.getAuthor());
+        if (post.getLinkFlairText()==null) {
+            format = format.replace("$flair","-");
+        } else {
+            format = format.replace("$flair",post.getLinkFlairText());
+        }
+        
+        binding.otherInfo.setText(format);
     }
 
     public void setPost(Submission post) {
