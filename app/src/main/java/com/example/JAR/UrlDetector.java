@@ -26,8 +26,10 @@ public class UrlDetector {
                 return "reddit:video";
             case "i.imgur.com":
                 Log.d("Imgur",url.getPath());
-                if (url.getPath().endsWith(".gifv")){
+                if (url.getPath().endsWith(".gifv")||url.getPath().endsWith(".mp4")) {
                     return "imgur:video";
+                } else{
+                    return "imgur:image";
                 }
         }
         return "unknown";
