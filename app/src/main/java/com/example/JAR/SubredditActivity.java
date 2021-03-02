@@ -35,6 +35,7 @@ import net.dean.jraw.models.Listing;
 import net.dean.jraw.models.Submission;
 import net.dean.jraw.models.SubredditSearchResult;
 import net.dean.jraw.models.SubredditSort;
+import net.dean.jraw.models.TimePeriod;
 import net.dean.jraw.pagination.DefaultPaginator;
 
 import org.jetbrains.annotations.NotNull;
@@ -244,36 +245,72 @@ public class SubredditActivity extends AppCompatActivity {
     public void showSortOptions(int sortCriteria)
     {
         RedditClient reddit = JRAW.getInstance(this);
-//        Toast.makeText(this, String.valueOf(sortCriteria),Toast.LENGTH_SHORT).show();
-
-        if (this instanceof MainActivity)
-        {
-            switch (sortCriteria)
-            {
+        if (this instanceof MainActivity) {
+            switch (sortCriteria) {
                 case 0:
-                    Toast.makeText(this, String.valueOf(sortCriteria), Toast.LENGTH_LONG).show();
-//                      NavigationHandler.openSubreddit("pics", this);
                     page = reddit.frontPage().sorting(SubredditSort.HOT).build();
+                    backgroundTasks();
                 case 1:
-                    Toast.makeText(this, String.valueOf(sortCriteria), Toast.LENGTH_LONG).show();
-//                      NavigationHandler.openSubreddit("pics", this);
                     page = reddit.frontPage().sorting(SubredditSort.NEW).build();
-//                      JRAW.getInstance(this).frontPage().sorting(SubredditSort.NEW).build();
+                    backgroundTasks();
                 case 2:
-                    Toast.makeText(this, String.valueOf(sortCriteria), Toast.LENGTH_LONG).show();
-//                      NavigationHandler.openSubreddit("pics", this);
                     page = reddit.frontPage().sorting(SubredditSort.TOP).build();
-//                      JRAW.getInstance(this).frontPage().sorting(SubredditSort.NEW).build();
-
+                    backgroundTasks();
+                case 3:
+                    page = reddit.frontPage().sorting(SubredditSort.RISING).build();
+                    backgroundTasks();
+                case 4:
+                    page = reddit.frontPage().sorting(SubredditSort.CONTROVERSIAL).build();
+                    backgroundTasks();
+                case 5:
+                    page = reddit.frontPage().sorting(SubredditSort.BEST).build();
+                    backgroundTasks();
             }
+        }
+//            switch (sortCriteria)
+//            {
+//                case 0:
+//
+//                case 1:
+//                    Background.execute(() -> {
+//                        page = reddit.frontPage().sorting(SubredditSort.NEW).build();
+//                        List<Submission> posts = page.next().getChildren(); // This retrieves all the posts
+//
+//                        Log.d("Jar", "added posts");
+//                        runOnUiThread(() -> {
+//                            postAdapter.notifyDataSetChanged();
+//                        });
+//                    });
+////                    Toast.makeText(this, String.valueOf(sortCriteria), Toast.LENGTH_LONG).show();
+//////                      NavigationHandler.openSubreddit("pics", this);
+////                    page = reddit.frontPage().sorting(SubredditSort.NEW).build();
+//////                      JRAW.getInstance(this).frontPage().sorting(SubredditSort.NEW).build();
+//                case 2:
+//                    Toast.makeText(this, String.valueOf(sortCriteria), Toast.LENGTH_LONG).show();
+////                      NavigationHandler.openSubreddit("pics", this);
+//                    page = reddit.frontPage().sorting(SubredditSort.TOP).build();
+////                      JRAW.getInstance(this).frontPage().sorting(SubredditSort.NEW).build();
+//
+//            }
 
         }
-    }
 
     public void enableNav() {
         binding.getRoot().addView(binding.nav,binding.nav.getLayoutParams());
     }
     public void disableNav() {
         binding.getRoot().removeView(binding.nav);
+    }
+
+    public void backgroundTasks()
+    {
+        Background.execute(() -> {
+            allPosts.clear();
+            List<Submission> posts = page.next().getChildren();
+            allPosts.addAll(posts);
+            runOnUiThread(() -> {
+                postAdapter.notifyDataSetChanged();
+            });
+        });
     }
 }
