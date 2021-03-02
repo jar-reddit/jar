@@ -137,35 +137,25 @@ public class NavigationHandler {
      */
     public static void openLink(Context context, Submission submission) {
         String type = UrlDetector.detect(submission.getUrl());
-        Log.d("type",type);
-        if (type.contains("image")) {
-            openImage(context,submission.getUrl());
-        } else if (type.contains("video")) {
-            if (type.contains("reddit")) {
-                openVideo(context, submission.getEmbeddedMedia().getRedditVideo().getDashUrl());
-            }
-            
+        if (type.equals("reddit:video")) {
+            openVideo(context, submission.getEmbeddedMedia().getRedditVideo().getDashUrl());
         } else {
             openLink(context,submission.getUrl());
         }
-//        if (submission.getPostHint().equals("image")) {
-//            openImage(context, submission.getUrl());
-//        } else if(submission.getPostHint().contains("video")) {
-//            if (submission.getPostHint().contains("hosted")) {
-//                openVideo(context, submission.getEmbeddedMedia().getRedditVideo().getDashUrl());
-//            }
-//        } else {
-//            Log.d("link",submission.getUrl());
-//            openLink(context, submission.getUrl());
-//        }
         
     }
 
     private static void openLink(Context context, URL url) {
-        if (UrlDetector.detect(url).contains("image")) {
+        String type = UrlDetector.detect(url);
+        if (type.contains("image")) {
             openImage(context, url.toString());
-        } else if (UrlDetector.detect(url).contains("video")) {
-            openVideo(context, url.toString());
+        } else if (type.contains("video")) {
+            if (type.contains("imgur")) {
+                String mp4Url =url.toString().replace(".gifv",".mp4");
+                openVideo(context, mp4Url);
+            } else {
+                openVideo(context, url.toString());
+            }
         } else {
             Intent browserIntent = new Intent(Intent.ACTION_VIEW,Uri.parse(url.toString()));
             context.startActivity(browserIntent);
