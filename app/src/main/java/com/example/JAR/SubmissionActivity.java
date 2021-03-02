@@ -2,6 +2,7 @@ package com.example.JAR;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -15,6 +16,7 @@ import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
+import com.example.JAR.databinding.ActivitySubmissionBinding;
 
 import net.dean.jraw.RedditClient;
 import net.dean.jraw.models.PublicContribution;
@@ -22,10 +24,7 @@ import net.dean.jraw.models.Submission;
 import net.dean.jraw.tree.CommentNode;
 import net.dean.jraw.tree.RootCommentNode;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.util.Iterator;
+import me.saket.bettermovementmethod.BetterLinkMovementMethod;
 
 
 public class SubmissionActivity extends AppCompatActivity {
@@ -37,12 +36,14 @@ public class SubmissionActivity extends AppCompatActivity {
     private TextView score;
     private TextView commentScore;
     //private String postID;
+    private ActivitySubmissionBinding views;
 
 
     public void onCreate(Bundle savedInstanceState)
     {
+        views = ActivitySubmissionBinding.inflate(getLayoutInflater());
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_submission);
+        setContentView(views.getRoot());
         getPost();
         getComments();
         setContent();
@@ -79,6 +80,18 @@ public class SubmissionActivity extends AppCompatActivity {
         TextView score = (TextView) findViewById(R.id.submissionScore);
         score.setText(String.valueOf(post.getScore()));
         commentScore.setText(""+post.getCommentCount());
+        if (post.isSelfPost()) {
+            views.submissionSelfText.setText(Html.fromHtml(post.getSelfTextHtml(),Html.FROM_HTML_SEPARATOR_LINE_BREAK_PARAGRAPH));
+//            views.submissionSelfText.setMovementMethod(BetterLinkMovementMethod.linkifyHtml(views.submissionSelfText));
+            BetterLinkMovementMethod method = BetterLinkMovementMethod.linkifyHtml(views.submissionSelfText);
+            method.setOnLinkClickListener((textView,url)->{
+                // TODO: 02/03/2021 handle the url passed here 
+                Log.d("Clicked link",url);
+                return true;
+            });
+        }
+        views.submissionUser.setText(post.getAuthor());
+
     }
 
     public void getComments()
