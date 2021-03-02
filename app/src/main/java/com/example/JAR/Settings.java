@@ -158,6 +158,8 @@ public class Settings{
                 settings.put("autoplay","false");
                 settings.put("darkmode","false");
                 settings.put("allow_dms","true");
+                settings.put("separator","\uD83C\uDDF5\uD83C\uDDF0");
+                settings.put("format","r/$subreddit | u/$username | $flair");
                 tomlWriter.write(settings,fos);
             }catch (Exception e) {
                 e.printStackTrace();

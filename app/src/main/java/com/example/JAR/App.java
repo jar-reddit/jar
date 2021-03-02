@@ -48,7 +48,7 @@ public class App extends Application {
 
         // An AccountHelper manages switching between accounts and into/out of userless mode.
         accountHelper = AndroidHelper.accountHelper(provider, uuid, tokenStore);
-
+        Settings.getInstance(getApplicationContext());
         // Every time we use the AccountHelper to switch between accounts (from one account to
         // another, or into/out of userless mode), call this function
         accountHelper.onSwitch(redditClient -> {

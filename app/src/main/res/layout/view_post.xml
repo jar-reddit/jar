@@ -31,6 +31,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/postTitle" />
 
+        <TextView
+            android:id="@+id/otherInfo"
+            android:text="Other Info here"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/TextAppearance.MaterialComponents.Caption"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/postImage"
+            />
 
         <ImageView
             android:id="@+id/scoreIcon"
@@ -81,7 +90,7 @@
             app:tint="@android:color/holo_orange_light"
             android:backgroundTint="@android:color/black"
             app:layout_constraintEnd_toStartOf="@id/postDownvoteButton"
-            app:layout_constraintTop_toBottomOf="@id/postImage"
+            app:layout_constraintTop_toBottomOf="@id/otherInfo"
             />
 
         <ImageButton
@@ -93,7 +102,10 @@
             android:src="@drawable/ic_baseline_arrow_downward_24"
             app:tint="@android:color/holo_blue_light"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/postImage"/>
+            app:layout_constraintTop_toTopOf="@id/postUpvoteButton"
+            app:layout_constraintBottom_toBottomOf="@id/postUpvoteButton"
+            />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>
