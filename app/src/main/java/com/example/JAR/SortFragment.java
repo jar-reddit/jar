@@ -47,6 +47,7 @@ public class SortFragment extends DialogFragment {
             public void onClick(DialogInterface dialog, int which) {
                 SubredditActivity activity = (SubredditActivity) getActivity();
                 activity.showSortOptions(selectedSort);
+
             }
         });
 
