@@ -245,53 +245,84 @@ public class SubredditActivity extends AppCompatActivity {
     public void showSortOptions(int sortCriteria)
     {
         RedditClient reddit = JRAW.getInstance(this);
-        if (this instanceof MainActivity) {
+        if (frontpage) {
             switch (sortCriteria) {
                 case 0:
+//                  String p = allPosts.get(0).getPermalink();
+//                  Log.d("postHTML", p);
+                    Log.d("HOT", String.valueOf(sortCriteria));
                     page = reddit.frontPage().sorting(SubredditSort.HOT).build();
                     backgroundTasks();
+                    break;
                 case 1:
+                    Log.d("NEW", String.valueOf(sortCriteria));
                     page = reddit.frontPage().sorting(SubredditSort.NEW).build();
                     backgroundTasks();
+                    break;
                 case 2:
+                    Log.d("TOP", String.valueOf(sortCriteria));
                     page = reddit.frontPage().sorting(SubredditSort.TOP).build();
                     backgroundTasks();
+                    break;
                 case 3:
+                    Log.d("RISING", String.valueOf(sortCriteria));
                     page = reddit.frontPage().sorting(SubredditSort.RISING).build();
                     backgroundTasks();
+                    break;
                 case 4:
+                    Log.d("CONTROVERSIAL", String.valueOf(sortCriteria));
                     page = reddit.frontPage().sorting(SubredditSort.CONTROVERSIAL).build();
                     backgroundTasks();
+                    break;
                 case 5:
+                    Log.d("BEST", String.valueOf(sortCriteria));
                     page = reddit.frontPage().sorting(SubredditSort.BEST).build();
                     backgroundTasks();
+                    break;
             }
         }
-//            switch (sortCriteria)
-//            {
-//                case 0:
-//
-//                case 1:
-//                    Background.execute(() -> {
-//                        page = reddit.frontPage().sorting(SubredditSort.NEW).build();
-//                        List<Submission> posts = page.next().getChildren(); // This retrieves all the posts
-//
-//                        Log.d("Jar", "added posts");
-//                        runOnUiThread(() -> {
-//                            postAdapter.notifyDataSetChanged();
-//                        });
-//                    });
-////                    Toast.makeText(this, String.valueOf(sortCriteria), Toast.LENGTH_LONG).show();
-//////                      NavigationHandler.openSubreddit("pics", this);
-////                    page = reddit.frontPage().sorting(SubredditSort.NEW).build();
-//////                      JRAW.getInstance(this).frontPage().sorting(SubredditSort.NEW).build();
-//                case 2:
-//                    Toast.makeText(this, String.valueOf(sortCriteria), Toast.LENGTH_LONG).show();
-////                      NavigationHandler.openSubreddit("pics", this);
-//                    page = reddit.frontPage().sorting(SubredditSort.TOP).build();
-////                      JRAW.getInstance(this).frontPage().sorting(SubredditSort.NEW).build();
-//
-//            }
+        else
+        {
+            String postSub = allPosts.get(0).getSubreddit();
+            switch (sortCriteria) {
+                case 0:
+                    Toast.makeText(this, String.valueOf(sortCriteria), Toast.LENGTH_SHORT).show();
+                    Log.d("HOT", String.valueOf(sortCriteria));
+                    page = reddit.subreddit(postSub).posts().sorting(SubredditSort.HOT).build();
+                    backgroundTasks();
+                    break;
+                case 1:
+                    Toast.makeText(this, String.valueOf(sortCriteria), Toast.LENGTH_SHORT).show();
+                    Log.d("NEW", String.valueOf(sortCriteria));
+                    page = reddit.subreddit(postSub).posts().sorting(SubredditSort.NEW).build();
+                    backgroundTasks();
+                    break;
+                case 2:
+                    Toast.makeText(this, String.valueOf(sortCriteria), Toast.LENGTH_SHORT).show();
+                    Log.d("TOP", String.valueOf(sortCriteria));
+                    page = reddit.subreddit(postSub).posts().sorting(SubredditSort.TOP).build();
+                    backgroundTasks();
+                    break;
+                case 3:
+                    Toast.makeText(this, String.valueOf(sortCriteria), Toast.LENGTH_SHORT).show();
+                    Log.d("RISING", String.valueOf(sortCriteria));
+                    page = reddit.subreddit(postSub).posts().sorting(SubredditSort.RISING).build();
+                    backgroundTasks();
+                    break;
+                case 4:
+                    Toast.makeText(this, String.valueOf(sortCriteria), Toast.LENGTH_SHORT).show();
+                    Log.d("CONTROVERSIAL", String.valueOf(sortCriteria));
+                    page = reddit.subreddit(postSub).posts().sorting(SubredditSort.CONTROVERSIAL).build();
+                    backgroundTasks();
+                    break;
+                case 5:
+                    Toast.makeText(this, String.valueOf(sortCriteria), Toast.LENGTH_SHORT).show();
+                    Log.d("BEST", String.valueOf(sortCriteria));
+                    page = reddit.subreddit(postSub).posts().sorting(SubredditSort.BEST).build();
+                    backgroundTasks();
+                    break;
+            }
+        }
 
         }
 
