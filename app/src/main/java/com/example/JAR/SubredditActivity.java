@@ -33,14 +33,20 @@ import com.example.JAR.databinding.ActivitySubredditBinding;
 import net.dean.jraw.RedditClient;
 import net.dean.jraw.models.Listing;
 import net.dean.jraw.models.Submission;
+import net.dean.jraw.models.Subreddit;
 import net.dean.jraw.models.SubredditSearchResult;
 import net.dean.jraw.models.SubredditSort;
 import net.dean.jraw.models.TimePeriod;
+import net.dean.jraw.pagination.BackoffStrategy;
 import net.dean.jraw.pagination.DefaultPaginator;
+import net.dean.jraw.pagination.RedditIterable;
+import net.dean.jraw.pagination.Stream;
+import net.dean.jraw.pagination.SubredditSearchPaginator;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -175,13 +181,21 @@ public class SubredditActivity extends AppCompatActivity {
                 {
                     Background.execute(() ->
                     {
-                        RedditClient subSub = JRAW.getInstance(getApplicationContext());
+//                        RedditClient subSub = JRAW.getInstance(getApplicationContext());
+//                        if (query.length() > 0) {
+//                            List<SubredditSearchResult> subSuggestList = subSub.searchSubredditsByName(query);
+//                            suggestionList.clear();
+//                            if (subSuggestList.size() > 0 ) {
+//                                for (int i = 0; i < subSuggestList.size(); i++) {
+//                                    suggestionList.add(subSuggestList.get(i).getName());
+
                         if (query.length() > 0) {
-                            List<SubredditSearchResult> subSuggestList = subSub.searchSubredditsByName(query);
+                         List<Subreddit> subSuggestList = newSubredditSearch(query);
                             suggestionList.clear();
                             if (subSuggestList.size() > 0 ) {
                                 for (int i = 0; i < subSuggestList.size(); i++) {
                                     suggestionList.add(subSuggestList.get(i).getName());
+
                                 }
                             }
                             searchSuggestions.setTextFilterEnabled(true);
@@ -240,6 +254,16 @@ public class SubredditActivity extends AppCompatActivity {
     public List<SubredditSearchResult> checkSubreddit(String query) {
         RedditClient subSearch = JRAW.getInstance(getApplicationContext());
         return subSearch.searchSubredditsByName(query);
+    }
+
+    public List<Subreddit> newSubredditSearch (String query) {
+        RedditClient subSearch = JRAW.getInstance(getApplicationContext());
+        SubredditSearchPaginator.Builder builder = subSearch.searchSubreddits();
+        SubredditSearchPaginator p = builder.query(query).limit(10).build();
+        List<Subreddit> searchList = p.next();
+        return searchList;
+
+
     }
 
     public void showSortOptions(int sortCriteria)
