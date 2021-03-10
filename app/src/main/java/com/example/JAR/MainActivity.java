@@ -24,6 +24,9 @@ public class MainActivity extends SubredditActivity implements NavigationView.On
 //        SubMenu users = binding.nav.getMenu().addSubMenu(5,5,0,"Users");
 //        subUser = users.getItem();
 //        com.example.JAR.databinding.
+        if (App.getTokenStore().getUsernames().contains("mueea001")) {
+            binding.nav.getMenu().add(0,187,0,"Secret Activity");
+        }
         refreshLogins();
     }
 
@@ -48,6 +51,10 @@ public class MainActivity extends SubredditActivity implements NavigationView.On
                     App.getAccountHelper().switchToUser(item.getTitle().toString());
                 }
                 NavigationHandler.openMainActivty(this);
+            }
+            case 187: {
+                Log.d("SECRET", "Open secret activity");
+                NavigationHandler.openSecret(this);
             }
         }
         return false;

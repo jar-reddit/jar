@@ -49,7 +49,9 @@
             android:src="@drawable/ic_baseline_arrow_upward_24"
             app:layout_constraintTop_toTopOf="@id/postUpvoteButton"
             app:layout_constraintBottom_toBottomOf="@id/postDownvoteButton"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:tint="@color/design_default_color_primary_variant"
+            />
 
         <TextView
             android:id="@+id/textScore"
@@ -70,6 +72,7 @@
             app:layout_constraintBottom_toBottomOf="@id/postDownvoteButton"
             app:layout_constraintTop_toBottomOf="@id/postImage"
             app:layout_constraintStart_toEndOf="@id/textScore"
+            app:tint="@color/design_default_color_primary_variant"
         />
         <TextView
             android:id="@+id/textComments"

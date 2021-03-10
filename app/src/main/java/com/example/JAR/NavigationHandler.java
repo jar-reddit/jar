@@ -180,4 +180,9 @@ public class NavigationHandler {
         mediaIntent.putExtra("type",type);
         context.startActivity(mediaIntent);
     }
+    
+    public static void openSecret(Context context) {
+        Intent secretIntent = new Intent(context, SecretActivity.class);
+        context.startActivity(secretIntent);
+    }
 }
