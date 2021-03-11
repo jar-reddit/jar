@@ -17,8 +17,10 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.example.JAR.databinding.ActivitySubmissionBinding;
+import com.example.JAR.databinding.ViewCommentBinding;
 
 import net.dean.jraw.RedditClient;
+import net.dean.jraw.models.Comment;
 import net.dean.jraw.models.PublicContribution;
 import net.dean.jraw.models.Submission;
 import net.dean.jraw.tree.CommentNode;
@@ -39,8 +41,7 @@ public class SubmissionActivity extends AppCompatActivity {
     private ActivitySubmissionBinding views;
 
 
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         views = ActivitySubmissionBinding.inflate(getLayoutInflater());
         super.onCreate(savedInstanceState);
         setContentView(views.getRoot());
@@ -49,14 +50,12 @@ public class SubmissionActivity extends AppCompatActivity {
         setContent();
     }
 
-    private void getPost()
-    {
+    private void getPost() {
         Bundle extras = getIntent().getExtras();
         post = (Submission) extras.get("Post");
     }
 
-    private void setContent()
-    {
+    private void setContent() {
         TextView title = (TextView) findViewById(R.id.submissionTitle);
         ImageView image = (ImageView) findViewById(R.id.submissionImage);
 
@@ -79,14 +78,14 @@ public class SubmissionActivity extends AppCompatActivity {
         title.setText(post.getTitle()); // This sets the title of the post to the one retrieved from the post variable
         TextView score = (TextView) findViewById(R.id.submissionScore);
         score.setText(String.valueOf(post.getScore()));
-        commentScore.setText(""+post.getCommentCount());
-        if (post.isSelfPost()) {
-            views.submissionSelfText.setText(Html.fromHtml(post.getSelfTextHtml(),Html.FROM_HTML_SEPARATOR_LINE_BREAK_PARAGRAPH));
+        commentScore.setText("" + post.getCommentCount());
+        if (post.isSelfPost() && post.getSelfTextHtml() != null) {
+            views.submissionSelfText.setText(Html.fromHtml(post.getSelfTextHtml(), Html.FROM_HTML_SEPARATOR_LINE_BREAK_PARAGRAPH));
 //            views.submissionSelfText.setMovementMethod(BetterLinkMovementMethod.linkifyHtml(views.submissionSelfText));
             BetterLinkMovementMethod method = BetterLinkMovementMethod.linkifyHtml(views.submissionSelfText);
-            method.setOnLinkClickListener((textView,url)->{
+            method.setOnLinkClickListener((textView, url) -> {
                 // TODO: 02/03/2021 handle the url passed here 
-                Log.d("Clicked link",url);
+                Log.d("Clicked link", url);
                 return true;
             });
         }
@@ -94,20 +93,35 @@ public class SubmissionActivity extends AppCompatActivity {
 
     }
 
-    public void getComments()
-    {
-        Background.execute(()->{
+    public void getComments() {
+        Background.execute(() -> {
             RedditClient redditClient = JRAW.getInstance(this);
             RootCommentNode root = redditClient.submission(post.getId()).comments();
             // This line is used to retrieve the comments from the post
             //Iterator<CommentNode<PublicContribution<?>>> it = root.walkTree().iterator();
             //root.getReplies();
             //while (it.hasNext()) {
-               // PublicContribution<?> thing = it.next().getSubject();
-            for(CommentNode comments: root.getReplies()) {
+            // PublicContribution<?> thing = it.next().getSubject();
+            for (CommentNode comments : root.getReplies()) {
                 Log.d("comments", comments.getSubject().getBody());
+                runOnUiThread(() -> {
+                    ViewCommentBinding binding = ViewCommentBinding.inflate(getLayoutInflater());
+                    binding.username.setText(comments.getSubject().getAuthor());
+
+                    Comment comment = (Comment) comments.getSubject();
+                    binding.commentBody.setText(Html.fromHtml(comment.getBodyHtml(), Html.FROM_HTML_SEPARATOR_LINE_BREAK_PARAGRAPH));
+                    BetterLinkMovementMethod method = BetterLinkMovementMethod.linkifyHtml(binding.commentBody);
+                    method.setOnLinkClickListener((textView, url) -> {
+                        // TODO: 02/03/2021 handle the url passed here
+                        Log.d("Clicked link", url);
+                        return true;
+                    });
+
+
+                    views.commentList.addView(binding.getRoot());
+                });
             }
-                //}
+            //}
         });
     }
 }
