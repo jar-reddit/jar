@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -26,6 +27,8 @@ import net.dean.jraw.models.SubmissionPreview;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+
+import me.saket.bettermovementmethod.BetterLinkMovementMethod;
 
 // This is the code for a singular post
 public class PostView extends MaterialCardView implements View.OnClickListener {
@@ -63,6 +66,12 @@ public class PostView extends MaterialCardView implements View.OnClickListener {
                 NavigationHandler.openLink(getContext(),post);
             }
         });
+        BetterLinkMovementMethod method = BetterLinkMovementMethod.linkifyHtml(binding.otherInfo);
+        method.setOnLinkClickListener((textView, url) -> {
+            Log.d("Clicked link", url);
+            NavigationHandler.openLink(PostView.this.getContext(), url);
+            return true;
+        });
 
 
 
@@ -94,8 +103,9 @@ public class PostView extends MaterialCardView implements View.OnClickListener {
         } else {
             format = format.replace("$flair",post.getLinkFlairText());
         }
-        
-        binding.otherInfo.setText(format);
+        binding.otherInfo.setText(Html.fromHtml(format, Html.FROM_HTML_SEPARATOR_LINE_BREAK_PARAGRAPH));
+
+//        binding.otherInfo.setText(format);
     }
 
     public void setPost(Submission post) {
