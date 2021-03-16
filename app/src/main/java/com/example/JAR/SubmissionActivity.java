@@ -86,6 +86,7 @@ public class SubmissionActivity extends AppCompatActivity {
             method.setOnLinkClickListener((textView, url) -> {
                 // TODO: 02/03/2021 handle the url passed here 
                 Log.d("Clicked link", url);
+                NavigationHandler.openLink(SubmissionActivity.this,url);
                 return true;
             });
         }
@@ -114,6 +115,7 @@ public class SubmissionActivity extends AppCompatActivity {
                     method.setOnLinkClickListener((textView, url) -> {
                         // TODO: 02/03/2021 handle the url passed here
                         Log.d("Clicked link", url);
+                        NavigationHandler.openLink(SubmissionActivity.this,url);
                         return true;
                     });
 
