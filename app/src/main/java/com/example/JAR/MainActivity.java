@@ -50,7 +50,7 @@ public class MainActivity extends SubredditActivity implements NavigationView.On
                 } else {
                     App.getAccountHelper().switchToUser(item.getTitle().toString());
                 }
-                NavigationHandler.openMainActivty(this);
+                NavigationHandler.openMainActivity(this);
             }
             case 187: {
                 Log.d("SECRET", "Open secret activity");

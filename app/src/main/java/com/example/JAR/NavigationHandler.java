@@ -100,11 +100,12 @@ public class NavigationHandler {
 
 
     public static void openFrontpage(Context context) {
-        Intent subredditIntent = new Intent(context, SubredditActivity.class);
-        context.startActivity(subredditIntent);
+//        Intent subredditIntent = new Intent(context, SubredditActivity.class);
+//        context.startActivity(subredditIntent);
+        openMainActivity(context);
     }
 
-    public static void openMainActivty(Context context) {
+    public static void openMainActivity(Context context) {
         Intent mainIntent = new Intent(context, MainActivity.class);
         context.startActivity(mainIntent);
     }
