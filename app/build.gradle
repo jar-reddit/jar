@@ -46,7 +46,7 @@ dependencies {
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-    implementation "com.github.mueea001:JRAW:-SNAPSHOT"
+    implementation "com.github.mueea001:JRAW:master-SNAPSHOT"
     implementation ('com.github.mueea001:JRAW-Android:master-SNAPSHOT') {
         exclude group: 'com.github.mueea001', module: 'JRAW'
     }
