@@ -40,7 +40,7 @@ public class LoginActivity extends AppCompatActivity {
                         RedditClient reddit = helper.onUserChallenge(url);
 
 
-                        NavigationHandler.openFrontpage(LoginActivity.this);
+                        NavigationHandler.openMainActivity(LoginActivity.this);
 
                     });
 
