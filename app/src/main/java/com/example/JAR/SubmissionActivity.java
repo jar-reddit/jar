@@ -84,9 +84,8 @@ public class SubmissionActivity extends AppCompatActivity {
 //            views.submissionSelfText.setMovementMethod(BetterLinkMovementMethod.linkifyHtml(views.submissionSelfText));
             BetterLinkMovementMethod method = BetterLinkMovementMethod.linkifyHtml(views.submissionSelfText);
             method.setOnLinkClickListener((textView, url) -> {
-                // TODO: 02/03/2021 handle the url passed here 
                 Log.d("Clicked link", url);
-                NavigationHandler.openLink(SubmissionActivity.this,url);
+                NavigationHandler.openLink(SubmissionActivity.this, url);
                 return true;
             });
         }
@@ -113,9 +112,8 @@ public class SubmissionActivity extends AppCompatActivity {
                     binding.commentBody.setText(Html.fromHtml(comment.getBodyHtml(), Html.FROM_HTML_SEPARATOR_LINE_BREAK_PARAGRAPH));
                     BetterLinkMovementMethod method = BetterLinkMovementMethod.linkifyHtml(binding.commentBody);
                     method.setOnLinkClickListener((textView, url) -> {
-                        // TODO: 02/03/2021 handle the url passed here
                         Log.d("Clicked link", url);
-                        NavigationHandler.openLink(SubmissionActivity.this,url);
+                        NavigationHandler.openLink(SubmissionActivity.this, url);
                         return true;
                     });
 
