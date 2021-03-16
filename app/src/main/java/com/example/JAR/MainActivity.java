@@ -41,7 +41,7 @@ public class MainActivity extends SubredditActivity implements NavigationView.On
         switch (item.getItemId()) {
             case R.id.nav_login: {
                 NavigationHandler.openLogin(this);
-                return false;
+                return true;
             }
             case 5: {
 
@@ -51,10 +51,12 @@ public class MainActivity extends SubredditActivity implements NavigationView.On
                     App.getAccountHelper().switchToUser(item.getTitle().toString());
                 }
                 NavigationHandler.openMainActivity(this);
+                return true;
             }
             case 187: {
                 Log.d("SECRET", "Open secret activity");
                 NavigationHandler.openSecret(this);
+                return true;
             }
         }
         return false;
