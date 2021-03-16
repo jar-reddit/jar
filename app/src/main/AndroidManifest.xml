@@ -56,5 +56,7 @@
         <activity android:name=".SearchActivity"/>
         <activity android:name=".LoginActivity"/>
         <activity android:name=".SecretActivity"/>
+        <activity android:name=".TomlActivity"
+            android:windowSoftInputMode="adjustResize"/>
     </application>
 </manifest>

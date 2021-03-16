@@ -16,6 +16,15 @@
 
         </menu>
     </item>
+    <item
+        android:id="@+id/setting_menu"
+        android:title="Settings">
+        <menu>
+            <item
+                android:id="@+id/menuToml"
+                android:title="Edit TOML" />
+        </menu>
+    </item>
 
 
 </menu>

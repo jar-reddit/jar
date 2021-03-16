@@ -43,6 +43,10 @@ public class MainActivity extends SubredditActivity implements NavigationView.On
                 NavigationHandler.openLogin(this);
                 return true;
             }
+            case R.id.menuToml: {
+                NavigationHandler.openTomlEditor(this);
+                return true;
+            }
             case 5: {
 
                 if (item.getTitle().toString().equals("Guest")) {
