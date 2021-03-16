@@ -22,6 +22,19 @@ public class App extends Application {
     private static AccountHelper accountHelper;
     private static SharedPreferencesTokenStore tokenStore;
     private static UserAgent ua;
+
+    public static AccountHelper getAccountHelper() {
+        return accountHelper;
+    }
+
+    public static SharedPreferencesTokenStore getTokenStore() {
+        return tokenStore;
+    }
+
+    public static UserAgent getUserAgent() {
+        return ua;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -30,7 +43,7 @@ public class App extends Application {
             @Override
             public AppInfo provide() {
                 Context context = getApplicationContext();
-                ua = new UserAgent("android", context.getPackageName(),context.getString(R.string.app_version),"JARForReddit");
+                ua = new UserAgent("android", context.getPackageName(), context.getString(R.string.app_version), "JARForReddit");
                 return new AppInfo("fxPqP8pMEuu-Tw",
                         "http://localhost:8080/",
                         ua
@@ -59,12 +72,12 @@ public class App extends Application {
                 getSharedPreferences(getPackageName().concat("users"), MODE_PRIVATE)
                         .edit()
                         .putString("lastUser", redditClient.me().getUsername()).apply();
-                Log.d("Current user",redditClient.me().getUsername());
+                Log.d("Current user", redditClient.me().getUsername());
             } catch (IllegalStateException e) {
                 getSharedPreferences(getPackageName().concat("users"), MODE_PRIVATE)
                         .edit()
                         .putString("lastUser", "<userless>").apply();
-                Log.d("Current user","<userless>");
+                Log.d("Current user", "<userless>");
             }
             LogAdapter logAdapter = new SimpleAndroidLogAdapter(Log.INFO);
 
@@ -77,11 +90,8 @@ public class App extends Application {
             // redditClient.setLogger(new NoopHttpLogger());
             return null;
         });
-        Log.d("Jar","usernames: "+tokenStore.getUsernames().toString());
+        Log.d("Jar", "usernames: " + tokenStore.getUsernames().toString());
 
 
     }
-    public static AccountHelper getAccountHelper() { return accountHelper; }
-    public static SharedPreferencesTokenStore getTokenStore() { return tokenStore; }
-    public static UserAgent getUserAgent() { return ua; }
 }

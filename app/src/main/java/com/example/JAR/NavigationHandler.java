@@ -4,10 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
-import android.webkit.WebView;
 
+import net.dean.jraw.models.Sorting;
 import net.dean.jraw.models.Submission;
-import net.dean.jraw.pagination.DefaultPaginator;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -19,84 +18,68 @@ import java.util.List;
 public class NavigationHandler {
     /**
      * Opens the correct Activity when url is passed.
-     * @param uri the reddit uri you want to go to
+     *
+     * @param uri     the reddit uri you want to go to
      * @param context
      */
     public static void openUri(Uri uri, Context context) {
         List<String> uriPath = uri.getPathSegments();
         String subreddit;
-        if (uriPath.size() >=2 && uriPath.get(0).equals("r")) {
-            Log.d("JAR URL",uriPath.get(1));
+        if (uriPath.size() >= 2 && uriPath.get(0).equals("r")) {
+            Log.d("JAR URL", uriPath.get(1));
             subreddit = uriPath.get(1);
-            if (uriPath.size() >=4 && uriPath.get(2).equals("comments")) {
-                openSubmission(uriPath.get(3),context);
-//                Intent submissionIntent = new Intent(context, SubmissionActivity.class);
-//                Background.execute(() -> {
-//                    Log.d("Post URL",uriPath.get(3));
-//                    Submission s = JRAW.getInstance(context).submission(uriPath.get(3)).inspect();
-//                    ((Activity) context).runOnUiThread(()-> {
-//                        submissionIntent.putExtra("Post",s);
-//                        context.startActivity(submissionIntent);
-//                    });
-//                });
-
+            if (uriPath.size() >= 4 && uriPath.get(2).equals("comments")) {
+                openSubmission(uriPath.get(3), context);
 
             } else {
-                openSubreddit(subreddit,context);
-//                Intent subredditIntent = new Intent(context, SubredditActivity.class);
-//                subredditIntent.setAction(Intent.ACTION_SEARCH);
-//                subredditIntent.putExtra("query", subreddit);
-//                context.startActivity(subredditIntent);
+                openSubreddit(subreddit, context);
             }
-        } else {
+        } else if (uriPath.size() == 0) {
             openFrontpage(context);
-//            Intent subredditIntent = new Intent(context, SubredditActivity.class);
-//            context.startActivity(subredditIntent);
+        } else {
+            letAndroidHandleIt(uri.toString(), context);
         }
     }
 
     /**
      * Open the corresponding submission
+     *
      * @param id
      * @param context
      */
     public static void openSubmission(String id, Context context) {
 
-        Background.execute(()->{
+        Background.execute(() -> {
             Submission sub;
             sub = JRAW.getInstance(context).submission(id).inspect();
-            openSubmission(sub,context);
+            openSubmission(sub, context);
         });
 
     }
 
     /**
      * open a submission when a {@link Submission} object is passed
+     *
      * @param submission
      * @param context
      */
     public static void openSubmission(Submission submission, Context context) {
         Intent submissionIntent = new Intent(context, SubmissionActivity.class);
-        submissionIntent.putExtra("Post",submission);
+        submissionIntent.putExtra("Post", submission);
         context.startActivity(submissionIntent);
     }
 
     public static void openSubreddit(String subreddit, Context context) {
+        openSubreddit(subreddit,0,context);
+    }
+
+    public static void openSubreddit(String subreddit, int sortCriteria, Context context) {
         Intent subredditIntent = new Intent(context, SubredditActivity.class);
         subredditIntent.setAction(Intent.ACTION_SEARCH);
         subredditIntent.putExtra("query", subreddit);
+        subredditIntent.putExtra("sort",sortCriteria);
         context.startActivity(subredditIntent);
-//        Background.execute(()->{
-//            DefaultPaginator<Submission> page = JRAW.getInstance(context).subreddit(subreddit).posts().build();
-//
-//        });
     }
-
-    public static void openSubreddit(String subreddit, int sortCriteria, Context context)
-    {
-
-    }
-
 
 
     public static void openFrontpage(Context context) {
@@ -122,28 +105,34 @@ public class NavigationHandler {
 
     /**
      * Open the link in the appropriate activity
+     *
      * @param url URL to resource
      */
     public static void openLink(Context context, String url) {
         try {
             openLink(context, new URL(url));
         } catch (MalformedURLException e) {
-            Log.d("JAR/URL",e.getMessage());
+            Log.d("JAR/URL", e.getMessage());
         }
     }
 
     /**
      * Open a link in a submission like the video or image
+     *
      * @param submission the instance of the submission
      */
     public static void openLink(Context context, Submission submission) {
         String type = UrlDetector.detect(submission.getUrl());
         if (type.equals("reddit:video")) {
-            openVideo(context, submission.getEmbeddedMedia().getRedditVideo().getDashUrl());
+            if (submission.getEmbeddedMedia() != null
+                    && submission.getEmbeddedMedia().getRedditVideo() != null) {
+                openVideo(context, submission.getEmbeddedMedia().getRedditVideo().getDashUrl());
+            }
+            // TODO: 16/03/2021 show error  
         } else {
-            openLink(context,submission.getUrl());
+            openLink(context, submission.getUrl());
         }
-        
+
     }
 
     private static void openLink(Context context, URL url) {
@@ -152,36 +141,52 @@ public class NavigationHandler {
             openImage(context, url.toString());
         } else if (type.contains("video")) {
             if (type.contains("imgur")) {
-                String mp4Url =url.toString().replace(".gifv",".mp4");
+                String mp4Url = url.toString().replace(".gifv", ".mp4");
                 openVideo(context, mp4Url);
             } else {
                 openVideo(context, url.toString());
             }
         } else {
-            Intent browserIntent = new Intent(Intent.ACTION_VIEW,Uri.parse(url.toString()));
-            context.startActivity(browserIntent);
+            letAndroidHandleIt(url.toString(), context);
         }
         // TODO: 02/03/2021 add more link types like article to open in WebActivity 
     }
-    
+
+    public static void letAndroidHandleIt(String url, Context context) {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        context.startActivity(browserIntent);
+    }
+
     public static void openVideo(Context context, String url) {
-        openMedia(context,url,"video");
+        openMedia(context, url, "video");
 
     }
-    
+
     public static void openImage(Context context, String url) {
-        openMedia(context,url,"image");
-        
+        openMedia(context, url, "image");
+
     }
-    
+
+    /**
+     * Open the media activity
+     *
+     * @param context
+     * @param url
+     * @param type
+     */
     private static void openMedia(Context context, String url, String type) {
-        Log.d("JAR","opening "+type);
-        Intent mediaIntent = new Intent(context,MediaActivity.class);
-        mediaIntent.putExtra("url",url);
-        mediaIntent.putExtra("type",type);
+        Log.d("JAR", "opening " + type);
+        Intent mediaIntent = new Intent(context, MediaActivity.class);
+        mediaIntent.putExtra("url", url);
+        mediaIntent.putExtra("type", type);
         context.startActivity(mediaIntent);
     }
-    
+
+    /**
+     * Open secret activity
+     *
+     * @param context the context
+     */
     public static void openSecret(Context context) {
         Intent secretIntent = new Intent(context, SecretActivity.class);
         context.startActivity(secretIntent);
