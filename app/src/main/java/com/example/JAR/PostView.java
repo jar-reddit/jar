@@ -142,4 +142,6 @@ public class PostView extends MaterialCardView implements View.OnClickListener {
     public Submission getPost() {
         return post;
     }
+    
+    public ViewPostBinding getBinding(){return binding;};
 }
