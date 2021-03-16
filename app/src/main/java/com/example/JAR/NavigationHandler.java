@@ -191,4 +191,9 @@ public class NavigationHandler {
         Intent secretIntent = new Intent(context, SecretActivity.class);
         context.startActivity(secretIntent);
     }
+
+    public static void openTomlEditor(Context context) {
+        Intent tomlEditorIntent = new Intent(context,TomlActivity.class);
+        context.startActivity(tomlEditorIntent);
+    }
 }
