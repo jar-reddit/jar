@@ -6,9 +6,13 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.JAR.databinding.ActivityTomlBinding;
+import com.moandjiezana.toml.TomlWriter;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
 import java.util.Scanner;
 
 public class TomlActivity extends AppCompatActivity {
@@ -23,14 +27,30 @@ public class TomlActivity extends AppCompatActivity {
         file = new File(this.getFilesDir(), "settings.toml");
         try {
             Scanner scanner = new Scanner(this.openFileInput(file.getName()));
-            String settings = "";
+            StringBuilder settings = new StringBuilder();
             while (scanner.hasNextLine()) {
-                settings += scanner.nextLine()+"\n";
+                settings.append(scanner.nextLine()).append("\n");
             }
-            view.tomlText.setText(settings);
+            view.tomlText.setText(settings.toString());
             scanner.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+        
+        view.btnApply.setOnClickListener((view1)->{
+            try {
+                Writer writer = new FileWriter(file);
+                writer.write(view.tomlText.getText().toString());
+                writer.close();
+                Settings.refresh();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            TomlActivity.this.finish();
+        });
+        
+        view.btnCancel.setOnClickListener((view)->{
+            TomlActivity.this.finish();
+        });
     }
 }

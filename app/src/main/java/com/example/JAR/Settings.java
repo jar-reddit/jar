@@ -173,5 +173,9 @@ public class Settings{
     public static Toml getSettings(Context context) {
         return getInstance(context).setting;
     }
+    
+    public static void refresh(){
+        INSTANCE = new Settings(INSTANCE.context);
+    }
 
 }
