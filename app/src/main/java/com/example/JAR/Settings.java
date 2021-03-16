@@ -39,15 +39,11 @@ public class Settings{
         settings = new HashMap<>();
         settingFile = new File(context.getFilesDir(),"settings.toml");
 
-        if(settingFile.exists()){
+        if(!settingFile.exists()){
 //            readSettings();
-            setting = new Toml().read(settingFile);
-        }else{
-
-//            defaultSettings();
             defaultToml();
         }
-
+        setting = new Toml().read(settingFile);
     }
 
     /***
