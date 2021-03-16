@@ -1,23 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_height="match_parent"
-    android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardElevation="5dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:layout_margin="5dp"
-    >
+    app:cardElevation="5dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        >
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/postTitle"
+            style="@style/TextAppearance.MaterialComponents.Headline6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/TextAppearance.MaterialComponents.Headline6"
             android:text="postTitle"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -33,13 +31,12 @@
 
         <TextView
             android:id="@+id/otherInfo"
-            android:text="Other Info here"
+            style="@style/TextAppearance.MaterialComponents.Caption"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/TextAppearance.MaterialComponents.Caption"
+            android:text="Other Info here"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/postImage"
-            />
+            app:layout_constraintTop_toBottomOf="@id/postImage" />
 
         <ImageView
             android:id="@+id/scoreIcon"
@@ -47,51 +44,49 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:src="@drawable/ic_baseline_arrow_upward_24"
-            app:layout_constraintTop_toTopOf="@id/postUpvoteButton"
             app:layout_constraintBottom_toBottomOf="@id/postDownvoteButton"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/postUpvoteButton" />
 
         <TextView
             android:id="@+id/textScore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            app:layout_constraintTop_toTopOf="@id/postUpvoteButton"
             app:layout_constraintBottom_toBottomOf="@id/postDownvoteButton"
             app:layout_constraintStart_toEndOf="@id/scoreIcon"
-            />
+            app:layout_constraintTop_toTopOf="@id/postUpvoteButton" />
 
         <ImageView
             android:id="@+id/commentsIcon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_baseline_comment_24"
-            app:layout_constraintTop_toTopOf="@id/postUpvoteButton"
             app:layout_constraintBottom_toBottomOf="@id/postDownvoteButton"
-            app:layout_constraintTop_toBottomOf="@id/postImage"
             app:layout_constraintStart_toEndOf="@id/textScore"
-        />
+            app:layout_constraintTop_toBottomOf="@id/postImage"
+            app:layout_constraintTop_toTopOf="@id/postUpvoteButton" />
+
         <TextView
             android:id="@+id/textComments"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="comments"
-            app:layout_constraintTop_toTopOf="@id/postUpvoteButton"
             app:layout_constraintBottom_toBottomOf="@id/postDownvoteButton"
-            app:layout_constraintStart_toEndOf="@id/commentsIcon"/>
+            app:layout_constraintStart_toEndOf="@id/commentsIcon"
+            app:layout_constraintTop_toTopOf="@id/postUpvoteButton" />
 
         <ImageButton
             android:id="@+id/postUpvoteButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@drawable/ic_baseline_arrow_upward_24"
-            app:tint="@android:color/holo_orange_light"
             android:backgroundTint="@android:color/black"
+            android:src="@drawable/ic_baseline_arrow_upward_24"
             app:layout_constraintEnd_toStartOf="@id/postDownvoteButton"
             app:layout_constraintTop_toBottomOf="@id/otherInfo"
-            />
+            app:tint="@android:color/holo_orange_light" />
 
         <ImageButton
             android:id="@+id/postDownvoteButton"
@@ -100,11 +95,10 @@
             android:layout_weight="1"
             android:backgroundTint="@android:color/black"
             android:src="@drawable/ic_baseline_arrow_downward_24"
-            app:tint="@android:color/holo_blue_light"
+            app:layout_constraintBottom_toBottomOf="@id/postUpvoteButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/postUpvoteButton"
-            app:layout_constraintBottom_toBottomOf="@id/postUpvoteButton"
-            />
+            app:tint="@android:color/holo_blue_light" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
