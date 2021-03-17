@@ -91,7 +91,7 @@ public class PostView extends MaterialCardView implements View.OnClickListener {
 
         this.txtScore.setText(score);
         this.txtComments.setText(comments);
-        String format = Settings.getSettings(getContext()).getString("format");
+        String format = Settings.getSettings(getContext()).getString("posts.format");
         Chunk chunk = new Chunk();
         chunk.append(format);
         chunk.set("subreddit",post.getSubreddit());

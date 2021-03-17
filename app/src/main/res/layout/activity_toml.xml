@@ -4,16 +4,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <EditText
+    <EditText xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/tomlText"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:ems="10"
+        android:fontFamily="monospace"
         android:gravity="start|top"
         android:inputType="textMultiLine"
+        app:layout_constraintBottom_toTopOf="@id/btnCancel"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/btnCancel"/>
+        tools:imeOptions="flagNoPersonalizedLearning|flagNoFullscreen"
+        tools:inputType="textNoSuggestions|textFilter|textMultiLine" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnReset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:text="@string/reset"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnCancel"
@@ -21,9 +33,9 @@
         android:layout_height="wrap_content"
         android:layout_margin="4dp"
         android:text="@string/cancel"
-        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/btnApply"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintHorizontal_weight="1" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnApply"
@@ -31,6 +43,6 @@
         android:layout_height="wrap_content"
         android:layout_margin="4dp"
         android:text="@string/apply"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
