@@ -24,18 +24,10 @@ public class TomlActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         view = ActivityTomlBinding.inflate(getLayoutInflater());
         setContentView(view.getRoot());
+        setTitle("TOML");
         file = new File(this.getFilesDir(), "settings.toml");
-        try {
-            Scanner scanner = new Scanner(this.openFileInput(file.getName()));
-            StringBuilder settings = new StringBuilder();
-            while (scanner.hasNextLine()) {
-                settings.append(scanner.nextLine()).append("\n");
-            }
-            view.tomlText.setText(settings.toString());
-            scanner.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+
+        readToml();
         
         view.btnApply.setOnClickListener((view1)->{
             try {
@@ -52,5 +44,24 @@ public class TomlActivity extends AppCompatActivity {
         view.btnCancel.setOnClickListener((view)->{
             TomlActivity.this.finish();
         });
+
+        view.btnReset.setOnClickListener((btnView)->{
+            Settings.getInstance(this).defaultToml();
+            readToml();
+        });
+    }
+    
+    private void readToml() {
+        try {
+            Scanner scanner = new Scanner(this.openFileInput(file.getName()));
+            StringBuilder settings = new StringBuilder();
+            while (scanner.hasNextLine()) {
+                settings.append(scanner.nextLine()).append("\n");
+            }
+            view.tomlText.setText(settings.toString());
+            scanner.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -15,7 +15,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MaterialComponents.DayNight">
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity" android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -25,6 +25,7 @@
                 android:value=".SubredditActivity" />
         </activity>
         <activity
+            android:configChanges="orientation|screenSize"
             android:name=".SubmissionActivity" >
 
         </activity>
@@ -34,6 +35,7 @@
             android:name=".MediaActivity" >
         </activity>
         <activity
+            android:configChanges="orientation|screenSize"
             android:name=".SubredditActivity"
             >
             <meta-data android:name="android.app.searchable"
@@ -53,10 +55,11 @@
                     />
             </intent-filter>
         </activity>
-        <activity android:name=".SearchActivity"/>
-        <activity android:name=".LoginActivity"/>
-        <activity android:name=".SecretActivity"/>
+        <activity android:name=".SearchActivity" android:configChanges="orientation|screenSize"/>
+        <activity android:name=".LoginActivity" android:configChanges="orientation|screenSize"/>
+        <activity android:name=".SecretActivity" android:configChanges="orientation|screenSize"/>
         <activity android:name=".TomlActivity"
+            android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="adjustResize"/>
     </application>
 </manifest>
