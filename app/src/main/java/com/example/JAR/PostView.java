@@ -19,6 +19,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.JAR.databinding.ViewPostBinding;
 import com.google.android.material.card.MaterialCardView;
+import com.x5.template.Chunk;
 
 import net.dean.jraw.models.Comment;
 import net.dean.jraw.models.Submission;
@@ -27,6 +28,7 @@ import net.dean.jraw.models.SubmissionPreview;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.HashMap;
 
 import me.saket.bettermovementmethod.BetterLinkMovementMethod;
 
@@ -87,25 +89,21 @@ public class PostView extends MaterialCardView implements View.OnClickListener {
     public void setData(String title, String uri, String score, String comments/*, String postID*/) {
         this.txtTitle.setText(title);
 
-//        if (post.hasThumbnail()) {
-//            Log.d("JAR img", uri);
-//        }
         this.txtScore.setText(score);
         this.txtComments.setText(comments);
         String format = Settings.getSettings(getContext()).getString("format");
-//        String format = "r/$subreddit | u/$username | $flair";
-//        format = format.replace("|","\uD83C\uDDF5\uD83C\uDDF0");
-        format = format.replace("|",Settings.getSettings(getContext()).getString("separator"));
-        format = format.replace("$subreddit",post.getSubreddit());
-        format = format.replace("$username",post.getAuthor());
-        if (post.getLinkFlairText()==null) {
-            format = format.replace("$flair","-");
-        } else {
-            format = format.replace("$flair",post.getLinkFlairText());
-        }
-        binding.otherInfo.setText(Html.fromHtml(format, Html.FROM_HTML_SEPARATOR_LINE_BREAK_PARAGRAPH));
+        Chunk chunk = new Chunk();
+        chunk.append(format);
+        chunk.set("subreddit",post.getSubreddit());
+        chunk.set("author",post.getAuthor());
+        chunk.set("self_text",post.getSelfText());
+        chunk.set("self_text_html",post.getSelfTextHtml());
+        chunk.set("time",post.getCreated());
+        chunk.set("flair",post.getLinkFlairText());
+        chunk.setMultiple(Settings.getSettings(getContext()).toMap());
 
-//        binding.otherInfo.setText(format);
+        binding.otherInfo.setText(Html.fromHtml(chunk.toString(), Html.FROM_HTML_SEPARATOR_LINE_BREAK_PARAGRAPH));
+
     }
 
     public void setPost(Submission post) {
