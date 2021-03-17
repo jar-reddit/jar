@@ -14,6 +14,7 @@
 # post view on subreddits and frontpage
 [posts]
     # format supports limited HTML
+    title="{$title}"
     format="""\
     <a href='/r/{$subreddit}'>r/{$subreddit}</a> \
     {$posts.sep}\

@@ -87,7 +87,7 @@ public class PostView extends MaterialCardView implements View.OnClickListener {
      * @param comments number of comments
      */
     public void setData(String title, String uri, String score, String comments/*, String postID*/) {
-        this.txtTitle.setText(title);
+//        this.txtTitle.setText(title);
 
         this.txtScore.setText(score);
         this.txtComments.setText(comments);
@@ -100,10 +100,14 @@ public class PostView extends MaterialCardView implements View.OnClickListener {
         chunk.set("self_text_html",post.getSelfTextHtml());
         chunk.set("time",post.getCreated());
         chunk.set("flair",post.getLinkFlairText());
+        chunk.set("title",post.getTitle());
         chunk.setMultiple(Settings.getSettings(getContext()).toMap());
 
         binding.otherInfo.setText(Html.fromHtml(chunk.toString(), Html.FROM_HTML_SEPARATOR_LINE_BREAK_PARAGRAPH));
-
+        chunk.resetTemplate();
+        chunk.append(Settings.getSettings(getContext()).getString("posts.title"));
+        binding.postTitle.setText(Html.fromHtml(chunk.toString(), Html.FROM_HTML_SEPARATOR_LINE_BREAK_PARAGRAPH));
+        chunk.clear();
     }
 
     public void setPost(Submission post) {
