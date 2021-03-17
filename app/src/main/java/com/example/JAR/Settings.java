@@ -157,6 +157,7 @@ public class Settings{
                 settings.put("separator","\uD83C\uDDF5\uD83C\uDDF0");
                 settings.put("format","r/$subreddit | u/$username | $flair");
                 tomlWriter.write(settings,fos);
+
             }catch (Exception e) {
                 e.printStackTrace();
             } finally {
