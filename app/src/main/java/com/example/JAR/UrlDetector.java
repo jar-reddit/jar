@@ -32,6 +32,9 @@ public class UrlDetector {
                     return "imgur:image";
                 }
         }
+        if (url.getAuthority().endsWith("reddit.com")) {
+            return "reddit:link";
+        }
         return "unknown";
     }
     

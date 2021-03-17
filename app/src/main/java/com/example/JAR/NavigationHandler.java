@@ -9,6 +9,7 @@ import net.dean.jraw.models.Sorting;
 import net.dean.jraw.models.Submission;
 
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.List;
 
@@ -113,6 +114,9 @@ public class NavigationHandler {
             openLink(context, new URL(url));
         } catch (MalformedURLException e) {
             Log.d("JAR/URL", e.getMessage());
+            if (url.startsWith("/")) {
+                openLink(context,"https://reddit.com"+url);
+            }
         }
     }
 
@@ -146,6 +150,8 @@ public class NavigationHandler {
             } else {
                 openVideo(context, url.toString());
             }
+        } else if (type.equals("reddit:link")) {
+            openUri(Uri.parse(url.toString()),context);
         } else {
             letAndroidHandleIt(url.toString(), context);
         }
