@@ -3,8 +3,8 @@ package com.example.JAR;
 import android.content.Context;
 
 import com.moandjiezana.toml.Toml;
-import com.moandjiezana.toml.TomlWriter;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -39,7 +39,13 @@ public class Settings {
 //            readSettings();
             defaultToml();
         }
-        setting = new Toml().read(settingFile);
+        Toml defaults = null;
+        try {
+            defaults = new Toml().read(context.getAssets().open("settings.toml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        setting = new Toml(defaults).read(settingFile);
     }
 
     public static Settings getInstance(Context context) {
@@ -148,24 +154,25 @@ public class Settings {
     public void defaultToml() {
         try {
 
-                CustomStringBuilder txtSettings = new CustomStringBuilder();
-                Writer writer = new FileWriter(settingFile);
-                Scanner scanner = new Scanner(context.getAssets().open("settings.toml"));
+            CustomStringBuilder txtSettings = new CustomStringBuilder();
+            Writer writer = new FileWriter(settingFile);
+            Scanner scanner = new Scanner(context.getAssets().open("settings.toml"));
             while (scanner.hasNextLine()) {
                 txtSettings.appendLine(scanner.nextLine());
             }
             scanner.close();
-                writer.write(txtSettings.toString());
-                writer.close();
-                refresh();
+            writer.write(txtSettings.toString());
+            writer.close();
+            refresh();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
     }
-    
+
     class CustomStringBuilder {
         StringBuilder builder;
+
         public CustomStringBuilder() {
             builder = new StringBuilder();
         }
@@ -173,7 +180,7 @@ public class Settings {
         public CustomStringBuilder appendLine() {
             return appendLine("");
         }
-        
+
         public CustomStringBuilder appendLine(String str) {
             builder.append(str).append("\n");
             return this;
@@ -184,6 +191,7 @@ public class Settings {
             return this;
         }
 
+        @NotNull
         @Override
         public String toString() {
             return builder.toString();
