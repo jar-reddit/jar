@@ -17,6 +17,7 @@ import java.io.InputStreamReader;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
+import java.util.Scanner;
 
 public class Settings {
     private static Settings INSTANCE = null;
@@ -145,57 +146,18 @@ public class Settings {
     }
 
     public void defaultToml() {
-//        TomlWriter tomlWriter = new TomlWriter();
         try {
 
-//            FileOutputStream fos = null;
-//            try {
-//                fos = context.openFileOutput(settingFile.getName(), Context.MODE_PRIVATE);
-////                fos = context.openFileOutput("settings.txt", context.MODE_PRIVATE);
-//                //Example default settings
-//                String l1 = "autoplay:false" + '\n' + "darkmode:false" + '\n' + "allow_dms:true";
-//                settings.put("autoplay", "false");
-//                settings.put("darkmode", "false");
-//                settings.put("allow_dms", "true");
-//                settings.put("separator", "\uD83C\uDDF5\uD83C\uDDF0");
-//                settings.put("format", "r/$subreddit | u/$username | $flair");
-//                tomlWriter.write(settings, fos);
                 CustomStringBuilder txtSettings = new CustomStringBuilder();
-                txtSettings
-                        .appendLine("# This TOML file uses Chunk template engine.")
-                        .appendLine("# To use stored variable use {$var}")
-                        .appendLine("# The following variables are available:")
-                        .appendLine("#    $subreddit -  name of subreddit")
-                        .appendLine("#    $author    -  name of author")
-                        .appendLine("#    $self_text -  post selftext in markdown")
-                        .appendLine("#    $self_text_html - post selftext as html")
-                        .appendLine("#    $flair          - post flair")
-                        .appendLine("# all variables declared in this file are also available")
-                        .appendLine("# General settings")//.append("\n")
-                        .appendLine("[general]")//.append("\n")
-                        .appendLine("\ttheme=\"system\" # light dark or system")//.append("\n")
-                        .appendLine()
-                        .appendLine("# post view on subreddits and frontpage")//.append("\n")
-                        .appendLine("[posts]")//.append("\n")
-                        .appendLine("\t# format supports limited HTML")
-                        .appendLine("\tformat=\"\"\"\\")//.append("\n")
-                        .appendLine("\t\t<a href='/r/{$subreddit}'>r/{$subreddit}</a> \\")
-                        .appendLine("\t\t{$posts.sep}\\ ")
-                        .appendLine("\t\t<a href='/u/{$author}'>u/{$author}</a> \\")
-                        .appendLine("\t\t\"\"\"")//.append("\n")
-                        .appendLine("\tsep=\"\uD83C\uDDF5\uD83C\uDDF0\"")//.append("\n")
-                        ;
                 Writer writer = new FileWriter(settingFile);
+                Scanner scanner = new Scanner(context.getAssets().open("settings.toml"));
+            while (scanner.hasNextLine()) {
+                txtSettings.appendLine(scanner.nextLine());
+            }
+            scanner.close();
                 writer.write(txtSettings.toString());
                 writer.close();
                 refresh();
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            } finally {
-//                if (fos != null) {
-//                    fos.close();
-//                }
-//            }
         } catch (IOException e) {
             e.printStackTrace();
         }

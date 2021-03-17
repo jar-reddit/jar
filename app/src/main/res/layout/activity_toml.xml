@@ -16,7 +16,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:imeOptions="flagNoPersonalizedLearning|flagNoFullscreen"
-        tools:inputType="textNoSuggestions|textFilter|textMultiLine" />
+        tools:inputType="textNoSuggestions|textFilter|textMultiLine"
+        android:scrollHorizontally="true"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnReset"
