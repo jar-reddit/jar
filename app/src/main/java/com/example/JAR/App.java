@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.Context;
 import android.util.Log;
 
+import androidx.appcompat.app.AppCompatDelegate;
+
 import net.dean.jraw.android.AndroidHelper;
 import net.dean.jraw.android.AppInfo;
 import net.dean.jraw.android.AppInfoProvider;
@@ -52,6 +54,7 @@ public class App extends Application {
         };
         UUID uuid = UUID.randomUUID();
 
+
         // Store our access tokens and refresh tokens in shared preferences
         tokenStore = new SharedPreferencesTokenStore(getApplicationContext());
         // Load stored tokens into memory
@@ -62,6 +65,18 @@ public class App extends Application {
         // An AccountHelper manages switching between accounts and into/out of userless mode.
         accountHelper = AndroidHelper.accountHelper(provider, uuid, tokenStore);
         Settings.getInstance(getApplicationContext());
+        switch (Settings.getSettings(getApplicationContext()).getString("general.theme")) {
+            case "light":
+
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                break;
+            case "dark":
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                break;
+            case "system":
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+                break;
+        }
         // Every time we use the AccountHelper to switch between accounts (from one account to
         // another, or into/out of userless mode), call this function
         accountHelper.onSwitch(redditClient -> {
