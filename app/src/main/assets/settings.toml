@@ -1,17 +1,17 @@
-# This TOML file uses Chunk template engine.")
-# To use stored variable use {$var}")
-# The following variables are available:")
-#    $subreddit -  name of subreddit")
-#    $author    -  name of author")
-#    $self_text -  post selftext in markdown")
-#    $self_text_html - post selftext as html")
-#    $flair          - post flair")
-# all variables declared in this file are also available")
-# General settings")//.append("\n")
+# This TOML file uses Chunk template engine.
+# To use stored variable use {$var}
+# The following variables are available:
+#    $subreddit -  name of subreddit
+#    $author    -  name of author
+#    $self_text -  post selftext in markdown
+#    $self_text_html - post selftext as html
+#    $flair          - post flair
+# all variables declared in this file are also available
+# General settings
 [general]
     theme="system" # light dark or system
 
-# post view on subreddits and frontpage")//.append("\n")
+# post view on subreddits and frontpage
 [posts]
     # format supports limited HTML
     format="""\
