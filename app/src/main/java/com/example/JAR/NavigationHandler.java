@@ -1,5 +1,6 @@
 package com.example.JAR;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -84,8 +85,6 @@ public class NavigationHandler {
 
 
     public static void openFrontpage(Context context) {
-//        Intent subredditIntent = new Intent(context, SubredditActivity.class);
-//        context.startActivity(subredditIntent);
         openMainActivity(context);
     }
 
@@ -114,8 +113,9 @@ public class NavigationHandler {
             openLink(context, new URL(url));
         } catch (MalformedURLException e) {
             Log.d("JAR/URL", e.getMessage());
+            openCrash(context,e);
             if (url.startsWith("/")) {
-                openLink(context,"https://reddit.com"+url);
+//                openLink(context,"https://reddit.com"+url);
             }
         }
     }
@@ -201,5 +201,17 @@ public class NavigationHandler {
     public static void openTomlEditor(Context context) {
         Intent tomlEditorIntent = new Intent(context,TomlActivity.class);
         context.startActivity(tomlEditorIntent);
+    }
+    
+    public static void openCrash(Context context,String title, String message) {
+        Intent crashIntent = new Intent(context,CrashActivity.class);
+        crashIntent.putExtra("title",title);
+        crashIntent.putExtra("message",message);
+        context.startActivity(crashIntent);
+        ((Activity)context).finish();
+    }
+    
+    public static void openCrash(Context context, Throwable ex) {
+        openCrash(context,ex.getClass().getName(),ex.getMessage());
     }
 }

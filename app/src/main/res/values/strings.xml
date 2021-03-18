@@ -11,6 +11,8 @@
     <string name="cancel">Cancel</string>
     <string name="apply">Apply</string>
     <string name="reset">Reset</string>
+    <string name="open_toml_settings">Open TOML Settings</string>
+    <string name="frontpage">Frontpage</string>
 
     <string-array name="sort_Posts">
         <item>Hot</item>

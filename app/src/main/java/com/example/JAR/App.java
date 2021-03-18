@@ -2,8 +2,12 @@ package com.example.JAR;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDelegate;
 
 import net.dean.jraw.android.AndroidHelper;
@@ -40,6 +44,7 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Thread.setDefaultUncaughtExceptionHandler(uncaughtExceptionHandler);
         AppInfoProvider provider = new AppInfoProvider() {
             @NotNull
             @Override
@@ -109,4 +114,19 @@ public class App extends Application {
 
 
     }
+
+    private final Thread.UncaughtExceptionHandler uncaughtExceptionHandler = (t, e) -> {
+        if (Looper.getMainLooper().isCurrentThread()) {
+            NavigationHandler.openCrash(getApplicationContext(), e);
+        } else {
+            new Handler(Looper.getMainLooper()).post(() -> {
+                Intent crashIntent = new Intent(getApplicationContext(),CrashActivity.class);
+                crashIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                crashIntent.putExtra("title",e.getClass().getSimpleName());
+                crashIntent.putExtra("message",e.getMessage());
+                startActivity(crashIntent);
+            });
+        }
+    };
+
 }
