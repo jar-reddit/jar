@@ -134,7 +134,7 @@ public class SubmissionActivity extends AppCompatActivity {
                     ViewCommentBinding binding = ViewCommentBinding.inflate(getLayoutInflater());
                     binding.username.setText(commentN.getSubject().getAuthor());
                     Comment comment = (Comment) commentN.getSubject();
-                    binding.commentBody.setText(Html.fromHtml(comment.getBodyHtml(), Html.FROM_HTML_SEPARATOR_LINE_BREAK_PARAGRAPH));
+                    binding.commentBody.setText(Html.fromHtml(comment.getBodyHtml(), Html.TO_HTML_PARAGRAPH_LINES_INDIVIDUAL));
                     BetterLinkMovementMethod method = BetterLinkMovementMethod.linkifyHtml(binding.commentBody);
                     method.setOnLinkClickListener((textView, url) -> {
                         Log.d("Clicked link", url);
