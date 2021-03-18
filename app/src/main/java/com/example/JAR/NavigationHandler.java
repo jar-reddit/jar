@@ -113,9 +113,8 @@ public class NavigationHandler {
             openLink(context, new URL(url));
         } catch (MalformedURLException e) {
             Log.d("JAR/URL", e.getMessage());
-            openCrash(context,e);
             if (url.startsWith("/")) {
-//                openLink(context,"https://reddit.com"+url);
+                openLink(context,"https://reddit.com"+url);
             }
         }
     }
