@@ -60,6 +60,8 @@ public class SubmissionActivity extends AppCompatActivity {
     }
 
     private void setContent() {
+        setTitle(post.getSubreddit());
+        views.userAvatar.setVisibility(View.GONE);
         TextView title = (TextView) findViewById(R.id.submissionTitle);
         ImageView image = (ImageView) findViewById(R.id.submissionImage);
 
@@ -78,7 +80,12 @@ public class SubmissionActivity extends AppCompatActivity {
                         return false;
                     }
                 })
+                .centerCrop()
                 .into(image);
+        image.setOnClickListener((view)->{
+            NavigationHandler.openLink(this,post);
+        });
+        image.setAdjustViewBounds(true);
         title.setText(post.getTitle()); // This sets the title of the post to the one retrieved from the post variable
         TextView score = (TextView) findViewById(R.id.submissionScore);
         score.setText(String.valueOf(post.getScore()));
