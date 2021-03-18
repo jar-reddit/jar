@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.JAR">
+
     <uses-permission android:name="android.permission.INTERNET" />
     <!--
     Allows Glide to monitor connectivity status and restart failed requests if users go from a
     a disconnected to a connected network state.
     -->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -15,51 +17,62 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MaterialComponents.DayNight">
-        <activity android:name=".MainActivity" android:configChanges="orientation|screenSize">
+        <activity
+            android:name=".CrashActivity"
+            android:exported="true"></activity>
+        <activity
+            android:name=".MainActivity"
+            android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value=".SubredditActivity" />
         </activity>
         <activity
-            android:configChanges="orientation|screenSize"
-            android:name=".SubmissionActivity" >
-
-        </activity>
-
+            android:name=".SubmissionActivity"
+            android:configChanges="orientation|screenSize"></activity>
         <activity
-            android:configChanges="orientation|screenSize"
-            android:name=".MediaActivity" >
-        </activity>
+            android:name=".MediaActivity"
+            android:configChanges="orientation|screenSize"></activity>
         <activity
-            android:configChanges="orientation|screenSize"
             android:name=".SubredditActivity"
-            >
-            <meta-data android:name="android.app.searchable"
+            android:configChanges="orientation|screenSize">
+            <meta-data
+                android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
+
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
             <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE"/>
+                <action android:name="android.intent.action.VIEW" />
 
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:scheme="https"
                     android:host="*reddit.com"
-                    />
+                    android:scheme="https" />
             </intent-filter>
         </activity>
-        <activity android:name=".SearchActivity" android:configChanges="orientation|screenSize"/>
-        <activity android:name=".LoginActivity" android:configChanges="orientation|screenSize"/>
-        <activity android:name=".SecretActivity" android:configChanges="orientation|screenSize"/>
-        <activity android:name=".TomlActivity"
+        <activity
+            android:name=".SearchActivity"
+            android:configChanges="orientation|screenSize" />
+        <activity
+            android:name=".LoginActivity"
+            android:configChanges="orientation|screenSize" />
+        <activity
+            android:name=".SecretActivity"
+            android:configChanges="orientation|screenSize" />
+        <activity
+            android:name=".TomlActivity"
             android:configChanges="orientation|screenSize"
-            android:windowSoftInputMode="adjustResize"/>
+            android:windowSoftInputMode="adjustResize" />
     </application>
+
 </manifest>
