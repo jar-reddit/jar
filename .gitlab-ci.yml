@@ -70,7 +70,7 @@ assembleDebug:
   artifacts:
     paths:
       - app/build/outputs/apk/debug
-
+    expire_in: 1 day
 # Run all tests, if any fails, interrupt the pipeline(fail it)
 # debugTests:
   # interruptible: true
