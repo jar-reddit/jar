@@ -10,6 +10,8 @@
 # General settings
 [general]
     theme="system" # light dark or system
+    upvote="#FFFFBB33"     #aarrggbb
+    downvote="#FF33B5E5"   #aarrggbb
 
 # post view on subreddits and frontpage
 [posts]
@@ -21,3 +23,6 @@
     <a href='/u/{$author}'>u/{$author}</a> \
     """
     sep="🇵🇰"
+
+[comments]
+    body="<h4><a href='/u/$username'>$username</a></h4>"
