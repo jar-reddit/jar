@@ -5,9 +5,11 @@ import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +25,8 @@ import com.example.JAR.databinding.ViewCommentBinding;
 import net.dean.jraw.RedditClient;
 import net.dean.jraw.models.Comment;
 import net.dean.jraw.models.Submission;
+import net.dean.jraw.models.VoteDirection;
+import net.dean.jraw.references.PublicContributionReference;
 import net.dean.jraw.tree.CommentNode;
 import net.dean.jraw.tree.RootCommentNode;
 
@@ -90,7 +94,21 @@ public class SubmissionActivity extends AppCompatActivity {
             });
         }
         views.submissionUser.setText(post.getAuthor());
+        ImageButton upVote = (ImageButton)findViewById(R.id.Upvote);
+        ImageButton downVote = (ImageButton)findViewById(R.id.downvote);
+        upVote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               upVoting(post);
+            }
+        });
 
+        downVote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                downVoting(post);
+            }
+        });
     }
 
     public void getComments() {
@@ -167,5 +185,49 @@ public class SubmissionActivity extends AppCompatActivity {
 //                views.commentList.addView(binding.getRoot());
 //            });
 //        }
+    }
+    private void upVoting(Submission post)
+    {
+        if(isUserless())
+        {
+            Toast.makeText(getApplicationContext(), "You do not have voting privileges, please log in or message the moderator", Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
+            Background.execute(() -> {
+                PublicContributionReference pcr = post.toReference(JRAW.getInstance(this));
+                if (post.getVote() == VoteDirection.UP) {
+                    pcr.unvote();
+                } else {
+                    pcr.setVote(VoteDirection.UP);
+                    Log.d("Secret Ballot", "voted up yo");
+                }
+            });
+        }
+    }
+
+    private void downVoting(Submission post)
+    {
+        if(isUserless())
+        {
+            Toast.makeText(getApplicationContext(), "You do not have voting privileges, please log in or message the moderator", Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
+            Background.execute(() -> {
+                PublicContributionReference pcr = post.toReference(JRAW.getInstance(this));
+                if (post.getVote() == VoteDirection.DOWN) {
+                    pcr.unvote();
+                } else {
+                    pcr.setVote(VoteDirection.DOWN);
+                    Log.d("Secret Ballot", "voted down yo");
+                }
+            });
+        }
+    }
+
+    public boolean isUserless()
+    {
+        return App.getAccountHelper().getReddit().getAuthMethod().isUserless();
     }
 }
