@@ -35,6 +35,7 @@ import net.dean.jraw.models.Listing;
 import net.dean.jraw.models.Submission;
 import net.dean.jraw.models.Subreddit;
 import net.dean.jraw.models.SubredditSearchResult;
+import net.dean.jraw.models.SubredditSearchSort;
 import net.dean.jraw.models.SubredditSort;
 import net.dean.jraw.models.TimePeriod;
 import net.dean.jraw.pagination.BackoffStrategy;
@@ -189,13 +190,11 @@ public class SubredditActivity extends AppCompatActivity {
 //                                for (int i = 0; i < subSuggestList.size(); i++) {
 //                                    suggestionList.add(subSuggestList.get(i).getName());
 
-                        if (query.length() > 0) {
+                        if (query.length() > 3) {
                          List<Subreddit> subSuggestList = newSubredditSearch(query);
-                            suggestionList.clear();
-                            if (subSuggestList.size() > 0 ) {
+                         if (subSuggestList.size() > 0 ) {
                                 for (int i = 0; i < subSuggestList.size(); i++) {
                                     suggestionList.add(subSuggestList.get(i).getName());
-
                                 }
                             }
                             searchSuggestions.setTextFilterEnabled(true);
@@ -259,7 +258,7 @@ public class SubredditActivity extends AppCompatActivity {
     public List<Subreddit> newSubredditSearch (String query) {
         RedditClient subSearch = JRAW.getInstance(getApplicationContext());
         SubredditSearchPaginator.Builder builder = subSearch.searchSubreddits();
-        SubredditSearchPaginator p = builder.query(query).limit(10).build();
+        SubredditSearchPaginator p = builder.query(query).limit(10).sorting(SubredditSearchSort.RELEVANCE).build();
         List<Subreddit> searchList = p.next();
         return searchList;
 
