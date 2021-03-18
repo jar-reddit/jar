@@ -6,6 +6,7 @@ import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -21,7 +22,6 @@ import com.example.JAR.databinding.ViewCommentBinding;
 
 import net.dean.jraw.RedditClient;
 import net.dean.jraw.models.Comment;
-import net.dean.jraw.models.PublicContribution;
 import net.dean.jraw.models.Submission;
 import net.dean.jraw.tree.CommentNode;
 import net.dean.jraw.tree.RootCommentNode;
@@ -102,13 +102,38 @@ public class SubmissionActivity extends AppCompatActivity {
             //root.getReplies();
             //while (it.hasNext()) {
             // PublicContribution<?> thing = it.next().getSubject();
-            for (CommentNode comments : root.getReplies()) {
-                Log.d("comments", comments.getSubject().getBody());
+            r_comments(root, views.commentList);
+//            for (CommentNode comments : root.getReplies()) {
+//                Log.d("comments", comments.getSubject().getBody());
+//                runOnUiThread(() -> {
+//                    ViewCommentBinding binding = ViewCommentBinding.inflate(getLayoutInflater());
+//                    binding.username.setText(comments.getSubject().getAuthor());
+//
+//                    Comment comment = (Comment) comments.getSubject();
+//                    binding.commentBody.setText(Html.fromHtml(comment.getBodyHtml(), Html.FROM_HTML_SEPARATOR_LINE_BREAK_PARAGRAPH));
+//                    BetterLinkMovementMethod method = BetterLinkMovementMethod.linkifyHtml(binding.commentBody);
+//                    method.setOnLinkClickListener((textView, url) -> {
+//                        Log.d("Clicked link", url);
+//                        NavigationHandler.openLink(SubmissionActivity.this, url);
+//                        return true;
+//                    });
+//
+//
+//                    views.commentList.addView(binding.getRoot());
+//                });
+//            }
+            //}
+        });
+    }
+
+    private void r_comments(CommentNode node, LinearLayout commentList) {
+        if (node.getReplies().size() != 0) {
+            for (Object commentO : node.getReplies()) {
+                CommentNode commentN = (CommentNode) commentO;
                 runOnUiThread(() -> {
                     ViewCommentBinding binding = ViewCommentBinding.inflate(getLayoutInflater());
-                    binding.username.setText(comments.getSubject().getAuthor());
-
-                    Comment comment = (Comment) comments.getSubject();
+                    binding.username.setText(commentN.getSubject().getAuthor());
+                    Comment comment = (Comment) commentN.getSubject();
                     binding.commentBody.setText(Html.fromHtml(comment.getBodyHtml(), Html.FROM_HTML_SEPARATOR_LINE_BREAK_PARAGRAPH));
                     BetterLinkMovementMethod method = BetterLinkMovementMethod.linkifyHtml(binding.commentBody);
                     method.setOnLinkClickListener((textView, url) -> {
@@ -116,12 +141,31 @@ public class SubmissionActivity extends AppCompatActivity {
                         NavigationHandler.openLink(SubmissionActivity.this, url);
                         return true;
                     });
-
-
-                    views.commentList.addView(binding.getRoot());
+                    commentList.addView(binding.getRoot());
+                    r_comments(commentN, binding.childComments);
                 });
             }
-            //}
-        });
+        }
+//        for (Object comment : commentn.getReplies()) {
+//            Comment comments = (Comment) comment;
+//
+//            Log.d("comments", comments.getSubject().getBody());
+//            runOnUiThread(() -> {
+//                ViewCommentBinding binding = ViewCommentBinding.inflate(getLayoutInflater());
+//                binding.username.setText(comments.getSubject().getAuthor());
+//
+//                Comment comment = (Comment) comments.getSubject();
+//                binding.commentBody.setText(Html.fromHtml(comment.getBodyHtml(), Html.FROM_HTML_SEPARATOR_LINE_BREAK_PARAGRAPH));
+//                BetterLinkMovementMethod method = BetterLinkMovementMethod.linkifyHtml(binding.commentBody);
+//                method.setOnLinkClickListener((textView, url) -> {
+//                    Log.d("Clicked link", url);
+//                    NavigationHandler.openLink(SubmissionActivity.this, url);
+//                    return true;
+//                });
+//
+//
+//                views.commentList.addView(binding.getRoot());
+//            });
+//        }
     }
 }
