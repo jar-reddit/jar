@@ -192,6 +192,7 @@ public class SubredditActivity extends AppCompatActivity {
 
                         if (query.length() > 3) {
                          List<Subreddit> subSuggestList = newSubredditSearch(query);
+                         suggestionList.clear();
                          if (subSuggestList.size() > 0 ) {
                                 for (int i = 0; i < subSuggestList.size(); i++) {
                                     suggestionList.add(subSuggestList.get(i).getName());
@@ -217,6 +218,8 @@ public class SubredditActivity extends AppCompatActivity {
                 searchSuggestions.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int listPos, long l) {
+                        search.setIconified(true);
+                        item.collapseActionView();
                         NavigationHandler.openSubreddit(suggestionAdapter.getItem(listPos), SubredditActivity.this);
 
 //                        Toast.makeText(getApplicationContext(), "Listview clicked " + suggestionAdapter.getItem(listPos), Toast.LENGTH_SHORT).show();
@@ -258,7 +261,7 @@ public class SubredditActivity extends AppCompatActivity {
     public List<Subreddit> newSubredditSearch (String query) {
         RedditClient subSearch = JRAW.getInstance(getApplicationContext());
         SubredditSearchPaginator.Builder builder = subSearch.searchSubreddits();
-        SubredditSearchPaginator p = builder.query(query).limit(10).sorting(SubredditSearchSort.RELEVANCE).build();
+        SubredditSearchPaginator p = builder.query(query).limit(10).build();
         List<Subreddit> searchList = p.next();
         return searchList;
 
@@ -272,7 +275,7 @@ public class SubredditActivity extends AppCompatActivity {
             switch (sortCriteria) {
                 case 0:
 //                  String p = allPosts.get(0).getPermalink();
-//                  Log.d("postHTML", p);
+//                  Log.d("postHTML", p)
                     Log.d("HOT", String.valueOf(sortCriteria));
                     page = reddit.frontPage().sorting(SubredditSort.HOT).build();
                     backgroundTasks();
