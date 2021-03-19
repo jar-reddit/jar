@@ -13,7 +13,7 @@
 
         <TextView
             android:id="@+id/postTitle"
-            style="@style/TextAppearance.MaterialComponents.Headline6"
+            style="@style/TextAppearance.MaterialComponents.Body1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="postTitle"
@@ -31,7 +31,7 @@
 
         <TextView
             android:id="@+id/otherInfo"
-            style="@style/TextAppearance.MaterialComponents.Caption"
+            style="@style/TextAppearance.MaterialComponents.Body1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Other Info here"
