@@ -3,10 +3,11 @@
 # The following variables are available:
 #    $subreddit -  name of subreddit
 #    $author    -  name of author
-#    $self_text -  post selftext in markdown
 #    $self_text_html - post selftext as html
 #    $flair          - post flair
 # all variables declared in this file are also available
+# for a full list and other helpful links checkout
+# jar.mueed.co.uk
 # General settings
 [general]
     theme="system" # light dark or system
