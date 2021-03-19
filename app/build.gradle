@@ -8,8 +8,8 @@ android {
         applicationId "com.example.JAR"
         minSdkVersion 24
         targetSdkVersion 30
-        versionCode 1
-        versionName "1.0"
+        versionCode getVersioncodeTimestamp()
+        versionName getVersionName("0.9") // based on sprint
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -34,6 +34,20 @@ android {
         compose true
     }
 
+}
+
+static def getVersioncodeTimestamp() {
+    def date = (new Date()).format("yyMMddHH");
+    def code = date.toInteger()
+    println(sprintf("Version code: %d",code))
+    return code
+}
+
+static def getVersionName(String version) {
+    def date = (new Date()).format("yyyyMMddHHmm")
+    def name = version.concat("-").concat(date)
+    println(sprintf("Version Name: %s",name))
+    return name
 }
 
 dependencies {

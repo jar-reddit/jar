@@ -57,8 +57,19 @@ public class App extends Application {
                 );
             }
         };
-        UUID uuid = UUID.randomUUID();
-
+        UUID uuid;
+        String strUUID = getSharedPreferences(getPackageName(), MODE_PRIVATE)
+                .getString("uuid","");
+        if (strUUID.equals("")) {
+            uuid = UUID.randomUUID();
+            getSharedPreferences(getPackageName(),MODE_PRIVATE)
+                    .edit()
+                    .putString("uuid",uuid.toString())
+                    .apply();
+        } else {
+            uuid = UUID.fromString(strUUID);
+        }
+        Log.d("UUID",uuid.toString());
 
         // Store our access tokens and refresh tokens in shared preferences
         tokenStore = new SharedPreferencesTokenStore(getApplicationContext());
@@ -91,12 +102,16 @@ public class App extends Application {
             try {
                 getSharedPreferences(getPackageName().concat("users"), MODE_PRIVATE)
                         .edit()
-                        .putString("lastUser", redditClient.me().getUsername()).apply();
+                        .putString("lastUser", redditClient
+                                .me()
+                                .getUsername())
+                        .apply();
                 Log.d("Current user", redditClient.me().getUsername());
             } catch (IllegalStateException e) {
                 getSharedPreferences(getPackageName().concat("users"), MODE_PRIVATE)
                         .edit()
-                        .putString("lastUser", "<userless>").apply();
+                        .putString("lastUser", "<userless>")
+                        .apply();
                 Log.d("Current user", "<userless>");
             }
             LogAdapter logAdapter = new SimpleAndroidLogAdapter(Log.INFO);
