@@ -97,7 +97,7 @@ public class PostViewHolder extends RecyclerView.ViewHolder {
                         Settings.getSettings(postItemView.getContext()).getString("posts.title"),
                         post
                 ),
-                Html.FROM_HTML_SEPARATOR_LINE_BREAK_PARAGRAPH));
+                Html.FROM_HTML_MODE_COMPACT));
     }
 
     private void upvote() {

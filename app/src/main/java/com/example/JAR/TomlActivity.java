@@ -46,7 +46,7 @@ public class TomlActivity extends AppCompatActivity {
         });
 
         view.btnReset.setOnClickListener((btnView)->{
-            Settings.getInstance(this).defaultToml();
+            Settings.getInstance(this).defaultToml(true);
             readToml();
         });
     }

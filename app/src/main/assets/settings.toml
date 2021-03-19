@@ -16,15 +16,15 @@
 # post view on subreddits and frontpage
 [posts]
     # format supports limited HTML
-    title="{$title}"
+    title="<h4>{$title}</h4>"
     format="""\
-    <a href='/r/{$subreddit}'>r/{$subreddit}</a> \
+    <small><a href='/r/{$subreddit}'>r/{$subreddit}</a> \
     {$posts.sep}\
-    <a href='/u/{$author}'>u/{$author}</a> \
+    <a href='/u/{$author}'>u/{$author}</a> </small>\
     """
     sep="🇵🇰"
 
 [comments]
-    body="""<h4><a href='/u/$username'>$username</a></h4>\
+    body="""<h6><a href='/u/$username'>$username</a></h6>\
     <p>
     """

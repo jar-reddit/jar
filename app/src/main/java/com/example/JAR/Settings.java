@@ -37,7 +37,7 @@ public class Settings {
 
         if (!settingFile.exists()) {
 //            readSettings();
-            defaultToml();
+            defaultToml(false);
         }
         Toml defaults = null;
         try {
@@ -151,7 +151,7 @@ public class Settings {
         }
     }
 
-    public void defaultToml() {
+    public void defaultToml(Boolean refresh) {
         try {
 
             CustomStringBuilder txtSettings = new CustomStringBuilder();
@@ -163,7 +163,9 @@ public class Settings {
             scanner.close();
             writer.write(txtSettings.toString());
             writer.close();
-            refresh();
+            if (refresh) {
+                refresh();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
