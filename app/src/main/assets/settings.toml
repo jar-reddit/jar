@@ -25,4 +25,6 @@
     sep="🇵🇰"
 
 [comments]
-    body="<h4><a href='/u/$username'>$username</a></h4>"
+    body="""<h4><a href='/u/$username'>$username</a></h4>\
+    <p>
+    """

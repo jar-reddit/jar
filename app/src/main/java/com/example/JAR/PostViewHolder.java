@@ -1,10 +1,8 @@
 package com.example.JAR;
 
-import android.content.Context;
 import android.graphics.Color;
 import android.text.Html;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -14,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.JAR.databinding.ViewPostBinding;
-import com.x5.template.Chunk;
 
 import net.dean.jraw.models.Submission;
 import net.dean.jraw.models.SubmissionPreview;
@@ -36,6 +33,12 @@ public class PostViewHolder extends RecyclerView.ViewHolder {
         viewPostBinding = ViewPostBinding.bind(postItemView);
     }
 
+    public static PostViewHolder create(ViewGroup parent) {
+        PostView view = new PostView(parent.getContext());
+        view.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        return new PostViewHolder(view);
+    }
+
     public void bind(Submission post) {
         setUnvoteColour();
         this.post = post;
@@ -55,7 +58,7 @@ public class PostViewHolder extends RecyclerView.ViewHolder {
             }
         }
         Glide.with(viewPostBinding.getRoot()).load(previewUrl).into(viewPostBinding.postImage);
-        viewPostBinding.getRoot().setOnClickListener((view)->{
+        viewPostBinding.getRoot().setOnClickListener((view) -> {
             NavigationHandler.openSubmission(post, view.getContext());
         });
 
@@ -81,27 +84,20 @@ public class PostViewHolder extends RecyclerView.ViewHolder {
         viewPostBinding.textScore.setText(String.valueOf(post.getScore()));
         viewPostBinding.textComments.setText(String.valueOf(post.getCommentCount()));
         String format = Settings.getSettings(postItemView.getContext()).getString("posts.format");
-        Chunk chunk = new Chunk();
-        chunk.append(format);
-        chunk.set("subreddit", post.getSubreddit());
-        chunk.set("author", post.getAuthor());
-        chunk.set("self_text", post.getSelfText());
-        chunk.set("self_text_html", post.getSelfTextHtml());
-        chunk.set("time", post.getCreated());
-        chunk.set("flair", post.getLinkFlairText());
-        chunk.set("title", post.getTitle());
-        chunk.setMultiple(Settings.getSettings(postItemView.getContext()).toMap());
 
-        viewPostBinding.otherInfo.setText(Html.fromHtml(chunk.toString(), Html.FROM_HTML_SEPARATOR_LINE_BREAK_PARAGRAPH));
-        chunk.resetTemplate();
-        chunk.append(Settings.getSettings(postItemView.getContext()).getString("posts.title"));
-        viewPostBinding.postTitle.setText(Html.fromHtml(chunk.toString(), Html.FROM_HTML_SEPARATOR_LINE_BREAK_PARAGRAPH));
-    }
-
-    public static PostViewHolder create(ViewGroup parent) {
-        PostView view = new PostView(parent.getContext());
-        view.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        return new PostViewHolder(view);
+        viewPostBinding.otherInfo.setText(Html
+                .fromHtml(Formatter
+                        .formatString(
+                                postItemView.getContext(),
+                                format,
+                                post
+                        ), Html.FROM_HTML_SEPARATOR_LINE_BREAK_PARAGRAPH));
+        viewPostBinding.postTitle.setText(Html.fromHtml(
+                Formatter.formatString(postItemView.getContext(),
+                        Settings.getSettings(postItemView.getContext()).getString("posts.title"),
+                        post
+                ),
+                Html.FROM_HTML_SEPARATOR_LINE_BREAK_PARAGRAPH));
     }
 
     private void upvote() {
@@ -158,16 +154,8 @@ public class PostViewHolder extends RecyclerView.ViewHolder {
     }
 
     private void vote(VoteDirection direction) {
-        Background.execute(()->{
+        Background.execute(() -> {
             post.toReference(JRAW.getInstance(postItemView.getContext())).setVote(direction);
         });
-    }
-
-    private void getVote() {
-//        Background.execute(()->{
-//            vote = post.toReference(JRAW.getInstance(postItemView.getContext())).inspect().getVote();
-//            setVoteColour();
-//        });
-
     }
 }
