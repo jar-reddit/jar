@@ -50,7 +50,13 @@ public class App extends Application {
             @Override
             public AppInfo provide() {
                 Context context = getApplicationContext();
-                ua = new UserAgent("android", context.getPackageName(), context.getString(R.string.app_version), "JARForReddit");
+                ua = new UserAgent(
+                        "android",
+                        context.getPackageName(),
+                        BuildConfig.VERSION_NAME
+                                .concat("-")
+                                .concat(BuildConfig.BUILD_TYPE),
+                        "JARForReddit");
                 return new AppInfo("fxPqP8pMEuu-Tw",
                         "http://localhost:8080/",
                         ua
