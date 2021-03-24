@@ -1,12 +1,15 @@
 package com.example.JAR;
 
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.JAR.databinding.ActivityTomlBinding;
+import com.moandjiezana.toml.Toml;
 import com.moandjiezana.toml.TomlWriter;
+import com.x5.template.TableOfMaps;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -31,14 +34,18 @@ public class TomlActivity extends AppCompatActivity {
         
         view.btnApply.setOnClickListener((view1)->{
             try {
+                Toml t = new Toml();
+                t.read(view.tomlText.getText().toString());
                 Writer writer = new FileWriter(file);
                 writer.write(view.tomlText.getText().toString());
                 writer.close();
                 Settings.refresh();
-            } catch (IOException e) {
+                TomlActivity.this.finish();
+            } catch (IOException | IllegalStateException  e) {
                 e.printStackTrace();
+                Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
             }
-            TomlActivity.this.finish();
+
         });
         
         view.btnCancel.setOnClickListener((view)->{
