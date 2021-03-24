@@ -4,7 +4,9 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -13,6 +15,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
@@ -82,8 +85,8 @@ public class SubmissionActivity extends AppCompatActivity {
                 })
                 .centerCrop()
                 .into(image);
-        image.setOnClickListener((view)->{
-            NavigationHandler.openLink(this,post);
+        image.setOnClickListener((view) -> {
+            NavigationHandler.openLink(this, post);
         });
         image.setAdjustViewBounds(true);
         title.setText(post.getTitle()); // This sets the title of the post to the one retrieved from the post variable
@@ -101,12 +104,12 @@ public class SubmissionActivity extends AppCompatActivity {
             });
         }
         views.submissionUser.setText(post.getAuthor());
-        ImageButton upVote = (ImageButton)findViewById(R.id.Upvote);
-        ImageButton downVote = (ImageButton)findViewById(R.id.downvote);
+        ImageButton upVote = (ImageButton) findViewById(R.id.Upvote);
+        ImageButton downVote = (ImageButton) findViewById(R.id.downvote);
         upVote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               upVoting(post);
+                upVoting(post);
             }
         });
 
@@ -166,6 +169,21 @@ public class SubmissionActivity extends AppCompatActivity {
                         NavigationHandler.openLink(SubmissionActivity.this, url);
                         return true;
                     });
+                    binding.getRoot().setOnClickListener(v -> {
+                        if (binding.childComments.getVisibility() == View.VISIBLE) {
+                            binding.childComments.setVisibility(View.GONE);
+                        } else {
+                            binding.childComments.setVisibility(View.VISIBLE);
+                        }
+                    });
+//                    binding.getRoot().setOnTouchListener((v, event) -> {
+//                        if (binding.childComments.getVisibility() == View.VISIBLE) {
+//                            binding.childComments.setVisibility(View.GONE);
+//                        } else {
+//                            binding.childComments.setVisibility(View.VISIBLE);
+//                        }
+//                        return true;
+//                    });
                     commentList.addView(binding.getRoot());
                     r_comments(commentN, binding.childComments);
                 });
@@ -193,14 +211,11 @@ public class SubmissionActivity extends AppCompatActivity {
 //            });
 //        }
     }
-    private void upVoting(Submission post)
-    {
-        if(isUserless())
-        {
+
+    private void upVoting(Submission post) {
+        if (isUserless()) {
             Toast.makeText(getApplicationContext(), "You do not have voting privileges, please log in or message the moderator", Toast.LENGTH_SHORT).show();
-        }
-        else
-        {
+        } else {
             Background.execute(() -> {
                 PublicContributionReference pcr = post.toReference(JRAW.getInstance(this));
                 if (post.getVote() == VoteDirection.UP) {
@@ -213,14 +228,10 @@ public class SubmissionActivity extends AppCompatActivity {
         }
     }
 
-    private void downVoting(Submission post)
-    {
-        if(isUserless())
-        {
+    private void downVoting(Submission post) {
+        if (isUserless()) {
             Toast.makeText(getApplicationContext(), "You do not have voting privileges, please log in or message the moderator", Toast.LENGTH_SHORT).show();
-        }
-        else
-        {
+        } else {
             Background.execute(() -> {
                 PublicContributionReference pcr = post.toReference(JRAW.getInstance(this));
                 if (post.getVote() == VoteDirection.DOWN) {
@@ -233,8 +244,7 @@ public class SubmissionActivity extends AppCompatActivity {
         }
     }
 
-    public boolean isUserless()
-    {
+    public boolean isUserless() {
         return App.getAccountHelper().getReddit().getAuthMethod().isUserless();
     }
 }
