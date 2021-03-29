@@ -8,6 +8,7 @@
     a disconnected to a connected network state.
     -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
 
     <application
         android:name=".App"
@@ -77,6 +78,16 @@
             android:name=".TomlActivity"
             android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".ActivityConfigBasicAction"
+            android:exported="true"
+            android:icon="@mipmap/ic_launcher"
+            android:label="My Tasker Action">
+            <intent-filter>
+                <action android:name="com.twofortyfouram.locale.intent.action.EDIT_SETTING" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
