@@ -64,12 +64,13 @@ public class SubredditActivity extends AppCompatActivity {
     List<String> suggestionList = new ArrayList<>();
     ArrayAdapter<String> suggestionAdapter;
     PostAdapter postAdapter;
+    String [] topSubs;
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        topSubs = getResources().getStringArray(R.array.top_subreddits);
         binding = ActivitySubredditBinding.inflate(getLayoutInflater()); // Joining views to Java
         if (allPosts == null) {
             allPosts = Listing.empty(); // initialise an empty list
@@ -169,57 +170,69 @@ public class SubredditActivity extends AppCompatActivity {
 
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
+
             public boolean onQueryTextSubmit(String s) {
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String query) {
+
                 suggestionAdapter = new ArrayAdapter(SubredditActivity.this, android.R.layout.simple_list_item_1, suggestionList);
+                suggestionAdapter.clear();
                 searchSuggestions.setAdapter(suggestionAdapter);
                 postList.setVisibility(View.INVISIBLE);
                 searchSuggestions.setVisibility(View.VISIBLE);
-                {
-                    Background.execute(() ->
-                    {
-//                        RedditClient subSub = JRAW.getInstance(getApplicationContext());
-//                        if (query.length() > 0) {
-//                            List<SubredditSearchResult> subSuggestList = subSub.searchSubredditsByName(query);
-//                            suggestionList.clear();
-//                            if (subSuggestList.size() > 0 ) {
-//                                for (int i = 0; i < subSuggestList.size(); i++) {
-//                                    suggestionList.add(subSuggestList.get(i).getName());
+                suggestionAdapter.addAll(topSubs);
+//                searchSuggestions.setTextFilterEnabled(true);
+                suggestionAdapter.getFilter().filter((query));
+                suggestionAdapter.notifyDataSetChanged();
+//                Toast.makeText(getApplicationContext(), String.valueOf(suggestionAdapter.getCount()),Toast.LENGTH_SHORT).show();
 
-                        if (query.length() > 3) {
-                         List<Subreddit> subSuggestList = newSubredditSearch(query);
-                         suggestionList.clear();
-                         if (subSuggestList.size() > 0 ) {
-                                for (int i = 0; i < subSuggestList.size(); i++) {
-                                    suggestionList.add(subSuggestList.get(i).getName());
-                                }
-                            }
-                            searchSuggestions.setTextFilterEnabled(true);
-                            Looper lx = getMainLooper();
-                            if (Looper.myLooper() == null) {
-                                lx.prepare();
-                            }
-                        } else {
-                            runOnUiThread(() -> {
-                                suggestionList.clear();
-                                searchSuggestions.setVisibility(View.INVISIBLE);
-                                postList.setVisibility(View.VISIBLE);
-                            });
-                        }
-                    });
-                    suggestionAdapter.getFilter().filter((query));
-                    suggestionAdapter.notifyDataSetChanged();
-                }
+//                {
+//                    Background.execute(() ->
+//                    {
+////                        RedditClient subSub = JRAW.getInstance(getApplicationContext());
+////                        if (query.length() > 0) {
+////                            List<SubredditSearchResult> subSuggestList = subSub.searchSubredditsByName(query);
+////                            suggestionList.clear();
+////                            if (subSuggestList.size() > 0 ) {
+////                                for (int i = 0; i < subSuggestList.size(); i++) {
+////                                    suggestionList.add(subSuggestList.get(i).getName());
+//
+//                        if (query.length() > 3) {
+////                         List<Subreddit> subSuggestList = newSubredditSearch(query);
+////                            List<String> subSuggestList = recommendedSubs();
+////                         suggestionList.clear();
+////                         if (subSuggestList.size() > 0 ) {
+////                                for (int i = 0; i < subSuggestList.size(); i++) {
+////                                    suggestionList.add(subSuggestList.get(i).getName());
+////                                }
+////                            }
+//                            suggestionList.addAll(recommendedSubs());
+//                            searchSuggestions.setTextFilterEnabled(true);
+////                            Looper lx = getMainLooper();
+////                            if (Looper.myLooper() == null) {
+////                                lx.prepare();
+////                            }
+//                        } else {
+//                            runOnUiThread(() -> {
+//                                suggestionList.clear();
+//                                searchSuggestions.setVisibility(View.INVISIBLE);
+//                                postList.setVisibility(View.VISIBLE);
+//                            });
+//                        }
+//                    });
+//                    suggestionAdapter.getFilter().filter((query));
+//                    suggestionAdapter.notifyDataSetChanged();
+//                }
 
                 searchSuggestions.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int listPos, long l) {
-                        search.setIconified(true);
-                        item.collapseActionView();
+//                        search.setIconified(true);
+//                        item.collapseActionView();
+                        Toast.makeText(getApplicationContext(), String.valueOf(listPos), Toast.LENGTH_SHORT).show();
                         NavigationHandler.openSubreddit(suggestionAdapter.getItem(listPos), SubredditActivity.this);
 
 //                        Toast.makeText(getApplicationContext(), "Listview clicked " + suggestionAdapter.getItem(listPos), Toast.LENGTH_SHORT).show();
@@ -258,15 +271,30 @@ public class SubredditActivity extends AppCompatActivity {
         return subSearch.searchSubredditsByName(query);
     }
 
-    public List<Subreddit> newSubredditSearch (String query) {
+//    public List<Subreddit> newSubredditSearch (String query) {
+//        RedditClient subSearch = JRAW.getInstance(getApplicationContext());
+//        SubredditSearchPaginator.Builder builder = subSearch.searchSubreddits();
+//        SubredditSearchPaginator p = builder.query(query).limit(10).build();
+//        List<Subreddit> searchList = p.next();
+//        return searchList;
+//    }
+
+    public String newSubredditSearch (String query) {
         RedditClient subSearch = JRAW.getInstance(getApplicationContext());
         SubredditSearchPaginator.Builder builder = subSearch.searchSubreddits();
-        SubredditSearchPaginator p = builder.query(query).limit(10).build();
+        SubredditSearchPaginator p = builder.query(query).limit(1).build();
         List<Subreddit> searchList = p.next();
-        return searchList;
-
-
+        return searchList.get(0).getName();
     }
+
+    public List<String> recommendedSubs()
+    {
+        RedditClient recs = JRAW.getInstance(getApplicationContext());
+        List<String> recommend = null;
+        recs.recommendedSubreddits(recommend, false);
+        return recommend;
+    }
+
 
     public void showSortOptions(int sortCriteria)
     {
