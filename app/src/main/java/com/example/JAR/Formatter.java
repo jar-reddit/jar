@@ -3,11 +3,17 @@ package com.example.JAR;
 import android.content.Context;
 
 import com.x5.template.Chunk;
+import com.x5.template.Theme;
+import com.x5.template.filters.FilterArgs;
+import com.x5.template.filters.ObjectFilter;
 
 import net.dean.jraw.models.Comment;
 import net.dean.jraw.models.PublicContribution;
 import net.dean.jraw.models.Submission;
 import net.dean.jraw.models.Votable;
+
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 
 public class Formatter {
@@ -15,7 +21,9 @@ public class Formatter {
 
     private static void init() {
         if (chunk==null) {
-            chunk = new Chunk();
+            Theme theme = new Theme();
+            theme.registerFilter(new DateFilter());
+            chunk = theme.makeChunk();
         }
 
     }
@@ -57,7 +65,28 @@ public class Formatter {
         String formattedStr = formatString(context,string);
         return formattedStr;
     }
-    
+
+    private static class DateFilter extends ObjectFilter{
+
+        @Override
+        public String getFilterName() {
+            return "date";
+        }
+
+        @Override
+        public Object transformObject(Chunk chunk, Object object, FilterArgs args) {
+            if (object instanceof Date){
+                Date date = (Date) object;
+    //                DateTimeFormatter.ofPattern(args.getUnparsedArgs());
+                //
+            }
+
+            return object.getClass().toString();
+        }
+
+
+    }
+
     private static void addCommentTags(Comment post) {
         chunk.set("self_text",post.getBody());
         chunk.set("self_text_html",post.getBodyHtml());
