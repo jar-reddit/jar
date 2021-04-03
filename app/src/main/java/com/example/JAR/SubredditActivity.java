@@ -41,7 +41,6 @@ import net.dean.jraw.models.TimePeriod;
 import net.dean.jraw.pagination.BackoffStrategy;
 import net.dean.jraw.pagination.DefaultPaginator;
 import net.dean.jraw.pagination.RedditIterable;
-import net.dean.jraw.pagination.Stream;
 import net.dean.jraw.pagination.SubredditSearchPaginator;
 
 import org.jetbrains.annotations.NotNull;
