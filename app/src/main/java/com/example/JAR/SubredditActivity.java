@@ -156,8 +156,8 @@ public class SubredditActivity extends AppCompatActivity {
         Log.d("Jar actBar","Option menu being created");
         MenuItem item = menu.findItem(R.id.action_search);
         SearchView search = (SearchView) item.getActionView();
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        search.setSearchableInfo(searchManager.getSearchableInfo(new ComponentName(this, this.getClass())));
+//        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+//        search.setSearchableInfo(searchManager.getSearchableInfo(new ComponentName(this, this.getClass())));
         search.setQueryHint(getResources().getString(R.string.search_hint));
         search.setIconifiedByDefault(false);
         search.requestFocus();
@@ -168,18 +168,19 @@ public class SubredditActivity extends AppCompatActivity {
             ActionBar aB = getSupportActionBar();
             aB.setTitle(message);
         }
-
+        suggestionAdapter = new ArrayAdapter(SubredditActivity.this, android.R.layout.simple_list_item_1, suggestionList);
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
 
+
             public boolean onQueryTextSubmit(String s) {
-                return false;
+                NavigationHandler.openSubreddit(s,SubredditActivity.this);
+                return true;
             }
+
 
             @Override
             public boolean onQueryTextChange(String query) {
-
-                suggestionAdapter = new ArrayAdapter(SubredditActivity.this, android.R.layout.simple_list_item_1, suggestionList);
                 suggestionAdapter.clear();
                 searchSuggestions.setAdapter(suggestionAdapter);
                 postList.setVisibility(View.INVISIBLE);
@@ -187,7 +188,8 @@ public class SubredditActivity extends AppCompatActivity {
                 suggestionAdapter.addAll(topSubs);
 //                searchSuggestions.setTextFilterEnabled(true);
                 suggestionAdapter.getFilter().filter((query));
-                suggestionAdapter.notifyDataSetChanged();
+
+//                suggestionAdapter.notifyDataSetChanged();
 //                Toast.makeText(getApplicationContext(), String.valueOf(suggestionAdapter.getCount()),Toast.LENGTH_SHORT).show();
 
 //                {
@@ -233,7 +235,7 @@ public class SubredditActivity extends AppCompatActivity {
                     public void onItemClick(AdapterView<?> adapterView, View view, int listPos, long l) {
 //                        search.setIconified(true);
 //                        item.collapseActionView();
-                        Toast.makeText(getApplicationContext(), String.valueOf(listPos), Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getApplicationContext(), String.valueOf(listPos), Toast.LENGTH_SHORT).show();
                         NavigationHandler.openSubreddit(suggestionAdapter.getItem(listPos), SubredditActivity.this);
 
 //                        Toast.makeText(getApplicationContext(), "Listview clicked " + suggestionAdapter.getItem(listPos), Toast.LENGTH_SHORT).show();
