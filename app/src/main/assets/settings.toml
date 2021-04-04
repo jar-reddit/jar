@@ -26,6 +26,7 @@
     sep="🇵🇰"
 
 [comments]
-    body="""<h6><a href='/u/$username'>$username</a></h6>\
-    <p>
+    title="<b><a href='/u/{$author}'>{$author}</a></b> {$author_flair}"
+    body="""\
+    {$self_text_html}
     """

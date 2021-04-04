@@ -97,6 +97,7 @@ public class Formatter {
         chunk.set("time",post.getCreated());
         chunk.set("controversial",post.getControversiality());
         chunk.set("url",post.getUrl());
+        chunk.set("author_flair", post.getAuthorFlairText());
     }
     
     public static String formatString(Context context, String string) {
