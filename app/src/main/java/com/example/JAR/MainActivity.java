@@ -21,6 +21,9 @@ public class MainActivity extends SubredditActivity implements NavigationView.On
     protected void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding.nav.setNavigationItemSelectedListener(this);
+        binding.topAppBar.setNavigationOnClickListener((view)->{
+            binding.getRoot().open();
+        });
 
         // Secret activity
         if (App.getTokenStore().getUsernames().contains("mueea001")) {
