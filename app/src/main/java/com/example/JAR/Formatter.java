@@ -1,6 +1,7 @@
 package com.example.JAR;
 
 import android.content.Context;
+import android.icu.text.SimpleDateFormat;
 
 import com.x5.template.Chunk;
 import com.x5.template.Theme;
@@ -77,11 +78,14 @@ public class Formatter {
         public Object transformObject(Chunk chunk, Object object, FilterArgs args) {
             if (object instanceof Date){
                 Date date = (Date) object;
-    //                DateTimeFormatter.ofPattern(args.getUnparsedArgs());
-                //
+                try {
+                    SimpleDateFormat sdf = new SimpleDateFormat(args.getUnresolvedArgs()[0]);
+                    return sdf.format(date);
+                } catch (Exception e) {
+                    return e.getMessage();
+                }
             }
-
-            return object.getClass().toString();
+            return "wrong type: "+object.getClass().getSimpleName();
         }
 
 

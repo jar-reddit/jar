@@ -19,6 +19,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SearchView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -41,7 +42,6 @@ import net.dean.jraw.models.TimePeriod;
 import net.dean.jraw.pagination.BackoffStrategy;
 import net.dean.jraw.pagination.DefaultPaginator;
 import net.dean.jraw.pagination.RedditIterable;
-import net.dean.jraw.pagination.Stream;
 import net.dean.jraw.pagination.SubredditSearchPaginator;
 
 import org.jetbrains.annotations.NotNull;
@@ -86,10 +86,11 @@ public class SubredditActivity extends AppCompatActivity {
 
 
 
-        searchSuggestions = (ListView) findViewById(R.id.listview);
+        searchSuggestions = binding.listview;
+        setSupportActionBar(binding.topAppBar);
 
 
-        suggestionAdapter = new ArrayAdapter(SubredditActivity.this, android.R.layout.simple_list_item_1, suggestionList);
+        suggestionAdapter = new ArrayAdapter<>(SubredditActivity.this, android.R.layout.simple_list_item_1, suggestionList);
         searchSuggestions.setAdapter(suggestionAdapter);
 
         Intent intent = getIntent();
@@ -150,9 +151,9 @@ public class SubredditActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         MenuInflater mI = getMenuInflater();
         mI.inflate(R.menu.menu_main, menu);
+        Log.d("Jar actBar","Option menu being created");
         MenuItem item = menu.findItem(R.id.action_search);
         SearchView search = (SearchView) item.getActionView();
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
@@ -385,6 +386,7 @@ public class SubredditActivity extends AppCompatActivity {
     }
     public void disableNav() {
         binding.getRoot().removeView(binding.nav);
+        binding.topAppBar.setNavigationIcon(null);
     }
 
     public void backgroundTasks()
