@@ -3,23 +3,15 @@ package com.example.JAR
 import android.app.Activity
 import android.content.Context
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.widget.Toast
 import com.example.JAR.databinding.ActivityTaskerMainBinding
 import com.joaomgcd.taskerpluginlibrary.action.TaskerPluginRunnerAction
 import com.joaomgcd.taskerpluginlibrary.config.TaskerPluginConfig
 import com.joaomgcd.taskerpluginlibrary.config.TaskerPluginConfigHelper
-import com.joaomgcd.taskerpluginlibrary.input.STRING_RES_ID_NOT_SET
 import com.joaomgcd.taskerpluginlibrary.input.TaskerInput
 import com.joaomgcd.taskerpluginlibrary.input.TaskerInputField
 import com.joaomgcd.taskerpluginlibrary.input.TaskerInputRoot
-import com.joaomgcd.taskerpluginlibrary.output.TaskerOutputForConfig
 import com.joaomgcd.taskerpluginlibrary.output.TaskerOutputObject
 import com.joaomgcd.taskerpluginlibrary.output.TaskerOutputVariable
-import com.joaomgcd.taskerpluginlibrary.output.TaskerOutputsForConfig
-import com.joaomgcd.taskerpluginlibrary.output.runner.TaskerOutputForRunner
-import com.joaomgcd.taskerpluginlibrary.output.runner.TaskerOutputsForRunner
 import com.joaomgcd.taskerpluginlibrary.runner.TaskerPluginResult
 import com.joaomgcd.taskerpluginlibrary.runner.TaskerPluginResultSucess
 import net.dean.jraw.models.Submission
@@ -52,6 +44,7 @@ class ActivityConfigBasicAction : Activity(), TaskerPluginConfig<GetStringInput>
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         binding.btnApply.setOnClickListener { taskerHelper.onBackPressed() }
+        actionBar?.title = "Tasker Get Subreddit Config"
         taskerHelper.onCreate()
     }
 
@@ -72,10 +65,17 @@ class GetStringInput @JvmOverloads constructor(
 
 )
 
-@TaskerOutputObject()
-class TaskerSubmission (
-    @get:TaskerOutputVariable("url",R.string.url,R.string.url) var url:String
-
+@TaskerOutputObject
+class TaskerSubmission(
+    @get:TaskerOutputVariable("post", R.string.post_id, R.string.post_id_desc) var id: String,
+    @get:TaskerOutputVariable("url", R.string.url, R.string.url_desc) var url: String,
+    @get:TaskerOutputVariable("title", R.string.title, R.string.title_desc) var title: String,
+    @get:TaskerOutputVariable("subreddit", R.string.subreddit, R.string.sub_desc) var sub: String,
+    @get:TaskerOutputVariable(
+        "hint",
+        R.string.post_hint,
+        R.string.post_hint_desc
+    ) var hint: String,
 )
 
 /**
@@ -87,23 +87,32 @@ class BasicActionRunner : TaskerPluginRunnerAction<GetStringInput, Array<TaskerS
         input: TaskerInput<GetStringInput>
     ): TaskerPluginResult<Array<TaskerSubmission>> {
         val page: DefaultPaginator<Submission>?
-        if (input.regular.test == null) {
+        val sub: String = input.regular.test.toString()
+        val split = sub.split("+")
+        if (split.isEmpty() || split[0].equals("")) {
             page = JRAW.getInstance(context).frontPage().build()
         } else {
-            val sub: String = input.regular.test.toString()
-            val results = JRAW.getInstance(context).searchSubredditsByName(sub)
-            var found = false
-            results.forEach {
-                if (it.name.equals(sub, ignoreCase = true)) {
-                    found = true
+            if (split.size == 1) {
+                val results = JRAW.getInstance(context).searchSubredditsByName(sub)
+                var found = false
+                results.forEach {
+                    if (it.name.equals(split[0], ignoreCase = true)) {
+                        found = true
+                    }
                 }
-            }
-            if (found) {
-                page =
-                    JRAW.getInstance(context).subreddit(sub).posts()
-                        .build()
-            }else {
-                throw RuntimeException("Subreddit '$sub' doesn't exit")
+                if (found) {
+                    page =
+                        JRAW.getInstance(context).subreddit(sub).posts()
+                            .build()
+                } else {
+                    val tmp = split[0]
+                    throw RuntimeException("Subreddit '$tmp' doesn't exit")
+                }
+
+            } else {
+                page = JRAW.getInstance(context)
+                    .subreddits(split[0], split[1], *split.takeLast(split.size - 2).toTypedArray())
+                    .posts().build()
             }
 
 
@@ -113,7 +122,15 @@ class BasicActionRunner : TaskerPluginRunnerAction<GetStringInput, Array<TaskerS
 //        Handler(Looper.getMainLooper()).post {
 //            Toast.makeText(context, posts[0]?.url, Toast.LENGTH_LONG).show()
 //        }
-        val results:Array<TaskerSubmission> = posts.map { TaskerSubmission(it.url) }.toTypedArray()
+        val results: Array<TaskerSubmission> = posts.map {
+            TaskerSubmission(
+                it.id,
+                it.url,
+                it.title,
+                it.subreddit,
+                it.postHint.toString()
+            )
+        }.toTypedArray()
 
         return TaskerPluginResultSucess(results)
     }

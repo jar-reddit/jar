@@ -8,7 +8,7 @@
         android:id="@+id/helpInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Help info goes here \nand here"
+        android:text="@string/tasker_sub_help"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
