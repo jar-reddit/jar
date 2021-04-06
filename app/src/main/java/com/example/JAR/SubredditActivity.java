@@ -39,6 +39,7 @@ import net.dean.jraw.models.SubredditSearchResult;
 import net.dean.jraw.models.SubredditSearchSort;
 import net.dean.jraw.models.SubredditSort;
 import net.dean.jraw.models.TimePeriod;
+import net.dean.jraw.models.internal.SubredditElement;
 import net.dean.jraw.pagination.BackoffStrategy;
 import net.dean.jraw.pagination.DefaultPaginator;
 import net.dean.jraw.pagination.RedditIterable;
@@ -67,6 +68,7 @@ public class SubredditActivity extends AppCompatActivity {
     String [] topSubs;
 
 
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,6 +90,7 @@ public class SubredditActivity extends AppCompatActivity {
 
         searchSuggestions = binding.listview;
         setSupportActionBar(binding.topAppBar);
+
 
 
         suggestionAdapter = new ArrayAdapter<>(SubredditActivity.this, android.R.layout.simple_list_item_1, suggestionList);
@@ -162,22 +165,41 @@ public class SubredditActivity extends AppCompatActivity {
         search.setIconifiedByDefault(false);
         search.requestFocus();
 
+        MenuItem searchMenuItem = menu.findItem(R.id.action_search);
+
+        searchMenuItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem menuItem) {
+
+                return true;
+            }
+
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem menuItem) {
+//                Toast.makeText(SubredditActivity.this, "Hello", Toast.LENGTH_SHORT).show();
+                postList.setVisibility(View.VISIBLE);
+                searchSuggestions.setVisibility(View.INVISIBLE);
+                return true;
+            }
+        });
+
         Intent intent = getIntent();
         if (intent.getStringExtra("query") != null) {
             String message = "r/" + intent.getStringExtra("query");
             ActionBar aB = getSupportActionBar();
             aB.setTitle(message);
         }
+
         suggestionAdapter = new ArrayAdapter(SubredditActivity.this, android.R.layout.simple_list_item_1, suggestionList);
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
 
 
             public boolean onQueryTextSubmit(String s) {
+//                Toast.makeText(SubredditActivity.this, "Hello", Toast.LENGTH_SHORT).show();
                 NavigationHandler.openSubreddit(s,SubredditActivity.this);
                 return true;
             }
-
 
             @Override
             public boolean onQueryTextChange(String query) {
@@ -229,6 +251,10 @@ public class SubredditActivity extends AppCompatActivity {
 //                    suggestionAdapter.getFilter().filter((query));
 //                    suggestionAdapter.notifyDataSetChanged();
 //                }
+
+
+
+//                getResources().getIdentifier("android:id/search_close_btn", null, null);
 
                 searchSuggestions.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override

@@ -41,10 +41,11 @@ public class SubmissionActivity extends AppCompatActivity {
     private Submission post;
     private TextView title;
     private ImageView image;
+    private ImageButton upVote;
+    private ImageButton downVote;
     private Drawable thumbnail;
     private TextView score;
     private TextView commentScore;
-    //private String postID;
     private ActivitySubmissionBinding views;
 
 
@@ -55,6 +56,8 @@ public class SubmissionActivity extends AppCompatActivity {
         getPost();
         getComments();
         setContent();
+        isUserless();
+
     }
 
     private void getPost() {
@@ -104,19 +107,24 @@ public class SubmissionActivity extends AppCompatActivity {
             });
         }
         views.submissionUser.setText(post.getAuthor());
-        ImageButton upVote = (ImageButton) findViewById(R.id.Upvote);
-        ImageButton downVote = (ImageButton) findViewById(R.id.downvote);
+        upVote = (ImageButton) findViewById(R.id.Upvote);
+        downVote = (ImageButton) findViewById(R.id.downvote);
+
+
+
         upVote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                upVoting(post);
+//                upVoting(post);
+                Log.d("Userless", String.valueOf(isUserless()));
             }
         });
 
         downVote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                downVoting(post);
+//                downVoting(post);
+                Log.d("Userless", String.valueOf(isUserless()));
             }
         });
     }
@@ -245,6 +253,23 @@ public class SubmissionActivity extends AppCompatActivity {
     }
 
     public boolean isUserless() {
-        return App.getAccountHelper().getReddit().getAuthMethod().isUserless();
+        //        return App.getAccountHelper().getReddit().getAuthMethod().isUserless();
+        if(App.getAccountHelper().getReddit().getAuthManager().currentUsername().equalsIgnoreCase("<userless>"))
+        {
+            upVote.setEnabled(false);
+            upVote.setVisibility(View.INVISIBLE);
+            downVote.setEnabled(false);
+            downVote.setVisibility(View.INVISIBLE);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
+
+//    public String currentUsername() {
+//        return App.getAccountHelper().getReddit().getAuthManager().currentUsername();
+//    }
+
 }

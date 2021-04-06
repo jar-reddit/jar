@@ -3,9 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/PC/StudioProjects/jar/app/src/main/res/layout/activity_main.xml" value="0.3170289855072464" />
+        <entry key="..\:/Users/PC/StudioProjects/jar/app/src/main/res/layout/activity_submission.xml" value="0.3170289855072464" />
+        <entry key="..\:/Users/PC/StudioProjects/jar/app/src/main/res/layout/view_inbox.xml" value="0.3170289855072464" />
+        <entry key="..\:/Users/PC/StudioProjects/jar/app/src/main/res/layout/view_post.xml" value="0.3170289855072464" />
+        <entry key="..\:/Users/PC/StudioProjects/jar/app/src/main/res/layout/view_subreddit.xml" value="0.3170289855072464" />
+        <entry key="..\:/Users/PC/StudioProjects/jar/app/src/main/res/menu/menu_main.xml" value="0.5" />
         <entry key="app/src/main/res/layout/activity_secret.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/activity_tasker_main.xml" value="0.20677083333333332" />
-        <entry key="app/src/main/res/layout/activity_toml.xml" value="0.10055724417426545" />
         <entry key="app/src/main/res/layout/view_post.xml" value="0.75" />
       </map>
     </option>
