@@ -1,5 +1,6 @@
 package com.example.JAR;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Html;
@@ -43,6 +44,7 @@ public class SubmissionActivity extends AppCompatActivity {
     private ImageView image;
     private ImageButton upVote;
     private ImageButton downVote;
+    private ImageButton share;
     private Drawable thumbnail;
     private TextView score;
     private TextView commentScore;
@@ -109,8 +111,16 @@ public class SubmissionActivity extends AppCompatActivity {
         views.submissionUser.setText(post.getAuthor());
         upVote = (ImageButton) findViewById(R.id.Upvote);
         downVote = (ImageButton) findViewById(R.id.downvote);
+        share = (ImageButton) findViewById(R.id.shareBtn);
 
-
+        share.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                shareContent(post.getUrl());
+            }
+        });
 
         upVote.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -266,6 +276,17 @@ public class SubmissionActivity extends AppCompatActivity {
         {
             return false;
         }
+    }
+
+    public void shareContent(String url)
+    {
+        Intent postIntent = new Intent();
+        postIntent.setAction(Intent.ACTION_SEND);
+        postIntent.putExtra(Intent.EXTRA_TEXT, url);
+        postIntent.setType("text/html");
+
+        Intent shareIntent = Intent.createChooser(postIntent, null);
+        startActivity(shareIntent);
     }
 
 //    public String currentUsername() {
