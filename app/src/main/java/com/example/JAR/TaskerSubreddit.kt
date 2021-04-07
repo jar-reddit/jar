@@ -3,6 +3,7 @@ package com.example.JAR
 import android.app.Activity
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import com.example.JAR.databinding.ActivityTaskerMainBinding
 import com.joaomgcd.taskerpluginlibrary.action.TaskerPluginRunnerAction
 import com.joaomgcd.taskerpluginlibrary.config.TaskerPluginConfig
@@ -87,39 +88,38 @@ class BasicActionRunner : TaskerPluginRunnerAction<GetStringInput, Array<TaskerS
         input: TaskerInput<GetStringInput>
     ): TaskerPluginResult<Array<TaskerSubmission>> {
         val page: DefaultPaginator<Submission>?
-        val sub: String = input.regular.test.toString()
-        val split = sub.split("+")
-        if (split.isEmpty() || split[0].equals("")) {
+        val sub: String? = input.regular.test
+        Log.d("jar task", sub.toString())
+        val split = sub.toString().split("+")
+        if (sub == null ||  split.isEmpty() || split[0] == "") {
             page = JRAW.getInstance(context).frontPage().build()
-        } else {
-            if (split.size == 1) {
-                val results = JRAW.getInstance(context).searchSubredditsByName(sub)
-                var found = false
-                results.forEach {
-                    if (it.name.equals(split[0], ignoreCase = true)) {
-                        found = true
-                    }
+        } else if (split.size == 1) {
+            val results = JRAW.getInstance(context).searchSubredditsByName(sub)
+            var found = false
+            results.forEach {
+                if (it.name.equals(split[0], ignoreCase = true)) {
+                    found = true
                 }
-                if (found) {
-                    page =
-                        JRAW.getInstance(context).subreddit(sub).posts()
-                            .build()
-                } else {
-                    val tmp = split[0]
-                    throw RuntimeException("Subreddit '$tmp' doesn't exit")
-                }
-
+            }
+            if (found) {
+                page =
+                    JRAW.getInstance(context).subreddit(sub).posts()
+                        .build()
             } else {
-                page = JRAW.getInstance(context)
-                    .subreddits(split[0], split[1], *split.takeLast(split.size - 2).toTypedArray())
-                    .posts().build()
+                val tmp = split[0]
+                throw RuntimeException("Subreddit '$tmp' doesn't exit")
             }
 
-
+        } else {
+            page = JRAW.getInstance(context)
+                .subreddits(split[0], split[1], *split.takeLast(split.size - 2).toTypedArray())
+                .posts().build()
         }
 
+
         val posts = page.next()
-//        Handler(Looper.getMainLooper()).post {
+
+        //        Handler(Looper.getMainLooper()).post {
 //            Toast.makeText(context, posts[0]?.url, Toast.LENGTH_LONG).show()
 //        }
         val results: Array<TaskerSubmission> = posts.map {
