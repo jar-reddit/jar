@@ -111,13 +111,5 @@
             app:layout_constraintTop_toBottomOf="@id/Upvote"
             tools:listitem="@layout/view_comment" />
 
-        <ImageButton
-            android:id="@+id/shareBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="shareContent"
-            app:layout_constraintEnd_toStartOf="@+id/Upvote"
-            app:layout_constraintTop_toTopOf="@+id/userAvatar"
-            app:srcCompat="@drawable/ic_share" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
