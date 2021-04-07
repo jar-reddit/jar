@@ -1,8 +1,13 @@
 package com.example.JAR;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Environment;
 import android.text.Html;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -14,15 +19,19 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityCompat;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.target.Target;
+import com.bumptech.glide.request.transition.Transition;
 import com.example.JAR.databinding.ActivitySubmissionBinding;
 import com.example.JAR.databinding.ViewCommentBinding;
 
@@ -33,6 +42,10 @@ import net.dean.jraw.models.VoteDirection;
 import net.dean.jraw.references.PublicContributionReference;
 import net.dean.jraw.tree.CommentNode;
 import net.dean.jraw.tree.RootCommentNode;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 
 import me.saket.bettermovementmethod.BetterLinkMovementMethod;
 
@@ -45,6 +58,7 @@ public class SubmissionActivity extends AppCompatActivity {
     private ImageButton upVote;
     private ImageButton downVote;
     private ImageButton share;
+    private ImageButton download;
     private Drawable thumbnail;
     private TextView score;
     private TextView commentScore;
@@ -59,6 +73,7 @@ public class SubmissionActivity extends AppCompatActivity {
         getComments();
         setContent();
         isUserless();
+        isImagePost(post);
 
     }
 
@@ -72,6 +87,10 @@ public class SubmissionActivity extends AppCompatActivity {
         views.userAvatar.setVisibility(View.GONE);
         TextView title = (TextView) findViewById(R.id.submissionTitle);
         ImageView image = (ImageView) findViewById(R.id.submissionImage);
+        upVote = (ImageButton) findViewById(R.id.upvote);
+        downVote = (ImageButton) findViewById(R.id.downvote);
+        share = (ImageButton) findViewById(R.id.share_btn);
+        download = (ImageButton) findViewById(R.id.dl_btn);
 
         TextView commentScore = (TextView) findViewById(R.id.commentScore);
         Glide.with(this)
@@ -109,9 +128,7 @@ public class SubmissionActivity extends AppCompatActivity {
             });
         }
         views.submissionUser.setText(post.getAuthor());
-        upVote = (ImageButton) findViewById(R.id.Upvote);
-        downVote = (ImageButton) findViewById(R.id.downvote);
-        share = (ImageButton) findViewById(R.id.shareBtn);
+
 
         share.setOnClickListener(new View.OnClickListener()
         {
@@ -125,7 +142,7 @@ public class SubmissionActivity extends AppCompatActivity {
         upVote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                upVoting(post);
+                upVoting(post);
                 Log.d("Userless", String.valueOf(isUserless()));
             }
         });
@@ -133,11 +150,21 @@ public class SubmissionActivity extends AppCompatActivity {
         downVote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                downVoting(post);
+                downVoting(post);
                 Log.d("Userless", String.valueOf(isUserless()));
             }
         });
+
+        download.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                downloadImage(post.getUrl());
+            }
+        });
     }
+
+
 
     public void getComments() {
         Background.execute(() -> {
@@ -289,8 +316,93 @@ public class SubmissionActivity extends AppCompatActivity {
         startActivity(shareIntent);
     }
 
+    public void isImagePost(Submission post) {
+        if (UrlDetector.detect(post.getUrl()).contains("image")) {
+            download.setVisibility(View.VISIBLE);
+            download.setClickable(true);
+        }
+    }
 //    public String currentUsername() {
 //        return App.getAccountHelper().getReddit().getAuthManager().currentUsername();
 //    }
+
+    public void downloadImage(String URL){
+
+        if (!checkStoragePermissions()) {
+            return;
+        }
+
+        String dirPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + getString(R.string.app_name) + "/";
+
+        final File directory = new File(dirPath);
+
+        final String fileName = URL.substring(URL.lastIndexOf('/') + 1);
+
+        Glide.with(this)
+                .load(URL)
+                .into(new CustomTarget<Drawable>() {
+                    @Override
+                    public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+
+                        Bitmap bitmap = ((BitmapDrawable)resource).getBitmap();
+                        Toast.makeText(SubmissionActivity.this, "Saving image to storage", Toast.LENGTH_SHORT).show();
+                        saveImage(bitmap, directory, fileName);
+                    }
+
+                    @Override
+                    public void onLoadCleared(@Nullable Drawable placeholder) {
+
+                    }
+
+                    @Override
+                    public void onLoadFailed(@Nullable Drawable placeholder) {
+                        super.onLoadFailed(placeholder);
+
+                        Toast.makeText(SubmissionActivity.this, "Image download failed", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+
+    }
+
+    public Boolean checkStoragePermissions() {
+
+        // This will return the current Status
+        int externalStoragePerms = ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+        if (externalStoragePerms != PackageManager.PERMISSION_GRANTED) {
+
+            String[] STORAGE_PERMISSIONS = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
+            // If permission not granted then ask for permission real time.
+            ActivityCompat.requestPermissions(this, STORAGE_PERMISSIONS, 1);
+            return false;
+        }
+
+        return true;
+    }
+
+    private void saveImage(Bitmap image, File imageDirectory, String imageName) {
+
+        boolean directoryCreated = false;
+        if (!imageDirectory.exists()) {
+            directoryCreated = imageDirectory.mkdir();
+        }
+        if (directoryCreated) {
+            File imageFile = new File(imageDirectory, imageName);
+            String savedImagePath = imageFile.getAbsolutePath();
+            try {
+                OutputStream fOut = new FileOutputStream(imageFile);
+                image.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
+                fOut.close();
+                Toast.makeText(SubmissionActivity.this, "Image saved to storage", Toast.LENGTH_SHORT).show();
+            } catch (Exception e) {
+                Toast.makeText(SubmissionActivity.this, "Error during save", Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
+            }
+
+        }else{
+            Toast.makeText(this, "Unable to create directory", Toast.LENGTH_SHORT).show();
+        }
+    }
 
 }
