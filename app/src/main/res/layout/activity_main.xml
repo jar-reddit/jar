@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@android:color/black"
     android:padding="10dp"
-    tools:context=".MainActivity">
+    tools:context="com.github.jarforreddit.MainActivity">
 
     <TextView
         android:id="@+id/test_text"

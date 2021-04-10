@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.JAR">
+    package="com.github.jarforreddit">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <!--
@@ -12,7 +12,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
-        android:name=".App"
+        android:name="com.github.jarforreddit.App"
         android:allowBackup="true"
         android:fullBackupOnly="true"
         android:icon="@mipmap/ic_launcher"
@@ -22,11 +22,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MaterialComponents.DayNight">
         <activity
-            android:name=".CrashActivity"
+            android:name="com.github.jarforreddit.CrashActivity"
             android:configChanges="orientation|screenSize"
             android:exported="true" />
         <activity
-            android:name=".MainActivity"
+            android:name="com.github.jarforreddit.MainActivity"
             android:configChanges="orientation|screenSize"
             android:exported="true"
             android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar">
@@ -41,13 +41,13 @@
                 android:value=".SubredditActivity" />
         </activity>
         <activity
-            android:name=".SubmissionActivity"
+            android:name="com.github.jarforreddit.SubmissionActivity"
             android:configChanges="orientation|screenSize" />
         <activity
-            android:name=".MediaActivity"
+            android:name="com.github.jarforreddit.MediaActivity"
             android:configChanges="orientation|screenSize" />
         <activity
-            android:name=".SubredditActivity"
+            android:name="com.github.jarforreddit.SubredditActivity"
             android:configChanges="orientation|screenSize"
             android:exported="true"
             android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar">
@@ -70,21 +70,21 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SearchActivity"
+            android:name="com.github.jarforreddit.SearchActivity"
             android:configChanges="orientation|screenSize" />
         <activity
-            android:name=".LoginActivity"
+            android:name="com.github.jarforreddit.LoginActivity"
             android:configChanges="orientation|screenSize" />
         <activity
-            android:name=".SecretActivity"
+            android:name="com.github.jarforreddit.SecretActivity"
             android:configChanges="orientation|screenSize" />
         <activity
-            android:name=".TomlActivity"
+            android:name="com.github.jarforreddit.TomlActivity"
             android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".ActivityConfigBasicAction"
+            android:name="com.github.jarforreddit.ActivityConfigBasicAction"
             android:exported="true"
             android:icon="@mipmap/ic_launcher"
             android:label="Get subreddit posts"
