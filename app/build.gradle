@@ -5,7 +5,7 @@ android {
     compileSdkVersion 30
 
     defaultConfig {
-        applicationId "com.example.JAR"
+        applicationId "com.github.jarforreddit"
         minSdkVersion 24
         targetSdkVersion 30
         versionCode getVersioncodeTimestamp()
